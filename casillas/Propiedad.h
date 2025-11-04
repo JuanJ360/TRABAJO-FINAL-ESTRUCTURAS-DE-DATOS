@@ -8,6 +8,11 @@ struct Propiedad {
     std::string name;
     std::string color;
     int value;
+    int alquiler;
+    int costoConstruirCasa;
+    bool flagCasa;
+    int costoConstruirHotel;
+    bool flagHotel;
 };
 
 // OPERACIONES
