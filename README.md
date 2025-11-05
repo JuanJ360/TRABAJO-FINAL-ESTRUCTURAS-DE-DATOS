@@ -1,2 +1,12 @@
 # TRABAJO-FINAL-ESTRUCTURAS-DE-DATOS
 Aqui se va a guardar todo el trabajo en parejas de Juan José Bolivar y Juan Andrés Correa sobre la creación del TAD monopoly para la asinatura estructuras de datos
+
+
+## 1 era semana
+
+- Juan Andrés y yo discutimos la forma en la que ibamos a trabajar con nuestro programa. En esta inciamos definiendo los .h mas importantes y separamos las casillas y cartas en cada una de sus carpetas.
+
+- Nos estamos basando directamente con los datos en un monopoly real, usando los mismos valores de propiedad de casillas, dinero total, viviendas y más. Esto con el objetivo de no tener que balancear el juego después.
+
+- Para esto estamos usando la pagina oficial del monopoly fandom, por ejemplo para las casas{https://monopoly.fandom.com/wiki/Houses#:~:text=El%20precio%20de%20una%20casa,y%20naranjas%20%2D%20%C2%A3%5C%24100}
+

@@ -17,5 +17,4 @@ struct Propiedad {
 
 // OPERACIONES
 Propiedad CrearPropiedad(std::string);
-
 #endif
