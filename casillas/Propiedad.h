@@ -5,16 +5,14 @@
 
 struct Propiedad {
     std::string type;
+    std::string subType;
     std::string name;
     std::string color;
     int value;
-    int alquiler;
-    int costoConstruirCasa;
-    bool flagCasa;
-    int costoConstruirHotel;
-    bool flagHotel;
+    bool hipotecada;
+    int alquiler[6];
 };
 
 // OPERACIONES
-Propiedad CrearPropiedad(std::string);
+Propiedad CrearPropiedad(std::string, std::string, std::string, bool, int, int[6]);
 #endif

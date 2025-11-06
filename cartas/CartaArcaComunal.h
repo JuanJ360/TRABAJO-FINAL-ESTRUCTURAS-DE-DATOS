@@ -9,4 +9,6 @@ struct CartaArcaComunal {
     std::string mensaje;
 };
 
+CartaArcaComunal CrearCartaArcaComunal(std::string, std::string, std::string);
+
 #endif

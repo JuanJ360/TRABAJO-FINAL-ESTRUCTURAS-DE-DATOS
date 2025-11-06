@@ -1,0 +1,82 @@
+[
+    {
+        "tipo": "Ganancia",
+        "nombre": "Error del Banco a favor",
+        "mensaje": "Error del Banco a tu favor. Cobra $200."
+    },
+    {
+        "tipo": "Movimiento",
+        "nombre": "Adelántese a la Salida",
+        "mensaje": "Adelántese a la casilla de Salida. Cobra $200."
+    },
+    {
+        "tipo": "Especial",
+        "nombre": "Salga Gratis de la Cárcel",
+        "mensaje": "Salga Gratis de la Cárcel. Conserve esta tarjeta hasta que la necesite o la venda."
+    },
+    {
+        "tipo": "Gasto",
+        "nombre": "Honorarios del médico",
+        "mensaje": "Pague la factura del médico $50."
+    },
+    {
+        "tipo": "Gasto",
+        "nombre": "Cuota escolar",
+        "mensaje": "Pague la cuota escolar $150."
+    },
+    {
+        "tipo": "Gasto",
+        "nombre": "Póliza de seguro de vida",
+        "mensaje": "Pague la póliza de seguro de vida $100."
+    },
+    {
+        "tipo": "Gasto",
+        "nombre": "Reembolso de impuestos",
+        "mensaje": "Reembolso de impuestos. Cobra $20."
+    },
+    {
+        "tipo": "Ganancia",
+        "nombre": "Herencia",
+        "mensaje": "Recibe una herencia. Cobra $100."
+    },
+    {
+        "tipo": "Ganancia",
+        "nombre": "Segundo premio de belleza",
+        "mensaje": "Ha ganado el segundo premio en un concurso de belleza. Cobra $10."
+    },
+    {
+        "tipo": "Ganancia",
+        "nombre": "Venta de acciones",
+        "mensaje": "De la venta de sus acciones recibe $45."
+    },
+    {
+        "tipo": "Ganancia",
+        "nombre": "Recibe renta",
+        "mensaje": "Recibe la renta del vencimiento de acciones. Cobra $50."
+    },
+    {
+        "tipo": "Gasto (Gral)",
+        "nombre": "Reparaciones en la calle",
+        "mensaje": "Pague una evaluación especial por cada casa $40. Pague por cada hotel $115."
+    },
+    {
+        "tipo": "Movimiento",
+        "nombre": "Ir a la Cárcel",
+        "mensaje": "Vaya a la Cárcel. Vaya directamente. No pase por Salida. No cobre los $200."
+    },
+    {
+        "tipo": "Ganancia (Gral)",
+        "nombre": "Aniversario",
+        "mensaje": "Es su aniversario. Cada jugador le da $10."
+    },
+    {
+        "tipo": "Ganancia",
+        "nombre": "Regalo de Navidad",
+        "mensaje": "Navidad llega tarde, recibe $100."
+    },
+    {
+        "tipo": "Ganancia",
+        "nombre": "Nuevo apartamento",
+        "mensaje": "Te has mudado a un nuevo departamento. Cobra $20."
+    }
+]
