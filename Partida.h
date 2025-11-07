@@ -16,12 +16,14 @@ struct Partida {
     Banco banco;
 };
 
-Partida IniciarPartida(); // función para instanciar el estado inicial de una partida
+Partida IniciarPartida(User, User, User, User); // función para instanciar el estado inicial de una partida
 Partida AvanzarPartida(Partida); // función para crear una nueva instancia de la partida avanzando el turno
-void GanarPropiedad(User&, Propiedad);
+Partida GanarPropiedad(Partida, User, Propiedad);
 void ReglaTercerTurno(Carcel&, std::string); // la regla de los 3 turnos en la carcel
 int TirarDado(); // función para tirar UN SOLO DADO
-void AvanzarJugador(User); // resibe el nombre del jugador
-int numeroDeServicios(User); // número de servicios que posee un jugador
+Tablero AvanzarJugador(Tablero, User); // resibe el nombre del jugador
+int NumeroDeServicios(const Tablero&, User); // número de servicios que posee un jugador
+bool TresParesConsecutivos(User&);
+User UsarCarta(User, CartaSuerte);
 
 #endif
