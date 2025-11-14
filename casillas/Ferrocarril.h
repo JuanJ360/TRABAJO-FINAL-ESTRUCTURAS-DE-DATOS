@@ -4,7 +4,7 @@
 #include <string>
 
 struct Ferrocarril {
-    std::string type;
+    std::string tipo;
     std::string name;
     int value;
     bool hipotecada;

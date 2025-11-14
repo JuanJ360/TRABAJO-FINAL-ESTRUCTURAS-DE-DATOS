@@ -16,12 +16,24 @@ struct Partida {
     Banco banco;
 };
 
-Partida IniciarPartida(); // función para instanciar el estado inicial de una partida
+// OPERACIONES
+
+Partida DecidirOrdenUsuarios(User, User, User, User);
+Partida IniciarPartida(std::vector<User>); // función para instanciar el estado inicial de una partida
 Partida AvanzarPartida(Partida); // función para crear una nueva instancia de la partida avanzando el turno
-void GanarPropiedad(User&, Propiedad);
-void ReglaTercerTurno(Carcel&, std::string); // la regla de los 3 turnos en la carcel
 int TirarDado(); // función para tirar UN SOLO DADO
-void AvanzarJugador(User); // resibe el nombre del jugador
-int numeroDeServicios(User); // número de servicios que posee un jugador
+bool PropiedadPerteneceAAlguien(Partida, std::string); // función que recibe el nombre de una propiedad y devuelve el verdadero o falso si este pertenece o no pertenece a algun jugador
+std::string DueñoDeLaPropiedad(Partida, std::string); // función que recibe el nombre de una propiedad y devuelve el nombre del propietario de dicha propiedad
+
+void ReglaTercerTurno(Carcel&, std::string); // la regla de los 3 turnos en la carcel
+Tablero AvanzarJugador(Tablero, User); // resibe el nombre del jugador
+bool TresParesConsecutivos(User&); // para comprovar despues de cada tirada de los dados del jugador si este ha sacado 3 pares consecutivos
+
+int numeroDeFerrocarriles(Partida, std::string); // funcion para saber cuantas propiedades de ferrocarril tiene un jugador
+int NumeroDeServicios(const Tablero&, User); // número de servicios que posee un jugador
+
+Partida GanarPropiedad(Partida, User, Propiedad);
+Partida SubastarPropiedad(Partida, std::string, std::string); // nombre de la propiedad y a quien se subasta para darle dicha propiedad
+User UsarCarta(User, CartaSuerte);
 
 #endif

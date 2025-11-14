@@ -3,12 +3,15 @@
 
 #include <string>
 #include <vector>
+#include "cartas/CartaSuerte.h"
 
 struct User {
     std::string name;
     int cash;
-    int sumDados;
+    int posicion;
+    int contPares; // contador de numeros de pares
     bool activo; // representa si el jugador puede seguir jugando o ya ha perdido
+    std::vector<CartaSuerte> cartas;
 };
 
 
@@ -18,5 +21,7 @@ User AumentarSumSados(User, int);
 User GanarDinero(User, int);
 User PerderDinero(User, int);
 User UsuarioEliminado(User);
+User ResetContPares(User);
+User AumentarContPares(User);
 
 #endif
