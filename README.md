@@ -13,4 +13,5 @@ Aqui se va a guardar todo el trabajo en parejas de Juan José Bolivar y Juan And
 
 ## Segunda semana
 
-- 
+- En esta semana tuvimos menos reuniones pero se trabajó finalmente en la instanciación de la finalización de los .h, implementando los trabajos que hicimos y las cosas que debatimos en clase, en las reuniones que tuvimos, juan andrés me comentó su idea principal de no trabajar con TADs, pero luego de hablarlo con gerardo nos comentó que la mejor opción era que lo hiciesemos, sobretodo porque solamente con structs no estaríamos implementando lo que aprendimos en EDD, por lo tanto, decidimos modificarlo
+
