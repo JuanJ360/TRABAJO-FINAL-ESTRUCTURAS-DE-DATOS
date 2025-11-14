@@ -16,6 +16,8 @@ struct Tablero {
     std::vector<Ferrocarril> ferrocarriles;
     std::vector<Propiedad> propiedades;
     std::vector<Servicio> servicios;
+    std::vector<std::string> especiales;
+    // casillas de suerte
 };
 
 Tablero CrearTablero();

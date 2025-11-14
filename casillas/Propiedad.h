@@ -4,11 +4,11 @@
 #include <string>
 
 struct Propiedad {
-    std::string type;
-    std::string subType;
+    std::string tipo;
+    std::string subTipo;
     std::string name;
     std::string color;
-    int value;
+    int valor;
     bool hipotecada;
     int alquiler[6];
 };

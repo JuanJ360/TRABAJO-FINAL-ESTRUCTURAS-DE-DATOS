@@ -3,7 +3,7 @@
 Ferrocarril CrearFerrocarril(std::string nombre) {
     Ferrocarril p;
     p.name = nombre;
-    p.type = "Ferrocarril";
+    p.tipo = "Ferrocarril";
     
     return p;
 }
