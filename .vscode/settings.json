@@ -58,6 +58,7 @@
         "istream": "cpp",
         "ranges": "cpp",
         "sstream": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "queue": "cpp"
     }
 }

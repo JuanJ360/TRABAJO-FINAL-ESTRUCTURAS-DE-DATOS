@@ -1,0 +1,82 @@
+[
+  {
+        "tipo": "cobrar",
+        "nombre": "avanza a la salida",
+        "mensaje": "avanza a la casilla de salida (cobra $200)."
+    },
+    {
+        "tipo": "movimiento",
+        "nombre": "avanza a illinois",
+        "mensaje": "avanza a la avenida illinois. si pasas por la casilla de salida, cobra $200."
+    },
+    {
+        "tipo": "movimiento",
+        "nombre": "avanza a st charles",
+        "mensaje": "avanza a la avenida st. charles place. si pasas por la casilla de salida, cobra $200."
+    },
+    {
+        "tipo": "movimiento",
+        "nombre": "avanza a paseo marítimo",
+        "mensaje": "avanza al paseo marítimo."
+    },
+    {
+        "tipo": "movimiento",
+        "nombre": "viaje a reading",
+        "mensaje": "haz un viaje a reading railroad. si pasas por la casilla de salida, cobra $200."
+    },
+    {
+        "tipo": "movimiento especial",
+        "nombre": "ferrocarril cercano 1",
+        "mensaje": "avanza al ferrocarril más cercano. paga al propietario el doble del alquiler al que tiene derecho. si no tiene propietario, puedes comprarlo al banco."
+    },
+    {
+        "tipo": "movimiento especial",
+        "nombre": "ferrocarril cercano 2",
+        "mensaje": "avanza al ferrocarril más cercano. paga al propietario el doble del alquiler al que tiene derecho. si no tiene propietario, puedes comprarlo al banco."
+    },
+    {
+        "tipo": "movimiento especial",
+        "nombre": "utilidad cercana",
+        "mensaje": "avanza a la utilidad más cercana. si tiene propietario, tira los dados y paga al propietario un total de diez veces la cantidad tirada. si no tiene propietario, puedes comprarla al banco."
+    },
+    {
+        "tipo": "cobrar",
+        "nombre": "dividendo bancario",
+        "mensaje": "el banco te paga un dividendo de $50."
+    },
+    {
+        "tipo": "cobrar",
+        "nombre": "préstamo y edificio",
+        "mensaje": "tu edificio y préstamo maduran, cobra $150."
+    },
+    {
+        "tipo": "pagar a jugadores",
+        "nombre": "presidente del consejo",
+        "mensaje": "has sido elegido presidente del consejo. paga a cada jugador $50."
+    },
+    {
+        "tipo": "pagar al banco",
+        "nombre": "impuestos a los pobres",
+        "mensaje": "paga impuestos a los pobres de $15."
+    },
+    {
+        "tipo": "reparaciones",
+        "nombre": "reparaciones generales",
+        "mensaje": "haz reparaciones generales en todas tus propiedades: por cada casa paga $25, por cada hotel pagos $100."
+    },
+    {
+        "tipo": "movimiento",
+        "nombre": "retrocede 3",
+        "mensaje": "retrocede 3 casillas."
+    },
+    {
+        "tipo": "cárcel",
+        "nombre": "ve a la cárcel",
+        "mensaje": "ve a la cárcel. ve directamente a la cárcel. no pases por salida. no cobras $200."
+    },
+    {
+        "tipo": "especial",
+        "nombre": "sal de la cárcel gratis",
+        "mensaje": "sal de la cárcel gratis. (esta carta puede ser guardada hasta que sea necesaria o vendida)."
+    }
+]
