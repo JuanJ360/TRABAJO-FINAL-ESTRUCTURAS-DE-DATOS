@@ -1,10 +1,10 @@
 #include "Servicio.h"
 
-Servicio CrearServicio (std::string nombre, int valor){
-
+Servicio CrearServicio (std::string _nombre, int _valor, int _hipoteca){
     Servicio s;
-    s.name = nombre;
-    s.value =valor;
-    s.type = "Servicio";
-
+    s.nombre = _nombre;
+    s.valor = _valor;
+    s.hipoteca = _hipoteca;
+    s.tipo = "Servicio";
+    return s;
 }

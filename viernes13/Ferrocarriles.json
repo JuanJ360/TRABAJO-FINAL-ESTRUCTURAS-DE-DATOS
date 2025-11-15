@@ -1,0 +1,26 @@
+[
+    {
+        "nombre": "Ferrocarril Reading",
+        "valor": 200,
+        "hipotecada": false,
+        "alquiler": [25, 50, 100, 200]
+    },
+    {
+        "nombre": "Ferrocarril Pennsylvania",
+        "valor": 200,
+        "hipotecada": false,
+        "alquiler": [25, 50, 100, 200]
+    },
+    {
+        "nombre": "Ferrocarril B&O",
+        "valor": 200,
+        "hipotecada": false,
+        "alquiler": [25, 50, 100, 200]
+    },
+    {
+        "nombre": "Línea Corta",
+        "valor": 200,
+        "hipotecada": false,
+        "alquiler": [25, 50, 100, 200]
+    }
+]

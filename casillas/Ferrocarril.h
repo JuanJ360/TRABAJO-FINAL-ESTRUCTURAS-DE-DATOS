@@ -5,13 +5,13 @@
 
 struct Ferrocarril {
     std::string tipo;
-    std::string name;
-    int value;
+    std::string nombre;
+    int valor;
     bool hipotecada;
-    int alquiler[6];
+    int alquiler[4];
 };
 
 // OPERACIONES
-Ferrocarril CrearFerrocarril(std::string);
+Ferrocarril CrearFerrocarril(std::string, int, bool, int[4]);
 
 #endif

@@ -5,11 +5,14 @@
 #include <vector>
 #include <string>
 #include <utility>
+#include <fstream>
 
-//#include "Casilla.h"
 #include "./casillas/Ferrocarril.h"
 #include "./casillas/Servicio.h"
 #include "./casillas/Propiedad.h"
+#include "viernes13/json.hpp"
+
+using json = nlohmann::json;
 
 struct Tablero {
     std::vector<std::pair<std::string, int>> casillas; // el tipo de la casilla y la posición dentro de su respectivo vector segun su tipo
@@ -20,7 +23,7 @@ struct Tablero {
 };
 
 Tablero CrearTablero();
-std::string ObtenerCasilla(const Tablero&, int);
-void VaciarTablero(Tablero&);
+// std::string ObtenerCasilla(const Tablero&, int); 
+// void VaciarTablero(Tablero&);
 
 #endif

@@ -4,12 +4,13 @@
 #include <string>
 
 struct Servicio {
-    std::string type;
-    std::string name;
-    int value;
+    std::string tipo;
+    std::string nombre;
+    int valor;
+    int hipoteca;
 };
 
 // OPERACIONES
-Servicio CrearServicio(std::string);
+Servicio CrearServicio(std::string, int, int);
 
 #endif

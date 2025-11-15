@@ -1,0 +1,178 @@
+[
+    {
+        "nombre": "Mediterranean Avenue",
+        "subTipo": "propiedad",
+        "color": "marrón",
+        "valor": 60,
+        "hipotecada": false,
+        "alquiler": [2, 10, 30, 90, 160, 250]
+    },
+    {
+        "nombre": "Baltic Avenue",
+        "subTipo": "propiedad",
+        "color": "marrón",
+        "valor": 60,
+        "hipotecada": false,
+        "alquiler": [4, 20, 60, 180, 320, 450]
+    },
+    {
+        "nombre": "Oriental Avenue",
+        "subTipo": "propiedad",
+        "color": "celeste",
+        "valor": 100,
+        "hipotecada": false,
+        "alquiler": [6, 30, 90, 270, 400, 550]
+    },
+    {
+        "nombre": "Vermont Avenue",
+        "subTipo": "propiedad",
+        "color": "celeste",
+        "valor": 100,
+        "hipotecada": false,
+        "alquiler": [6, 30, 90, 270, 400, 550]
+    },
+    {
+        "nombre": "Connecticut Avenue",
+        "subTipo": "propiedad",
+        "color": "celeste",
+        "valor": 120,
+        "hipotecada": false,
+        "alquiler": [8, 40, 100, 300, 450, 600]
+    },
+    {
+        "nombre": "St. Charles Place",
+        "subTipo": "propiedad",
+        "color": "rosa",
+        "valor": 140,
+        "hipotecada": false,
+        "alquiler": [10, 50, 150, 450, 625, 750]
+    },
+    {
+        "nombre": "States Avenue",
+        "subTipo": "propiedad",
+        "color": "rosa",
+        "valor": 140,
+        "hipotecada": false,
+        "alquiler": [10, 50, 150, 450, 625, 750]
+    },
+    {
+        "nombre": "Virginia Avenue",
+        "subTipo": "propiedad",
+        "color": "rosa",
+        "valor": 160,
+        "hipotecada": false,
+        "alquiler": [12, 60, 180, 500, 700, 900]
+    },
+    {
+        "nombre": "St. James Place",
+        "subTipo": "propiedad",
+        "color": "naranja",
+        "valor": 180,
+        "hipotecada": false,
+        "alquiler": [14, 70, 200, 550, 750, 950]
+    },
+    {
+        "nombre": "Tennessee Avenue",
+        "subTipo": "propiedad",
+        "color": "naranja",
+        "valor": 180,
+        "hipotecada": false,
+        "alquiler": [14, 70, 200, 550, 750, 950]
+    },
+    {
+        "nombre": "New York Avenue",
+        "subTipo": "propiedad",
+        "color": "naranja",
+        "valor": 200,
+        "hipotecada": false,
+        "alquiler": [16, 80, 220, 600, 800, 1000]
+    },
+    {
+        "nombre": "Kentucky Avenue",
+        "subTipo": "propiedad",
+        "color": "rojo",
+        "valor": 220,
+        "hipotecada": false,
+        "alquiler": [18, 90, 250, 700, 875, 1050]
+    },
+    {
+        "nombre": "Indiana Avenue",
+        "subTipo": "propiedad",
+        "color": "rojo",
+        "valor": 220,
+        "hipotecada": false,
+        "alquiler": [18, 90, 250, 700, 875, 1050]
+    },
+    {
+        "nombre": "Illinois Avenue",
+        "subTipo": "propiedad",
+        "color": "rojo",
+        "valor": 240,
+        "hipotecada": false,
+        "alquiler": [20, 100, 300, 750, 925, 1100]
+    },
+    {
+        "nombre": "Atlantic Avenue",
+        "subTipo": "propiedad",
+        "color": "amarillo",
+        "valor": 260,
+        "hipotecada": false,
+        "alquiler": [22, 110, 330, 800, 975, 1150]
+    },
+    {
+        "nombre": "Ventnor Avenue",
+        "subTipo": "propiedad",
+        "color": "amarillo",
+        "valor": 260,
+        "hipotecada": false,
+        "alquiler": [22, 110, 330, 800, 975, 1150]
+    },
+    {
+        "nombre": "Marvin Gardens",
+        "subTipo": "propiedad",
+        "color": "amarillo",
+        "valor": 280,
+        "hipotecada": false,
+        "alquiler": [24, 120, 360, 850, 1025, 1200]
+    },
+    {
+        "nombre": "Pacific Avenue",
+        "subTipo": "propiedad",
+        "color": "verde",
+        "valor": 300,
+        "hipotecada": false,
+        "alquiler": [26, 130, 390, 900, 1100, 1275]
+    },
+    {
+        "nombre": "North Carolina Avenue",
+        "subTipo": "propiedad",
+        "color": "verde",
+        "valor": 300,
+        "hipotecada": false,
+        "alquiler": [26, 130, 390, 900, 1100, 1275]
+    },
+    {
+        "nombre": "Pennsylvania Avenue",
+        "subTipo": "propiedad",
+        "color": "verde",
+        "valor": 320,
+        "hipotecada": false,
+        "alquiler": [28, 150, 450, 1000, 1200, 1400]
+    },
+    {
+        "nombre": "Park Place",
+        "subTipo": "propiedad",
+        "color": "azul",
+        "valor": 350,
+        "hipotecada": false,
+        "alquiler": [35, 175, 500, 1100, 1300, 1500]
+    },
+    {
+        "nombre": "Boardwalk",
+        "subTipo": "propiedad",
+        "color": "azul",
+        "valor": 400,
+        "hipotecada": false,
+        "alquiler": [50, 200, 600, 1400, 1700, 2000]
+    }
+]

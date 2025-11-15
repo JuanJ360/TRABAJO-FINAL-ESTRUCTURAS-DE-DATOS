@@ -9,6 +9,7 @@ User CrearUsuario(std::string _name) {
     user.posicion = 0; // se inicializa la suma de los tiros de los dados del usuario en 0
     user.contPares = 0;
     user.activo = true;
+    user.cartaSalirDeLaCarcel = false;
     return user;
 }
 
@@ -17,7 +18,7 @@ User CambiarNombreUsuario(User user, std::string newName) {
     return user;
 }
 
-User AumentarSumSados(User user, int aumento) {
+User AumentarPosicion(User user, int aumento) {
     user.posicion += aumento;
     return user;
 }
@@ -46,4 +47,18 @@ User ResetContPares(User user) {
 User AumentarContPares(User user) {
     user.contPares++;
     return user;
+}
+
+User GanarCartaSalirDeLaCarcel(User user) {
+    if (!user.cartaSalirDeLaCarcel) {
+        user.cartaSalirDeLaCarcel = true;
+        return user; 
+    }
+}
+
+User GastarCartaSalirDeLaCarcel(User user) {
+    if (user.cartaSalirDeLaCarcel) {
+        user.cartaSalirDeLaCarcel = false;
+        return user; 
+    }
 }
