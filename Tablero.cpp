@@ -1,23 +1,38 @@
 #include "Tablero.h"
 
 Tablero CrearTablero() {
-    std::ifstream achivoPropiedades("viernes13/Propiedades.json");
+    std::ifstream archivoPropiedades("viernes13/Propiedades.json");
+    if (!archivoPropiedades.is_open()) {
+        throw std::runtime_error("CrearTablero: Error al abrir el archivo de propiedades");
+    }
     json prop;
-    achivoPropiedades >> prop;
+    archivoPropiedades >> prop;
 
     std::ifstream archivoFerrcarriles("viernes13/Ferrocarriles.json");
+    if (!archivoFerrcarriles.is_open()) {
+        throw std::runtime_error("CrearTablero: Error al abrir el archivo de ferrocarriles");
+    }
     json ferro;
     archivoFerrcarriles >> ferro;
 
     std::ifstream archivoServicios("viernes13/Servicios.json");
+    if (!archivoServicios.is_open()) {
+        throw std::runtime_error("CrearTablero: Error al abrir el archivo de servicios");
+    }
     json serv;
     archivoServicios >> serv;
 
     std::ifstream archivosCasillasEspeciales("viernes13/CasillasEspeciales.json");
+    if (!archivosCasillasEspeciales.is_open()) {
+        throw std::runtime_error("CrearTablero: Error al abrir el archivo de casillas especiales");
+    }
     json casEsp;
     archivosCasillasEspeciales >> casEsp;
 
     std::ifstream archivosCasillas("viernes13/Casillas.json");
+    if (!archivosCasillas.is_open()) {
+        throw std::runtime_error("CrearTablero: Error al abrir el archivo de casillas");
+    }
     json cas;
     archivosCasillas >> cas;
 
@@ -56,9 +71,9 @@ Tablero CrearTablero() {
     }
 
     // enlazar todas las cartas con sus posiciones
-    std::vector<std::pair<std::string, int>> casillas;
+    std::vector<Casilla> casillas;
     for (i = 0; i < cas.size(); i++) {
-        casillas.push_back({cas[i]["tipo"], cas[i]["posicion"]});
+        casillas.push_back(CrearCasilla(cas[i]["tipo"], cas[i]["posicion"]));
     }
 
     Tablero tablero;
@@ -66,6 +81,8 @@ Tablero CrearTablero() {
     tablero.especiales = casillasEspeciales;
     tablero.ferrocarriles = ferrocarriles;
     tablero.servicios = servicios;
+    tablero.propiedades = propiedades;
+
 
     return tablero;
 }
