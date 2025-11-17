@@ -86,3 +86,15 @@ Tablero CrearTablero() {
 
     return tablero;
 }
+
+Casilla ObtenerCasilla(const Tablero& tablero, int pos) {
+    return tablero.casillas[pos];
+}
+
+void VaciarTablero(Tablero& tablero) {
+    tablero.casillas.clear();
+    tablero.especiales.clear();
+    tablero.ferrocarriles.clear();
+    tablero.propiedades.clear();
+    tablero.servicios.clear();
+}

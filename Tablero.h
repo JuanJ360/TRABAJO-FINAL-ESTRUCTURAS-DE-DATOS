@@ -24,7 +24,7 @@ struct Tablero {
 };
 
 Tablero CrearTablero();
-// std::string ObtenerCasilla(const Tablero&, int); 
-// void VaciarTablero(Tablero&);
+Casilla ObtenerCasilla(const Tablero&, int); 
+void VaciarTablero(Tablero&);
 
 #endif
