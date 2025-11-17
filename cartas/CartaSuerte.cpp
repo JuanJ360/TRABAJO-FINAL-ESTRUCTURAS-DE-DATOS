@@ -10,7 +10,7 @@ CartaSuerte CrearCartaSuerte(std::string _nombre, std::string _tipo, std::string
 
 std::queue<CartaSuerte> GenerarColaCartasSuerte() {
     std::vector<CartaSuerte> csVector;
-    std::ifstream archivo("viernes13/CartasArcaComunal.json");
+    std::ifstream archivo("viernes13/CartasSuerte.json");
     if (archivo.is_open()) {
         json j;
         archivo >> j;
