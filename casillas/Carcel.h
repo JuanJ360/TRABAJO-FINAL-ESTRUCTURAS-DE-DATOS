@@ -3,7 +3,7 @@
 
 #include <utility>
 #include <map>
-#include "./User.h"
+//#include "./User.h"
 
 struct Carcel {
     std::map<std::string, std::pair<User*, int>> prisioneros; // userName : <User, turnos en la carcel>
