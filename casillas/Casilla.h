@@ -10,4 +10,6 @@ struct Casilla {
 
 Casilla CrearCasilla(std::string, int);
 
+Casilla ActivarEvento(std::string, int);
+
 #endif
