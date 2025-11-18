@@ -126,3 +126,31 @@ Partida GanarPropiedad(Partida p, User u, Propiedad propiedad) {
 
     return p;
 }
+
+
+User AvanzarJugador(User& jugador) {
+
+    std::cout << "\nTurno de " << jugador.name << ". Presiona ENTER para tirar los dados...";
+    std::cin.get();
+
+    int d1 = TirarDado();
+    int d2 = TirarDado();
+    int suma = d1 + d2;
+
+    std::cout << "  Dados: " << d1 << " + " << d2 << " = " << suma << "\n";
+
+    // Avanzar posición
+    int posicionAnterior = jugador.posicion;
+    jugador.posicion = (jugador.posicion + suma) % 40;   // tablero de 40 casillas
+
+    // Pasó por la salida
+    if (posicionAnterior + suma >= 40) {
+        std::cout << ">>> " << jugador.name << " pasó por la salida y recibe $200.\n";
+        jugador.dinero += 200;
+    }
+
+    std::cout << jugador.name << " ahora está en la casilla " 
+              << jugador.posicion << ".\n";
+
+    return jugador;
+}
