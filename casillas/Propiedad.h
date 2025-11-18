@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <stdexcept>
+#include <iostream>
 
 struct Propiedad {
     std::string tipo;
@@ -16,10 +18,15 @@ struct Propiedad {
     int valorHotel;
     int valorHipotecar;
     int valorDesHipotecar;
+    // falta
+    int numCasas;
+    int numHoteles;
 };
 
 // OPERACIONES
 Propiedad CrearPropiedad(std::string, std::string, std::string, bool, int, int[6], int, int, int, int);
-int ValorRentaPropiedad(bool, std::string); // color de propiedad x 
+Propiedad ConstruirNCasas(Propiedad, int); // propiedad x numero de casas
+Propiedad ConsturirHotel(Propiedad); // propiedad
+int ValorRentaPropiedad(Propiedad&, bool); // propiedad x esta en un monopolio
 
 #endif
