@@ -11,7 +11,7 @@
 struct Partida {
     int nTurno;
 
-    // NUEVO: un solo registro de jugadores
+    // un solo registro de jugadores
     std::map<std::string, User> usuarios;
 
     Carcel carcel;
