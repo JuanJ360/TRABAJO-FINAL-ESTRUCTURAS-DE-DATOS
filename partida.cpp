@@ -66,3 +66,63 @@ Partida IniciarPartida(std::vector<User> listaUsuarios) {
 
     return p;
 }
+
+bool PropiedadPerteneceAAlguien(Partida p, std::string nombrePropiedad) {
+
+    for (const auto &par : p.usuarios) {
+
+        const auto &listaProps = par.second.second; 
+        // par.second = {User, vector<Propiedad>}
+        // par.second.second = vector<Propiedad>
+
+        // Buscar en las propiedades del jugador
+        for (const auto &prop : listaProps) {
+            if (prop.nombre == nombrePropiedad) {
+                return true; 
+            }
+        }
+    }
+
+
+    return false;
+}
+
+std::string DuenoDeLaPropiedad(Partida p, std::string nombrePropiedad) {
+
+    for (const auto &par : p.usuarios) {
+
+        const std::string &nombreJugador = par.first;
+        const auto &listaProps = par.second.second;
+
+        for (const auto &prop : listaProps) {
+            if (prop.nombre == nombrePropiedad) {
+                return nombreJugador; // lo encontramos
+            }
+        }
+    }
+
+    // Si no la tiene nadie
+    return "Nadie";
+}
+
+Partida GanarPropiedad(Partida p, User u, Propiedad propiedad) {
+
+    // acceso con el map
+    auto it = p.usuarios.find(u.name);
+
+    if (it == p.usuarios.end()) {
+        std::cout << "Error: el jugador " << u.name << " no existe en la partida.\n";
+        return p;
+    }
+
+    // Agregar la propiedad al vector del jugador
+    it->second.second.push_back(propiedad);
+
+    // Actualizar el objeto User dentro de la partida
+    it->second.first = u;
+
+    std::cout << ">>> " << u.name << " ha ganado la propiedad: " 
+              << propiedad.nombre << "\n";
+
+    return p;
+}

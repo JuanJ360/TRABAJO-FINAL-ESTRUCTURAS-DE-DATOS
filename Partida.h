@@ -26,10 +26,10 @@ bool PropiedadPerteneceAAlguien(Partida, std::string); // función que recibe el
 std::string DuenoDeLaPropiedad(Partida, std::string); // función que recibe el nombre de una propiedad y devuelve el nombre del propietario de dicha propiedad
 
 void ReglaTercerTurno(Carcel&, std::string); // la regla de los 3 turnos en la carcel
-Tablero AvanzarJugador(Tablero, User); // resibe el nombre del jugador
-bool TresParesConsecutivos(User&); // para comprovar despues de cada tirada de los dados del jugador si este ha sacado 3 pares consecutivos
+Tablero AvanzarJugador(Tablero, User); // recibe el nombre del jugador
+bool TresParesConsecutivos(User&); // para comprobar después de cada tirada de los dados del jugador si este ha sacado 3 pares consecutivos
 
-int numeroDeFerrocarriles(Partida, std::string); // funcion para saber cuantas propiedades de ferrocarril tiene un jugador
+int numeroDeFerrocarriles(Partida, std::string); // función para saber cuantas propiedades de ferrocarril tiene un jugador
 int NumeroDeServicios(const Tablero&, std::string); // número de servicios que posee un jugador
 int NumeroDePropiedades(const Tablero&, std::string); 
 
