@@ -30,10 +30,8 @@ Partida DecidirOrdenUsuarios(User u1, User u2, User u3, User u4) {
     }
 
     // Ordenar de mayor a menor según la suma 
-    std::sort(usuarios.begin(), usuarios.end(),
-              [](const User &a, const User &b) {
-                  return a.posicion > b.posicion;
-              });
+    std::sort(usuarios.begin(), usuarios.end(),[](const User &a, const User &b) {
+                  return a.posicion > b.posicion;});
 
     Partida p;
     p.nTurno = 1;
@@ -122,7 +120,7 @@ Partida GanarPropiedad(Partida p, User u, Propiedad propiedad) {
     it->second.first = u;
 
     std::cout << ">>> " << u.name << " ha ganado la propiedad: " 
-              << propiedad.nombre << "\n";
+              << propiedad.name << "\n";
 
     return p;
 }
@@ -146,11 +144,55 @@ User AvanzarJugador(User& jugador) {
     // Pasó por la salida
     if (posicionAnterior + suma >= 40) {
         std::cout << ">>> " << jugador.name << " pasó por la salida y recibe $200.\n";
-        jugador.dinero += 200;
+        jugador.cash += 200;
     }
 
-    std::cout << jugador.name << " ahora está en la casilla " 
-              << jugador.posicion << ".\n";
+    std::cout << jugador.name << " ahora está en la casilla " << jugador.posicion << ".\n";
 
     return jugador;
+}
+
+void ReglaTercerTurnoCarcel(Carcel& carcel, const std::string& name) {
+    
+    // Obtener referencia al par <User*, turnos>
+    auto& data = carcel.prisioneros[name];
+    User* user = data.first;
+    int turnos = data.second;
+
+    // Si ya cumplió 3 turnos debe ser liberado
+    if (turnos >= 3) {
+        std::cout << user->name << " ha cumplido 3 turnos en la cárcel. Queda libre.\n";
+
+        // Sale de la cárcel
+        LiberarDeLaCarcel(carcel, name);
+
+        // el user sale a casilla #10
+        user->posicion = 10;
+
+        // Resetear pares 
+        user->contPares = 0;
+    }
+}
+
+void ReglaTercerParFuera(Carcel& carcel, User& user) {
+    if (!EstaArrestado(carcel, user.name) && user.contPares >= 3) {
+        std::cout << user.name << " ha sacado 3 pares consecutivos. Va a la cárcel.\n";
+
+        user.posicion = 10;
+        user.contPares = 0;
+
+        Arrestar(carcel, &user);
+    }
+}
+
+bool TresParesConsecutivos(User& user) {
+
+    if (user.contPares >= 3)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }

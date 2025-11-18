@@ -25,8 +25,9 @@ int TirarDado(); // función para tirar UN SOLO DADO
 bool PropiedadPerteneceAAlguien(Partida, std::string); // función que recibe el nombre de una propiedad y devuelve el verdadero o falso si este pertenece o no pertenece a algun jugador
 std::string DuenoDeLaPropiedad(Partida, std::string); // función que recibe el nombre de una propiedad y devuelve el nombre del propietario de dicha propiedad
 
-void ReglaTercerTurno(Carcel&, std::string); // la regla de los 3 turnos en la carcel
-User AvanzarJugador(Tablero, User); // recibe el nombre del jugador
+void ReglaTercerTurnoCarcel(Carcel&, std::string); // la regla de los 3 turnos en la carcel
+void ReglaTercerParFuera(Carcel&, std::string); // la misma regla de los 3 Pares pero cuando estamos afuera, para entrar a la carcel
+User AvanzarJugador(User&); // recibe el nombre del jugador
 bool TresParesConsecutivos(User&); // para comprobar después de cada tirada de los dados del jugador si este ha sacado 3 pares consecutivos
 
 int numeroDeFerrocarriles(Partida, std::string); // función para saber cuantas propiedades de ferrocarril tiene un jugador
