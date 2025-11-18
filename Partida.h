@@ -13,7 +13,7 @@ struct Partida {
 
     // un solo registro de jugadores
     std::map<std::string, User> usuarios;
-
+    std::vector<std::string> ordenUsuarios;
     Carcel carcel;
     Tablero tablero;
     Banco banco;
@@ -33,9 +33,9 @@ Partida GanarPropiedad(Partida, User, Propiedad);
 Partida GanarFerrocarril(Partida, User, Ferrocarril);
 Partida GanarServicio(Partida, User, Servicio);
 
-int numeroDeFerrocarriles(const Partida&, std::string); // función para saber cuantas propiedades de ferrocarril tiene un jugador
-int NumeroDeServicios(const Partida&, std::string); // número de servicios que posee un jugador
-int NumeroDePropiedades(const Partida&, std::string); // número de propiedades que posee un jugador
+int numeroDeFerrocarriles(const Partida&, const std::string&); // función para saber cuantas propiedades de ferrocarril tiene un jugador
+int NumeroDeServicios(const Partida&, const std::string&); // número de servicios que posee un jugador
+int NumeroDePropiedades(const Partida&, const std::string&); // número de propiedades que posee un jugador
 
 Partida SubastarPropiedad(Partida, std::string, std::string); // nombre de la propiedad y a quien se subasta para darle dicha propiedad
 
@@ -46,5 +46,11 @@ void ReglaTercerTurnoCarcel(Carcel&, std::string); // la regla de los 3 turnos e
 void ReglaTercerParFuera(Carcel&, std::string); // la misma regla de los 3 Pares pero cuando estamos afuera, para entrar a la carcel
 
 User UsarCarta(User, CartaSuerte);
+
+std::string PropietarioDeServicio(Partida&, const std::string);
+std::string PropietarioDeFerrocarril(Partida&, const std::string);
+std::string PropietarioDePropiedad(Partida&, const std::string);
+bool PropiedadEnMonopolio(Partida&, const std::string);
+void EjecutarCasilla(Partida&, User&, int);
 
 #endif

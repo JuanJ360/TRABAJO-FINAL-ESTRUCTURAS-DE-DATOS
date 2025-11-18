@@ -31,19 +31,22 @@ Partida DecidirOrdenUsuarios(User u1, User u2, User u3, User u4) {
 
     // Ordenar de mayor a menor según la suma 
     std::sort(usuarios.begin(), usuarios.end(),[](const User &a, const User &b) {
-                  return a.posicion > b.posicion;});
+        return a.posicion > b.posicion;
+    });
 
     Partida p;
     p.nTurno = 1;
 
     // Pasar usuarios al map
-    for (auto &u : usuarios)
+    for (auto &u : usuarios) {
         p.usuarios[u.nombre] = u;
+        p.ordenUsuarios.push_back(u.nombre);
+    }
 
     std::cout << "\nOrden final de jugadores:\n";
-    for (auto &u : usuarios)
+    for (auto &u : usuarios) {
         std::cout << " - " << u.nombre << " (" << u.posicion << ")\n";
-
+    }
     return p;
 }
 
@@ -188,4 +191,152 @@ int NumeroDeServicios(const Partida& p, const std::string& jugador) {
 
 int NumeroDeFerrocarriles(const Partida& p, const std::string& jugador) {
     return p.usuarios.at(jugador).ferrocarriles.size();
+}
+
+std::string PropietarioDeServicio(Partida& partida, const std::string nomServicio) {
+    for(int i = 0; i < 4; i++) {
+        User& user = partida.usuarios[partida.ordenUsuarios[i]];
+        if (user.activo) {
+            for (int j = 0; j < user.servicios.size(); j++) {
+                if (user.servicios[j].nombre == nomServicio) {
+                    return user.nombre;
+                }
+            }
+        }
+    }
+    return "except";
+}
+
+std::string PropietarioDeFerrocarril(Partida& partida, const std::string nomFerrocarril) {
+    for (int i = 0; i < 4; i++) {
+        User& user = partida.usuarios[partida.ordenUsuarios[i]];
+        if (user.activo) {
+            for (int j = 0; j < user.ferrocarriles.size(); j++) {
+                if (user.ferrocarriles[j].nombre == nomFerrocarril) {
+                    return user.nombre;
+                }
+            }
+        }
+    }
+    return "except";
+}
+
+std::string PropietarioDePropiedad(Partida& partida, const std::string nomPropiedad) {
+    for (int i = 0; i < 4; i++) {
+        User& user = partida.usuarios[partida.ordenUsuarios[i]];
+        if (user.activo) {
+            for (int j = 0; j < user.propiedades.size(); j++) {
+                if (user.propiedades[j].nombre == nomPropiedad) {
+                    return user.nombre;
+                }
+            }
+        }
+    }
+    return "except";
+}
+
+// falta esta función
+// un monopolio es cuando un jugador tiene todas las casillas de un mismo color
+bool PropiedadEnMonopolio(Partida& partida, const std::string nomPropiedad) {
+
+}
+
+// adicionalmente hay que incorporarle el tema de las subastas
+void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
+    Casilla cas = ObtenerCasilla(partida.tablero, user.posicion + tiradaDeDados);
+    if (cas.tipo == "servicio") {
+        Servicio& servi = partida.tablero.servicios[cas.indiceTipo];
+        std::string propServi = PropietarioDeServicio(partida, servi.nombre);
+        // la casilla no tiene dueño
+        if (propServi == "except") {
+            std::cout << user.nombre << " tiene " << user.cash << "$." << " Desea comprar la casilla " << servi.nombre << " por el modico precio de " << servi.valor << " ? (si o no)" << std::endl;
+            std::string compCasilla;
+            std::cin >> compCasilla;
+            if (compCasilla == "si" || compCasilla == "SI" || compCasilla == "Si") {
+                if (user.cash >= servi.valor) {
+                    user = PerderDinero(user, servi.valor);
+                    user.servicios.push_back(servi);
+                    std::cout << user.nombre << " a comprado el servicio " << partida.tablero.servicios[cas.indiceTipo].nombre << "." << std::endl;
+                    return;
+                }
+                else {
+                    std::cout << user.nombre << " no tiene suficiente dinero y por ende se pasa a subastar." << std::endl;
+                }
+            }
+
+            // aqui va la subasta del servicio
+        }
+        else if (propServi != user.nombre) {
+            std::cout << user.nombre << " a caido en " << servi.nombre << ". Casilla la cual es propiedad de " << propServi << std::endl;
+            int precio = ValorRentaServicio(tiradaDeDados, NumeroDeServicios(partida, propServi));
+            partida.usuarios[propServi] = GanarDinero(partida.usuarios[propServi], precio);
+            user = PerderDinero(user, precio);
+            std::cout << user.nombre << " le ha pagado " << precio << " a " << propServi << ". " << user.nombre << " le quedan " << user.cash << "$" << std::endl;
+
+            // falta manejar lo de que el usuario pueda quedarse sin dinero o en negativo y por ende deva de subastar o hipotecar
+        }
+    }
+
+    else if (cas.tipo == "propiedad") {
+        Propiedad& prop = partida.tablero.propiedades[cas.indiceTipo];
+        std::string propProp = PropietarioDeFerrocarril(partida, prop.nombre);
+        // la casilla no tiene dueño
+        if (propProp == "except") {
+            std::cout << user.nombre << " tiene " << user.cash << "$." << " Desea comprar la casilla " << prop.nombre << " por el modico precio de " << prop.precio << " ? (si o no)" << std::endl;
+            std::string compCasilla;
+            std::cin >> compCasilla;
+            if (compCasilla == "si" || compCasilla == "SI" || compCasilla == "Si") {
+                if (user.cash >= prop.precio) {
+                    user = PerderDinero(user, prop.precio);
+                    user.propiedades.push_back(prop);
+                    std::cout << user.nombre << " a comprado la propiedad " << prop.nombre << "." << std::endl;
+                }
+                std::cout << user.nombre << " no tiene suficiente dinero y por ende se pasa a subastar." << std::endl;
+            }
+            // aqui va la subasta del servicio
+        }
+        else if (propProp != user.nombre) {
+            std::cout << user.nombre << " a caido en " << prop.nombre << ". Casilla la cual es propiedad de " << propProp << std::endl;
+            // falta lo del monopolio
+        }
+    }
+
+    else if (cas.tipo == "ferrocarril") {
+        Ferrocarril& ferro = partida.tablero.ferrocarriles[cas.indiceTipo];
+        std::string propFerro = PropietarioDeFerrocarril(partida, ferro.nombre);
+        // la casilla no tiene dueño
+        if (propFerro == "except") {
+            std::cout << user.nombre << " tiene " << user.cash << "$." << " Desea comprar la casilla " << ferro.nombre << " por el modico precio de " << ferro.valor << " ? (si o no)" << std::endl;
+            std::string compCasilla;
+            std::cin >> compCasilla;
+            if (compCasilla == "si" || compCasilla == "SI" || compCasilla == "Si") {
+                if (user.cash >= ferro.valor) {
+                    user = PerderDinero(user, ferro.valor);
+                    user.ferrocarriles.push_back(ferro);
+                    std::cout << user.nombre << " a comprado el ferrocarril " << ferro.nombre << "." << std::endl;
+                    return;
+                }
+                else {
+                    std::cout << user.nombre << " no tiene suficiente dinero y por ende se pasa a subastar." << std::endl;
+                }
+            }
+            // aqui va la subasta del ferrocarril
+        }
+        // la casilla tiene dueño
+        else {
+            std::cout << user.nombre << " a caido en " << ferro.nombre << ". Casilla la cual es propiedad de " << propFerro << std::endl;
+            int precio = ValorRentaFerrocarril(NumeroDeFerrocarriles(partida, propFerro));
+            partida.usuarios[propFerro] = GanarDinero(partida.usuarios[propFerro], precio);
+            user = PerderDinero(user, precio);
+            std::cout << user.nombre << " le ha pagado " << precio << " a " << propFerro << ". " << user.nombre << " le quedan " << user.cash << "$" << std::endl;
+
+            // falta manejar lo de que el usuario pueda quedarse sin dinero o en negativo y por ende deva de subastar o hipotecar
+        }
+        
+    }
+
+    // falta esto
+    else if (cas.tipo == "especial") {
+
+    }
 }

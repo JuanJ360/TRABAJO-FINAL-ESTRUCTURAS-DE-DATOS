@@ -88,7 +88,7 @@ Tablero CrearTablero() {
 }
 
 Casilla ObtenerCasilla(const Tablero& tablero, int pos) {
-    return tablero.casillas[pos];
+    return tablero.casillas[pos % tablero.casillas.size()];
 }
 
 void VaciarTablero(Tablero& tablero) {
@@ -98,3 +98,16 @@ void VaciarTablero(Tablero& tablero) {
     tablero.propiedades.clear();
     tablero.servicios.clear();
 }
+/*
+Ferrocarril ObtenerCasillaFerrocarril(const Tablero& tablero, int index) {
+    return tablero.ferrocarriles[index];
+}
+
+Servicio ObtenerCasillaServicio(const Tablero& tablero, int index) {
+    return tablero.servicios[index];
+}
+
+Propiedad ObtenerCasillaPropiedad(const Tablero& tablero, int index) {
+    return tablero.propiedades[index];
+}
+*/

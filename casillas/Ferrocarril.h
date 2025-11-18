@@ -15,6 +15,6 @@ struct Ferrocarril {
 
 // OPERACIONES
 Ferrocarril CrearFerrocarril(std::string, int, bool, int[4]);
-int ValorFerrocarril(int); // recibe el numero de ferrocarriles del dueño de la casilla y devuelve el valor a pagarle
+int ValorRentaFerrocarril(int); // recibe el numero de ferrocarriles del dueño de la casilla y devuelve el valor a pagarle
 
 #endif
