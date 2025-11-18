@@ -1,11 +1,11 @@
 [
     {
-        "nombre": "Compañía Eléctrica",
+        "nombre": "Companía Eléctrica",
         "valor": 150,
         "hipoteca": 75
     },
     {
-        "nombre": "Compañía de Agua",
+        "nombre": "Companía de Agua",
         "valor": 150,
         "hipoteca": 75
     }

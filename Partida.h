@@ -23,7 +23,7 @@ Partida IniciarPartida(std::vector<User>); // función para instanciar el estado
 Partida AvanzarPartida(Partida); // función para crear una nueva instancia de la partida avanzando el turno
 int TirarDado(); // función para tirar UN SOLO DADO
 bool PropiedadPerteneceAAlguien(Partida, std::string); // función que recibe el nombre de una propiedad y devuelve el verdadero o falso si este pertenece o no pertenece a algun jugador
-std::string DueñoDeLaPropiedad(Partida, std::string); // función que recibe el nombre de una propiedad y devuelve el nombre del propietario de dicha propiedad
+std::string DuenoDeLaPropiedad(Partida, std::string); // función que recibe el nombre de una propiedad y devuelve el nombre del propietario de dicha propiedad
 
 void ReglaTercerTurno(Carcel&, std::string); // la regla de los 3 turnos en la carcel
 Tablero AvanzarJugador(Tablero, User); // resibe el nombre del jugador

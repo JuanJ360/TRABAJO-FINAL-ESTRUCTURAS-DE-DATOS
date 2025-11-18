@@ -6,3 +6,4 @@ Casilla CrearCasilla(std::string _tipo, int _indiceTipo) {
     c.indiceTipo = _indiceTipo;
     return c;
 }
+
