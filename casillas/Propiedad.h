@@ -7,7 +7,7 @@
 struct Propiedad {
     std::string tipo;
     std::string subTipo;
-    std::string name;
+    std::string nombre;
     std::string color;
     int precio;
     bool hipotecada;

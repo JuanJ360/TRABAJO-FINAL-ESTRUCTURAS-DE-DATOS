@@ -4,16 +4,23 @@
 #include <string>
 #include <vector>
 #include "cartas/CartaSuerte.h"
+#include "./casillas/Propiedad.h" 
+#include "./casillas/Servicio.h"
+#include "./casillas/Ferrocarril.h"
 
 struct User {
-    std::string name;
+    std::string nombre;
     int cash;
     int posicion;
-    int contPares; // contador de numeros de pares
-    bool activo; // representa si el jugador puede seguir jugando o ya ha perdido
-    bool cartaSalirDeLaCarcel; // si tiene o no tiene la carta de salir de la carcel (solo existe una en todo el juego y esta puede ser vendida)
-};
+    int contPares;
+    bool activo;
+    bool cartaSalirDeLaCarcel;
 
+    //inventarios
+    std::vector<Servicio> servicios;
+    std::vector<Propiedad> propiedades;
+    std::vector<Ferrocarril> ferrocarriles;
+};
 
 User CrearUsuario(std::string);
 User CambiarNombreUsuario(User, std::string);

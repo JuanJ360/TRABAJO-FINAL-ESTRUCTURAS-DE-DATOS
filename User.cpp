@@ -1,20 +1,23 @@
 #include "User.h"
 
-// implementación de User.h
-
 User CrearUsuario(std::string _name) {
     User user;
-    user.name = _name;
-    user.cash = 0; // se inicializa el dinero del usuario en 0
-    user.posicion = 0; // se inicializa la suma de los tiros de los dados del usuario en 0
+    user.nombre = _name;
+    user.cash = 0;
+    user.posicion = 0;
     user.contPares = 0;
     user.activo = true;
     user.cartaSalirDeLaCarcel = false;
+
+    user.servicios = {};
+    user.propiedades = {};
+    user.ferrocarriles = {};
+
     return user;
 }
 
 User CambiarNombreUsuario(User user, std::string newName) {
-    user.name = newName;
+    user.nombre = newName;
     return user;
 }
 
@@ -28,7 +31,6 @@ User GanarDinero(User user, int dinero) {
     return user;
 }
 
-// creo que es mejor manejar el tema de las deudas y bancarrotas fuera de el usuario asi que esta implementación sera mas corta
 User PerderDinero(User user, int dinero) {
     user.cash -= dinero;
     return user;
@@ -50,15 +52,11 @@ User AumentarContPares(User user) {
 }
 
 User GanarCartaSalirDeLaCarcel(User user) {
-    if (!user.cartaSalirDeLaCarcel) {
-        user.cartaSalirDeLaCarcel = true;
-        return user; 
-    }
+    user.cartaSalirDeLaCarcel = true;
+    return user;
 }
 
 User GastarCartaSalirDeLaCarcel(User user) {
-    if (user.cartaSalirDeLaCarcel) {
-        user.cartaSalirDeLaCarcel = false;
-        return user; 
-    }
+    user.cartaSalirDeLaCarcel = false;
+    return user;
 }

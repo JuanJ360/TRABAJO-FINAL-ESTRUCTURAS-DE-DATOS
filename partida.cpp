@@ -17,7 +17,7 @@ Partida DecidirOrdenUsuarios(User u1, User u2, User u3, User u4) {
     std::vector<User> usuarios = {u1, u2, u3, u4};
 
     for (auto &u : usuarios) {
-        std::cout << "\nTurno para que " << u.name << " tire sus dados iniciales.\n";
+        std::cout << "\nTurno para que " << u.nombre << " tire sus dados iniciales.\n";
         std::cout << "Presiona ENTER para tirar...";
         std::cin.get();
 
@@ -38,11 +38,11 @@ Partida DecidirOrdenUsuarios(User u1, User u2, User u3, User u4) {
 
     // Pasar usuarios al map
     for (auto &u : usuarios)
-        p.usuarios[u.name] = {u, {}};
+        p.usuarios[u.nombre] = u;
 
     std::cout << "\nOrden final de jugadores:\n";
     for (auto &u : usuarios)
-        std::cout << " - " << u.name << " (" << u.posicion << ")\n";
+        std::cout << " - " << u.nombre << " (" << u.posicion << ")\n";
 
     return p;
 }
@@ -58,7 +58,7 @@ Partida IniciarPartida(std::vector<User> listaUsuarios) {
 
     // Agregar los usuarios al map
     for (auto &u : listaUsuarios)
-        p.usuarios[u.name] = {u, {}};
+        p.usuarios[u.nombre] = u;
 
     std::cout << "Partida iniciada.\n";
 
@@ -68,19 +68,12 @@ Partida IniciarPartida(std::vector<User> listaUsuarios) {
 bool PropiedadPerteneceAAlguien(Partida p, std::string nombrePropiedad) {
 
     for (const auto &par : p.usuarios) {
+        const User& jugador = par.second;
 
-        const auto &listaProps = par.second.second; 
-        // par.second = {User, vector<Propiedad>}
-        // par.second.second = vector<Propiedad>
-
-        // Buscar en las propiedades del jugador
-        for (const auto &prop : listaProps) {
-            if (prop.nombre == nombrePropiedad) {
-                return true; 
-            }
-        }
+        for (const auto &prop : jugador.propiedades)
+            if (prop.nombre == nombrePropiedad)
+                return true;
     }
-
 
     return false;
 }
@@ -88,39 +81,28 @@ bool PropiedadPerteneceAAlguien(Partida p, std::string nombrePropiedad) {
 std::string DuenoDeLaPropiedad(Partida p, std::string nombrePropiedad) {
 
     for (const auto &par : p.usuarios) {
+        const std::string& nombreJugador = par.first;
+        const User& jugador = par.second;
 
-        const std::string &nombreJugador = par.first;
-        const auto &listaProps = par.second.second;
-
-        for (const auto &prop : listaProps) {
-            if (prop.nombre == nombrePropiedad) {
-                return nombreJugador; // lo encontramos
-            }
-        }
+        for (const auto &prop : jugador.propiedades)
+            if (prop.nombre == nombrePropiedad)
+                return nombreJugador;
     }
 
-    // Si no la tiene nadie
     return "Nadie";
 }
 
 Partida GanarPropiedad(Partida p, User u, Propiedad propiedad) {
 
-    // acceso con el map
-    auto it = p.usuarios.find(u.name);
+    auto it = p.usuarios.find(u.nombre);
 
     if (it == p.usuarios.end()) {
-        std::cout << "Error: el jugador " << u.name << " no existe en la partida.\n";
+        std::cout << "Error: jugador no existe.\n";
         return p;
     }
 
-    // Agregar la propiedad al vector del jugador
-    it->second.second.push_back(propiedad);
-
-    // Actualizar el objeto User dentro de la partida
-    it->second.first = u;
-
-    std::cout << ">>> " << u.name << " ha ganado la propiedad: " 
-              << propiedad.name << "\n";
+    // añadir al vector de propiedades del jugador
+    it->second.propiedades.push_back(propiedad);
 
     return p;
 }
@@ -128,7 +110,7 @@ Partida GanarPropiedad(Partida p, User u, Propiedad propiedad) {
 
 User AvanzarJugador(User& jugador) {
 
-    std::cout << "\nTurno de " << jugador.name << ". Presiona ENTER para tirar los dados...";
+    std::cout << "\nTurno de " << jugador.nombre << ". Presiona ENTER para tirar los dados...";
     std::cin.get();
 
     int d1 = TirarDado();
@@ -143,28 +125,28 @@ User AvanzarJugador(User& jugador) {
 
     // Pasó por la salida
     if (posicionAnterior + suma >= 40) {
-        std::cout << ">>> " << jugador.name << " pasó por la salida y recibe $200.\n";
+        std::cout << ">>> " << jugador.nombre << " pasó por la salida y recibe $200.\n";
         jugador.cash += 200;
     }
 
-    std::cout << jugador.name << " ahora está en la casilla " << jugador.posicion << ".\n";
+    std::cout << jugador.nombre << " ahora está en la casilla " << jugador.posicion << ".\n";
 
     return jugador;
 }
 
-void ReglaTercerTurnoCarcel(Carcel& carcel, const std::string& name) {
+void ReglaTercerTurnoCarcel(Carcel& carcel, const std::string& nombre) {
     
     // Obtener referencia al par <User*, turnos>
-    auto& data = carcel.prisioneros[name];
+    auto& data = carcel.prisioneros[nombre];
     User* user = data.first;
     int turnos = data.second;
 
     // Si ya cumplió 3 turnos debe ser liberado
     if (turnos >= 3) {
-        std::cout << user->name << " ha cumplido 3 turnos en la cárcel. Queda libre.\n";
+        std::cout << user->nombre << " ha cumplido 3 turnos en la cárcel. Queda libre.\n";
 
         // Sale de la cárcel
-        LiberarDeLaCarcel(carcel, name);
+        LiberarDeLaCarcel(carcel, nombre);
 
         // el user sale a casilla #10
         user->posicion = 10;
@@ -175,8 +157,8 @@ void ReglaTercerTurnoCarcel(Carcel& carcel, const std::string& name) {
 }
 
 void ReglaTercerParFuera(Carcel& carcel, User& user) {
-    if (!EstaArrestado(carcel, user.name) && user.contPares >= 3) {
-        std::cout << user.name << " ha sacado 3 pares consecutivos. Va a la cárcel.\n";
+    if (!EstaArrestado(carcel, user.nombre) && user.contPares >= 3) {
+        std::cout << user.nombre << " ha sacado 3 pares consecutivos. Va a la cárcel.\n";
 
         user.posicion = 10;
         user.contPares = 0;
@@ -195,4 +177,15 @@ bool TresParesConsecutivos(User& user) {
     {
         return 0;
     }
+}
+int NumeroDePropiedades(const Partida& p, const std::string& jugador) {
+    return p.usuarios.at(jugador).propiedades.size();
+}
+
+int NumeroDeServicios(const Partida& p, const std::string& jugador) {
+    return p.usuarios.at(jugador).servicios.size();
+}
+
+int NumeroDeFerrocarriles(const Partida& p, const std::string& jugador) {
+    return p.usuarios.at(jugador).ferrocarriles.size();
 }

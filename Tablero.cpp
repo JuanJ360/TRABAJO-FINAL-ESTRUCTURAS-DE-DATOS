@@ -64,7 +64,7 @@ Tablero CrearTablero() {
         servicios.push_back(CrearServicio(serv[i]["nombre"], serv[i]["valor"], serv[i]["hipoteca"]));
     }
 
-    // crear casillas especailes
+    // crear casillas especiales
     std::vector<std::string> casillasEspeciales;
     for (i = 0; i < casEsp.size(); i++) {
         casillasEspeciales.push_back(casEsp[i]["nombre"]);
