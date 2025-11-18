@@ -25,8 +25,12 @@ struct Tablero {
 };
 
 Tablero CrearTablero();
-Casilla ObtenerCasilla(const Tablero&, int); 
+Casilla ObtenerCasilla(const Tablero&, int);
+/*
+Ferrocarril ObtenerCasillaFerrocarril(const Tablero&, int);
+Servicio ObtenerCasillaServicio(const Tablero&, int);
+Propiedad ObtenerCasillaPropiedad(const Tablero&, int);
 void VaciarTablero(Tablero&);
-void EjecutarCasilla(const Tablero&, User);
+*/
 
 #endif

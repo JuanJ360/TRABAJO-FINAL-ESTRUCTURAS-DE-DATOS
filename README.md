@@ -17,6 +17,6 @@ Aqui se va a guardar todo el trabajo en parejas de Juan José Bolivar y Juan And
 
 ## Tercera Semana
 
--Todo el fin de semana juan andrés y yo hemos estado en llamada revisando las cosas que podemos hacer, hemos dedicido que crearemos un TAD monopoly el cual tratará el juego principal, esto porque partida solo trata turno por turno, el TAD monopoly lo hará para toda la partida como tal, por lo que haremos será tener la función del retroceso dentro de este.
+- Todo el fin de semana juan andrés y yo hemos estado en llamada revisando las cosas que podemos hacer, hemos dedicido que crearemos un TAD monopoly el cual tratará el juego principal, esto porque partida solo trata turno por turno, el TAD monopoly lo hará para toda la partida como tal, por lo que haremos será tener la función del retroceso dentro de este.
 
--
+- Para el martes creamos las formas para poder generar las acciones que deben de suceder cuando un jugador cae en cierta casilla, como el comprar, vender, rentar, hipotecar propiedades, etc...
