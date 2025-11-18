@@ -1,178 +1,266 @@
 [
     {
-        "nombre": "Mediterranean Avenue",
+        "nombre": "Avenida Mediterránea",
         "subTipo": "propiedad",
         "color": "marrón",
-        "valor": 60,
+        "precio": 60,
         "hipotecada": false,
-        "alquiler": [2, 10, 30, 90, 160, 250]
+        "alquiler": [2, 10, 30, 90, 160, 250],
+        "valorCasa": 50,
+        "valorHotel": 50,
+        "valorHipotecar": 30,
+        "valorDesHipotecar": 33
     },
     {
-        "nombre": "Baltic Avenue",
+        "nombre": "Avenida Báltica",
         "subTipo": "propiedad",
         "color": "marrón",
-        "valor": 60,
+        "precio": 60,
         "hipotecada": false,
-        "alquiler": [4, 20, 60, 180, 320, 450]
+        "alquiler": [4, 20, 60, 180, 320, 450],
+        "valorCasa": 50,
+        "valorHotel": 50,
+        "valorHipotecar": 30,
+        "valorDesHipotecar": 33
     },
     {
-        "nombre": "Oriental Avenue",
+        "nombre": "Avenida Oriental",
         "subTipo": "propiedad",
         "color": "celeste",
-        "valor": 100,
+        "precio": 100,
         "hipotecada": false,
-        "alquiler": [6, 30, 90, 270, 400, 550]
+        "alquiler": [6, 30, 90, 270, 400, 550],
+        "valorCasa": 50,
+        "valorHotel": 50,
+        "valorHipotecar": 50,
+        "valorDesHipotecar": 55
     },
     {
-        "nombre": "Vermont Avenue",
+        "nombre": "Avenida Vermont",
         "subTipo": "propiedad",
         "color": "celeste",
-        "valor": 100,
+        "precio": 100,
         "hipotecada": false,
-        "alquiler": [6, 30, 90, 270, 400, 550]
+        "alquiler": [6, 30, 90, 270, 400, 550],
+        "valorCasa": 50,
+        "valorHotel": 50,
+        "valorHipotecar": 50,
+        "valorDesHipotecar": 55
     },
     {
-        "nombre": "Connecticut Avenue",
+        "nombre": "Avenida Connecticut",
         "subTipo": "propiedad",
         "color": "celeste",
-        "valor": 120,
+        "precio": 120,
         "hipotecada": false,
-        "alquiler": [8, 40, 100, 300, 450, 600]
+        "alquiler": [8, 40, 100, 300, 450, 600],
+        "valorCasa": 50,
+        "valorHotel": 50,
+        "valorHipotecar": 60,
+        "valorDesHipotecar": 66
     },
     {
-        "nombre": "St. Charles Place",
+        "nombre": "Plaza St. Charles",
         "subTipo": "propiedad",
         "color": "rosa",
-        "valor": 140,
+        "precio": 140,
         "hipotecada": false,
-        "alquiler": [10, 50, 150, 450, 625, 750]
+        "alquiler": [10, 50, 150, 450, 625, 750],
+        "valorCasa": 100,
+        "valorHotel": 100,
+        "valorHipotecar": 70,
+        "valorDesHipotecar": 77
     },
     {
-        "nombre": "States Avenue",
+        "nombre": "Avenida de los Estados",
         "subTipo": "propiedad",
         "color": "rosa",
-        "valor": 140,
+        "precio": 140,
         "hipotecada": false,
-        "alquiler": [10, 50, 150, 450, 625, 750]
+        "alquiler": [10, 50, 150, 450, 625, 750],
+        "valorCasa": 100,
+        "valorHotel": 100,
+        "valorHipotecar": 70,
+        "valorDesHipotecar": 77
     },
     {
-        "nombre": "Virginia Avenue",
+        "nombre": "Avenida Virginia",
         "subTipo": "propiedad",
         "color": "rosa",
-        "valor": 160,
+        "precio": 160,
         "hipotecada": false,
-        "alquiler": [12, 60, 180, 500, 700, 900]
+        "alquiler": [12, 60, 180, 500, 700, 900],
+        "valorCasa": 100,
+        "valorHotel": 100,
+        "valorHipotecar": 80,
+        "valorDesHipotecar": 88
     },
     {
-        "nombre": "St. James Place",
+        "nombre": "Plaza St. James",
         "subTipo": "propiedad",
         "color": "naranja",
-        "valor": 180,
+        "precio": 180,
         "hipotecada": false,
-        "alquiler": [14, 70, 200, 550, 750, 950]
+        "alquiler": [14, 70, 200, 550, 750, 950],
+        "valorCasa": 100,
+        "valorHotel": 100,
+        "valorHipotecar": 90,
+        "valorDesHipotecar": 99
     },
     {
-        "nombre": "Tennessee Avenue",
+        "nombre": "Avenida Tennessee",
         "subTipo": "propiedad",
         "color": "naranja",
-        "valor": 180,
+        "precio": 180,
         "hipotecada": false,
-        "alquiler": [14, 70, 200, 550, 750, 950]
+        "alquiler": [14, 70, 200, 550, 750, 950],
+        "valorCasa": 100,
+        "valorHotel": 100,
+        "valorHipotecar": 90,
+        "valorDesHipotecar": 99
     },
     {
-        "nombre": "New York Avenue",
+        "nombre": "Avenida Nueva York",
         "subTipo": "propiedad",
         "color": "naranja",
-        "valor": 200,
+        "precio": 200,
         "hipotecada": false,
-        "alquiler": [16, 80, 220, 600, 800, 1000]
+        "alquiler": [16, 80, 220, 600, 800, 1000],
+        "valorCasa": 100,
+        "valorHotel": 100,
+        "valorHipotecar": 100,
+        "valorDesHipotecar": 110
     },
     {
-        "nombre": "Kentucky Avenue",
+        "nombre": "Avenida Kentucky",
         "subTipo": "propiedad",
         "color": "rojo",
-        "valor": 220,
+        "precio": 220,
         "hipotecada": false,
-        "alquiler": [18, 90, 250, 700, 875, 1050]
+        "alquiler": [18, 90, 250, 700, 875, 1050],
+        "valorCasa": 150,
+        "valorHotel": 150,
+        "valorHipotecar": 110,
+        "valorDesHipotecar": 121
     },
     {
-        "nombre": "Indiana Avenue",
+        "nombre": "Avenida Indiana",
         "subTipo": "propiedad",
         "color": "rojo",
-        "valor": 220,
+        "precio": 220,
         "hipotecada": false,
-        "alquiler": [18, 90, 250, 700, 875, 1050]
+        "alquiler": [18, 90, 250, 700, 875, 1050],
+        "valorCasa": 150,
+        "valorHotel": 150,
+        "valorHipotecar": 110,
+        "valorDesHipotecar": 121
     },
     {
-        "nombre": "Illinois Avenue",
+        "nombre": "Avenida Illinois",
         "subTipo": "propiedad",
         "color": "rojo",
-        "valor": 240,
+        "precio": 240,
         "hipotecada": false,
-        "alquiler": [20, 100, 300, 750, 925, 1100]
+        "alquiler": [20, 100, 300, 750, 925, 1100],
+        "valorCasa": 150,
+        "valorHotel": 150,
+        "valorHipotecar": 120,
+        "valorDesHipotecar": 132
     },
     {
-        "nombre": "Atlantic Avenue",
+        "nombre": "Avenida Atlántica",
         "subTipo": "propiedad",
         "color": "amarillo",
-        "valor": 260,
+        "precio": 260,
         "hipotecada": false,
-        "alquiler": [22, 110, 330, 800, 975, 1150]
+        "alquiler": [22, 110, 330, 800, 975, 1150],
+        "valorCasa": 150,
+        "valorHotel": 150,
+        "valorHipotecar": 130,
+        "valorDesHipotecar": 143
     },
     {
-        "nombre": "Ventnor Avenue",
+        "nombre": "Avenida Ventnor",
         "subTipo": "propiedad",
         "color": "amarillo",
-        "valor": 260,
+        "precio": 260,
         "hipotecada": false,
-        "alquiler": [22, 110, 330, 800, 975, 1150]
+        "alquiler": [22, 110, 330, 800, 975, 1150],
+        "valorCasa": 150,
+        "valorHotel": 150,
+        "valorHipotecar": 130,
+        "valorDesHipotecar": 143
     },
     {
-        "nombre": "Marvin Gardens",
+        "nombre": "Jardines Marvin",
         "subTipo": "propiedad",
         "color": "amarillo",
-        "valor": 280,
+        "precio": 280,
         "hipotecada": false,
-        "alquiler": [24, 120, 360, 850, 1025, 1200]
+        "alquiler": [24, 120, 360, 850, 1025, 1200],
+        "valorCasa": 150,
+        "valorHotel": 150,
+        "valorHipotecar": 140,
+        "valorDesHipotecar": 154
     },
     {
-        "nombre": "Pacific Avenue",
+        "nombre": "Avenida Pacífico",
         "subTipo": "propiedad",
         "color": "verde",
-        "valor": 300,
+        "precio": 300,
         "hipotecada": false,
-        "alquiler": [26, 130, 390, 900, 1100, 1275]
+        "alquiler": [26, 130, 390, 900, 1100, 1275],
+        "valorCasa": 200,
+        "valorHotel": 200,
+        "valorHipotecar": 150,
+        "valorDesHipotecar": 165
     },
     {
-        "nombre": "North Carolina Avenue",
+        "nombre": "Avenida North Carolina",
         "subTipo": "propiedad",
         "color": "verde",
-        "valor": 300,
+        "precio": 300,
         "hipotecada": false,
-        "alquiler": [26, 130, 390, 900, 1100, 1275]
+        "alquiler": [26, 130, 390, 900, 1100, 1275],
+        "valorCasa": 200,
+        "valorHotel": 200,
+        "valorHipotecar": 150,
+        "valorDesHipotecar": 165
     },
     {
-        "nombre": "Pennsylvania Avenue",
+        "nombre": "Avenida Pensilvania",
         "subTipo": "propiedad",
         "color": "verde",
-        "valor": 320,
+        "precio": 320,
         "hipotecada": false,
-        "alquiler": [28, 150, 450, 1000, 1200, 1400]
+        "alquiler": [28, 150, 450, 1000, 1200, 1400],
+        "valorCasa": 200,
+        "valorHotel": 200,
+        "valorHipotecar": 160,
+        "valorDesHipotecar": 176
     },
     {
-        "nombre": "Park Place",
+        "nombre": "Plaza Park",
         "subTipo": "propiedad",
         "color": "azul",
-        "valor": 350,
+        "precio": 350,
         "hipotecada": false,
-        "alquiler": [35, 175, 500, 1100, 1300, 1500]
+        "alquiler": [35, 175, 500, 1100, 1300, 1500],
+        "valorCasa": 200,
+        "valorHotel": 200,
+        "valorHipotecar": 175,
+        "valorDesHipotecar": 193
     },
     {
-        "nombre": "Boardwalk",
+        "nombre": "Paseo Marítimo",
         "subTipo": "propiedad",
         "color": "azul",
-        "valor": 400,
+        "precio": 400,
         "hipotecada": false,
-        "alquiler": [50, 200, 600, 1400, 1700, 2000]
+        "alquiler": [50, 200, 600, 1400, 1700, 2000],
+        "valorCasa": 200,
+        "valorHotel": 200,
+        "valorHipotecar": 200,
+        "valorDesHipotecar": 220
     }
 ]
