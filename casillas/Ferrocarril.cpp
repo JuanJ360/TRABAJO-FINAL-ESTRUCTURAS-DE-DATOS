@@ -12,7 +12,7 @@ Ferrocarril CrearFerrocarril(std::string _nombre, int _valor, bool _hipotecada, 
     return p;
 }
 
-int ValorFerrocarril(int nFerro) {
+int ValorRentaFerrocarril(int nFerro) {
     if (nFerro < 1 || nFerro > 4) {
         throw std::invalid_argument("Ferrocarril: ValorFerrocarril: se espera que el numemro de ferrocarriles sea un numero entre 1 y 4");
     }

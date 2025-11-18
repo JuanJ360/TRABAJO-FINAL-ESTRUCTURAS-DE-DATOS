@@ -47,9 +47,10 @@ void ReglaTercerParFuera(Carcel&, std::string); // la misma regla de los 3 Pares
 
 User UsarCarta(User, CartaSuerte);
 
-std::string PropietarioDeServicio(Partida&, std::string);
-std::string PropietarioDeFerrocarril(Partida&, std::string);
-std::string PropietarioDePropiedad(Partida&, std::string);
+std::string PropietarioDeServicio(Partida&, const std::string);
+std::string PropietarioDeFerrocarril(Partida&, const std::string);
+std::string PropietarioDePropiedad(Partida&, const std::string);
+bool PropiedadEnMonopolio(Partida&, const std::string);
 void EjecutarCasilla(Partida&, User&, int);
 
 #endif
