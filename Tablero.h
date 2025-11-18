@@ -7,6 +7,7 @@
 #include <utility>
 #include <fstream>
 
+#include "User.h"
 #include "./casillas/Ferrocarril.h"
 #include "./casillas/Servicio.h"
 #include "./casillas/Propiedad.h"
@@ -26,5 +27,6 @@ struct Tablero {
 Tablero CrearTablero();
 Casilla ObtenerCasilla(const Tablero&, int); 
 void VaciarTablero(Tablero&);
+void EjecutarCasilla(const Tablero&, User);
 
 #endif

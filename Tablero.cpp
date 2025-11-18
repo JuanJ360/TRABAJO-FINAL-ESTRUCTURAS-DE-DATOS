@@ -45,7 +45,7 @@ Tablero CrearTablero() {
         for (j = 0; j < 6; j++) {
             tmp[j] = prop[i]["alquiler"][j];
         }
-        propiedades.push_back(CrearPropiedad(prop[i]["nombre"], prop[i]["subTipo"], prop[i]["color"], prop[i]["hipotecada"], prop[i]["valor"], tmp));
+        propiedades.push_back(CrearPropiedad(prop[i]["nombre"], prop[i]["subTipo"], prop[i]["color"], prop[i]["hipotecada"], prop[i]["precio"], tmp, prop[i]["valorCasa"], prop[i]["valorHotel"], prop[i]["valorHipotecar"], prop[i]["valorDesHipotecar"]));
     }
 
     // crear ferrocarriles
