@@ -1,42 +1,202 @@
 [
-  { "tipo": "especial", "posicion": 0 },
-  { "tipo": "propiedad", "posicion": 0 },
-  { "tipo": "especial", "posicion": 1 },
-  { "tipo": "propiedad", "posicion": 1 },
-  { "tipo": "especial", "posicion": 2 },
-  { "tipo": "ferrocarril", "posicion": 0 },
-  { "tipo": "propiedad", "posicion": 2 },
-  { "tipo": "especial", "posicion": 3 },
-  { "tipo": "propiedad", "posicion": 3 },
-  { "tipo": "propiedad", "posicion": 4 },
-  { "tipo": "especial", "posicion": 4 },
-  { "tipo": "propiedad", "posicion": 5 },
-  { "tipo": "servicio", "posicion": 0 },
-  { "tipo": "propiedad", "posicion": 6 },
-  { "tipo": "propiedad", "posicion": 7 },
-  { "tipo": "ferrocarril", "posicion": 1 },
-  { "tipo": "propiedad", "posicion": 8 },
-  { "tipo": "especial", "posicion": 5 },
-  { "tipo": "propiedad", "posicion": 9 },
-  { "tipo": "propiedad", "posicion": 10 },
-  { "tipo": "especial", "posicion": 6 },
-  { "tipo": "propiedad", "posicion": 11 },
-  { "tipo": "especial", "posicion": 7 },
-  { "tipo": "propiedad", "posicion": 12 },
-  { "tipo": "propiedad", "posicion": 13 },
-  { "tipo": "ferrocarril", "posicion": 2 },
-  { "tipo": "propiedad", "posicion": 14 },
-  { "tipo": "propiedad", "posicion": 15 },
-  { "tipo": "servicio", "posicion": 1 },
-  { "tipo": "propiedad", "posicion": 16 },
-  { "tipo": "especial", "posicion": 8 },
-  { "tipo": "propiedad", "posicion": 17 },
-  { "tipo": "propiedad", "posicion": 18 },
-  { "tipo": "especial", "posicion": 9 },
-  { "tipo": "propiedad", "posicion": 19 },
-  { "tipo": "ferrocarril", "posicion": 3 },
-  { "tipo": "especial", "posicion": 10 },
-  { "tipo": "propiedad", "posicion": 20 },
-  { "tipo": "especial", "posicion": 11 },
-  { "tipo": "propiedad", "posicion": 21 }
+  {
+    "tipo": "especial",
+    "posicion": 0,
+    "nombre": "Salida"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 0,
+    "nombre": "Avenida Mediterránea"
+  },
+  {
+    "tipo": "especial",
+    "posicion": 1,
+    "nombre": "Caja de Comunidad"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 1,
+    "nombre": "Avenida Báltica"
+  },
+  {
+    "tipo": "especial",
+    "posicion": 2,
+    "nombre": "Impuesto sobre la Renta"
+  },
+  {
+    "tipo": "ferrocarril",
+    "posicion": 0,
+    "nombre": "Ferrocarril Reading"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 2,
+    "nombre": "Avenida Oriental"
+  },
+  {
+    "tipo": "especial",
+    "posicion": 3,
+    "nombre": "Casilla de la Suerte"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 3,
+    "nombre": "Avenida Vermont"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 4,
+    "nombre": "Avenida Connecticut"
+  },
+  {
+    "tipo": "especial",
+    "posicion": 4,
+    "nombre": "Cárcel"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 5,
+    "nombre": "Plaza St. Charles"
+  },
+  {
+    "tipo": "servicio",
+    "posicion": 0,
+    "nombre": "Compañía Eléctrica"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 6,
+    "nombre": "Avenida de los Estados"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 7,
+    "nombre": "Avenida Virginia"
+  },
+  {
+    "tipo": "ferrocarril",
+    "posicion": 1,
+    "nombre": "Ferrocarril Pennsylvania"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 8,
+    "nombre": "Plaza St. James"
+  },
+  {
+    "tipo": "especial",
+    "posicion": 5,
+    "nombre": "Caja de Comunidad"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 9,
+    "nombre": "Avenida Tennessee"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 10,
+    "nombre": "Avenida Nueva York"
+  },
+  {
+    "tipo": "especial",
+    "posicion": 6,
+    "nombre": "Estacionamiento Gratuito"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 11,
+    "nombre": "Avenida Kentucky"
+  },
+  {
+    "tipo": "especial",
+    "posicion": 7,
+    "nombre": "Casilla de la Suerte"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 12,
+    "nombre": "Avenida Indiana"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 13,
+    "nombre": "Avenida Illinois"
+  },
+  {
+    "tipo": "ferrocarril",
+    "posicion": 2,
+    "nombre": "Ferrocarril B&O"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 14,
+    "nombre": "Avenida Atlántica"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 15,
+    "nombre": "Avenida Ventnor"
+  },
+  {
+    "tipo": "servicio",
+    "posicion": 1,
+    "nombre": "Compañía de Agua"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 16,
+    "nombre": "Jardines Marvin"
+  },
+  {
+    "tipo": "especial",
+    "posicion": 8,
+    "nombre": "Ir a la Cárcel"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 17,
+    "nombre": "Avenida Pacífico"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 18,
+    "nombre": "Avenida North Carolina"
+  },
+  {
+    "tipo": "especial",
+    "posicion": 9,
+    "nombre": "Caja de Comunidad"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 19,
+    "nombre": "Avenida Pensilvania"
+  },
+  {
+    "tipo": "ferrocarril",
+    "posicion": 3,
+    "nombre": "Línea Corta"
+  },
+  {
+    "tipo": "especial",
+    "posicion": 10,
+    "nombre": "Casilla de la Suerte"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 20,
+    "nombre": "Plaza Park"
+  },
+  {
+    "tipo": "especial",
+    "posicion": 11,
+    "nombre": "Impuesto de Lujo"
+  },
+  {
+    "tipo": "propiedad",
+    "posicion": 21,
+    "nombre": "Paseo Marítimo"
+  }
 ]

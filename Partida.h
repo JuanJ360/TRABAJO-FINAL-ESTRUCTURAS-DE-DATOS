@@ -29,9 +29,7 @@ int TirarDado(); // función para tirar UN SOLO DADO
 bool PropiedadPerteneceAAlguien(Partida, std::string); // función que recibe el nombre de una propiedad y devuelve el verdadero o falso si este pertenece o no pertenece a algun jugador
 std::string DuenoDeLaPropiedad(Partida, std::string); // función que recibe el nombre de una propiedad y devuelve el nombre del propietario de dicha propiedad
 
-Partida GanarPropiedad(Partida, User, Propiedad);
-Partida GanarFerrocarril(Partida, User, Ferrocarril);
-Partida GanarServicio(Partida, User, Servicio);
+void AsignarPropiedad(Partida&, const std::string&, const std::string&, int);
 
 int numeroDeFerrocarriles(const Partida&, const std::string&); // función para saber cuantas propiedades de ferrocarril tiene un jugador
 int NumeroDeServicios(const Partida&, const std::string&); // número de servicios que posee un jugador
@@ -52,5 +50,6 @@ std::string PropietarioDeFerrocarril(Partida&, const std::string);
 std::string PropietarioDePropiedad(Partida&, const std::string);
 bool PropiedadEnMonopolio(Partida&, const std::string);
 void EjecutarCasilla(Partida&, User&, int);
+void SubastarPropiedad(Partida&, User&, std::string, bool); // usuario que no participa de la subasta y el nombre de la propiedad
 
 #endif

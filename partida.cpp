@@ -323,7 +323,17 @@ bool PropiedadEnMonopolio(Partida& partida, const std::string nomPropiedad) {
 }
 
 
-// adicionalmente hay que incorporarle el tema de las subastas
+// Función auxiliar para validar si un jugador tiene suficiente dinero
+bool PuedeComprar(const User& user, int precio) {
+    return user.cash >= precio;
+}
+
+// Función auxiliar para normalizar entrada del usuario
+std::string NormalizarRespuesta(std::string entrada) {
+    std::transform(entrada.begin(), entrada.end(), entrada.begin(), ::tolower);
+    return entrada;
+}
+
 void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
 
     Casilla cas = ObtenerCasilla(partida.tablero, user.posicion);
@@ -341,16 +351,18 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
 
             std::string r;
             std::cin >> r;
+            r = NormalizarRespuesta(r);
 
-            if (r == "si" && user.cash >= servi.valor) {
+            if (r == "si" && PuedeComprar(user, servi.valor)) {
                 user = PerderDinero(user, servi.valor);
                 user.servicios.push_back(servi);
                 std::cout << user.nombre << " compró el servicio.\n";
+                partida.usuarios[user.nombre] = user;
                 return;
             }
 
             std::cout << "No tiene dinero o no quiso comprar. → SUBASTA\n";
-            // pendiente subasta
+            SubastarPropiedad(partida, user, cas.nombre, false);
             return;
         }
 
@@ -362,8 +374,8 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
             std::cout << user.nombre << " cayó en " << servi.nombre << " de " << propietario << ". Debe pagar " << renta << "$.\n";
 
             user = PerderDinero(user, renta);
-            partida.usuarios[propietario] =
-                GanarDinero(partida.usuarios[propietario], renta);
+            partida.usuarios[propietario] = GanarDinero(partida.usuarios[propietario], renta);
+            partida.usuarios[user.nombre] = user;
 
             return;
         }
@@ -382,15 +394,18 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
 
             std::string r;
             std::cin >> r;
+            r = NormalizarRespuesta(r);
 
-            if (r == "si" && user.cash >= prop.precio) {
+            if (r == "si" && PuedeComprar(user, prop.precio)) {
                 user = PerderDinero(user, prop.precio);
                 user.propiedades.push_back(prop);
                 std::cout << user.nombre << " compró la propiedad.\n";
+                partida.usuarios[user.nombre] = user;
                 return;
             }
 
             std::cout << "No tiene dinero o no quiso comprar. → SUBASTA\n";
+            SubastarPropiedad(partida, user, cas.nombre, false);
             return;
         }
 
@@ -404,8 +419,8 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
             std::cout << user.nombre << " cayó en " << prop.nombre << " de " << propietario << ". Debe pagar " << renta << "$.\n";
 
             user = PerderDinero(user, renta);
-            partida.usuarios[propietario] =
-                GanarDinero(partida.usuarios[propietario], renta);
+            partida.usuarios[propietario] = GanarDinero(partida.usuarios[propietario], renta);
+            partida.usuarios[user.nombre] = user;
 
             return;
         }
@@ -424,30 +439,32 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
 
             std::string r;
             std::cin >> r;
+            r = NormalizarRespuesta(r);
 
-            if (r == "si" && user.cash >= ferro.valor) {
+            if (r == "si" && PuedeComprar(user, ferro.valor)) {
                 user = PerderDinero(user, ferro.valor);
                 user.ferrocarriles.push_back(ferro);
                 std::cout << user.nombre << " compró el ferrocarril.\n";
+                partida.usuarios[user.nombre] = user;
                 return;
             }
 
             std::cout << "No tiene dinero o no quiso comprar. → SUBASTA\n";
+            SubastarPropiedad(partida, user, cas.nombre, false);
             return;
         }
 
         // CON DUEÑO
         if (propietario != user.nombre) {
 
-            int renta = ValorRentaFerrocarril(
-                NumeroDeFerrocarriles(partida, propietario));
+            int renta = ValorRentaFerrocarril(NumeroDeFerrocarriles(partida, propietario));
 
             std::cout << user.nombre << " cayó en " << ferro.nombre
                       << " de " << propietario << ". Debe pagar " << renta << "$.\n";
 
             user = PerderDinero(user, renta);
-            partida.usuarios[propietario] =
-                GanarDinero(partida.usuarios[propietario], renta);
+            partida.usuarios[propietario] = GanarDinero(partida.usuarios[propietario], renta);
+            partida.usuarios[user.nombre] = user;
 
             return;
         }
@@ -455,6 +472,112 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
 
     // ESPECIALES (Carcel, Suerte, Parking, Ir a la cárcel)
     else if (cas.tipo == "especial") {
-        // aquí metemos lo que quieras: ir a cárcel, suerte, impuestos, etc.
+        // EjecutarCasillaEspecial(partida, user, cas.nombre);
+    }
+}
+
+void SubastarPropiedad(Partida& partida, User& user, std::string nomCasilla, bool estaVendiendo) {
+    std::cout << "\n=== SUBASTA DE " << nomCasilla << " ===" << std::endl;
+    std::cout << "Los jugadores a participar de la subasta son:";
+    
+    std::vector<std::string> jugadoresSubasta;
+    for (auto& uName: partida.ordenUsuarios) {
+        if (uName != user.nombre) {
+            jugadoresSubasta.push_back(uName);
+            std::cout << " " << uName;
+        }
+    }
+    std::cout << ".\n" << std::endl;
+
+    // Si solo hay un jugador, él gana automáticamente por $1
+    if (jugadoresSubasta.size() == 1) {
+        std::cout << "Solo participa " << jugadoresSubasta[0] << ". Gana la subasta por $1.\n" << std::endl;
+        AsignarPropiedad(partida, jugadoresSubasta[0], nomCasilla, 1);
+        return;
+    }
+    
+    std::string mejorPostor;
+    int mejorPuesta = 0;
+    
+    std::string subastor;
+    bool primeraRonda = true;
+    
+    while (true) {
+        std::cout << "Ingrese el nombre del jugador que desea postar (o 'pasar' para retirarse): ";
+        std::cin >> subastor;
+        subastor = NormalizarRespuesta(subastor);
+
+        if (subastor == "pasar") {
+            if (mejorPostor.empty()) {
+                std::cout << "Debe haber al menos un postor. Intente de nuevo.\n";
+                continue;
+            }
+            break;
+        }
+
+        // Validar si el subastor está en la lista
+        bool esValido = false;
+        for (auto& jugador : jugadoresSubasta) {
+            if (jugador == subastor) {
+                esValido = true;
+                break;
+            }
+        }
+
+        if (!esValido) {
+            std::cout << "El jugador debe estar en la lista de participantes.\n";
+            continue;
+        }
+
+        std::cout << "Ingrese el precio que desea postar: $";
+        int precio;
+        std::cin >> precio;
+
+        if (precio <= mejorPuesta) {
+            std::cout << "La mejor puesta está en $" << mejorPuesta << " por " << mejorPostor 
+                      << ". Debe postar más de eso.\n";
+            continue;
+        }
+
+        mejorPostor = subastor;
+        mejorPuesta = precio;
+        std::cout << "Nueva mejor puesta: $" << mejorPuesta << " por " << mejorPostor << "\n\n";
+        primeraRonda = false;
+    }
+
+    if (!mejorPostor.empty()) {
+        AsignarPropiedad(partida, mejorPostor, nomCasilla, mejorPuesta);
+        
+        std::cout << "\n=== LA SUBASTA HA CULMINADO ===" << std::endl;
+        std::cout << "Ganador: " << mejorPostor << std::endl;
+        std::cout << "Precio final: $" << mejorPuesta << std::endl;
+        std::cout << "Propiedad: " << nomCasilla << "\n" << std::endl;
+
+        if (estaVendiendo) {
+            std::cout << user.nombre << " ha vendido la propiedad y recibe $" << mejorPuesta << ".\n" << std::endl;
+        }
+    }
+}
+
+void AsignarPropiedad(Partida& partida, const std::string& comprador, const std::string& nomCasilla, int precio) {
+    for (auto& c: partida.tablero.casillas) {
+        if (c.nombre == nomCasilla) {
+
+            if (c.tipo == "propiedad") {
+                partida.usuarios[comprador].propiedades.push_back(partida.tablero.propiedades[c.indiceTipo]);
+                partida.tablero.propiedades[c.indiceTipo].hipotecada = false;
+            }
+            else if (c.tipo == "ferrocarril") {
+                partida.usuarios[comprador].ferrocarriles.push_back(partida.tablero.ferrocarriles[c.indiceTipo]);
+                partida.tablero.ferrocarriles[c.indiceTipo].hipotecada = false;
+            }
+            else if (c.tipo == "servicio") {
+                partida.usuarios[comprador].servicios.push_back(partida.tablero.servicios[c.indiceTipo]);
+                partida.tablero.servicios[c.indiceTipo].hipoteca = false;
+            }
+
+            partida.usuarios[comprador] = PerderDinero(partida.usuarios[comprador], precio);
+            break;
+        }
     }
 }
