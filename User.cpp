@@ -3,7 +3,7 @@
 User CrearUsuario(std::string _name) {
     User user;
     user.nombre = _name;
-    user.cash = 1500;
+    user.cash = 1500; // cada uno inicia con 1500 dolares
     user.posicion = 0;
     user.contPares = 0;
     user.activo = true;
