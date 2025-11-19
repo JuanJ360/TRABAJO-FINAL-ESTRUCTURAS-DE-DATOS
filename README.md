@@ -190,28 +190,125 @@ Aqui se va a guardar todo el trabajo en parejas de Juan José Bolivar y Juan And
 
     - TirarDado: Null -> int
         - Pre: Nada.
-        - Pos: la función devuelve un numero entero randomizado de entre 1 y 6.
+        - Pos: la función devuelve un número entero randomizado entre `1` y `6`.
+
     - DecidirOrdenUsuarios: Partida -> void
-        - Pre: p.usuarios debe ser un map<string,User> con al menos 1 jugador
-            -para este caso, cada usuario debe tener un nombre, una posición y un contador de pares.
-        - Pos: Se define el orden de todos los users por la suma de los dados de cada uno.
-            - Como usamos el posicionamiento de cada uno para determinar quien saca mas, se limpia al final para que estos no inicien la partida en la posición del valor que sacaron de dados
-            - Como es void, modificamos p directamente.
+        - Pre: `p.usuarios` debe ser un `map<string, User>` con al menos un jugador.
+               Cada usuario debe tener un `nombre`, una `posición` y un `contador de pares` válido.
+        - Pos: Se define el orden de todos los usuarios según la suma de sus dados.
+               Como usamos la `posición` temporalmente para ordenar, se limpia al finalizar.
+               Como es `void`, se modifica `p` directamente.
+
     - IniciarPartida: vector<User> -> Partida
-        - Pre: - listaUsuarios tiene que tener por lo menos 1 elemento.
-               - crearTablero() y CrearCarcel() Tienen que existir.
-        - Pos: - crea una partida p con:
-                    - p.nTurno = 0
-                    - p.tablero = crearTablero()
-                    - p.carcel = crearCarcel()
-                    - usa el nombre de p.usuarios como clave.
-               - no modifica el vector original.
+        - Pre: `listaUsuarios` debe contener al menos un elemento.
+               Deben existir `crearTablero()` y `CrearCarcel()`.
+        - Pos: se crea una partida `p` con:
+                - `p.nTurno = 0`
+                - `p.tablero = crearTablero()`
+                - `p.carcel = CrearCarcel()`
+                - `p.usuarios` usando el `nombre` como clave.
+               No modifica `listaUsuarios` original.
+
     - PropiedadPerteneceAAlguien: Partida x string -> bool
-        - Pre: - p.usuario y nombrePropiedad deben existir y ser válidos.
-        - Pos: - True si algún usuario posee esta propiedad y false si nadie la tiene.
+        - Pre: `p.usuarios` y `nombrePropiedad` deben existir y ser válidos.
+        - Pos: `true` si algún usuario posee la propiedad, `false` si nadie la tiene.
+
     - DuenoDeLaPropiedad: Partida x string -> string
-        - Pre: - p.usuario y nombrePropiedad deben existir y ser válidos.
-        - Pos: - Devuelve el nombre del dueño y si no existe nadie retorna "nadie".
+        - Pre: `p.usuarios` y `nombrePropiedad` deben existir y ser válidos.
+        - Pos: retorna el nombre del dueño o `"nadie"` si no hay dueño.
+
+    - GanarPropiedad: Partida x User x Propiedad -> Partida
+        - Pre: `u.nombre` debe existir como clave en `p.usuarios`.
+        - Pos: la propiedad se agrega a `p.usuarios[u.nombre].propiedades`.
+               Se retorna la partida modificada.
+
+    - AvanzarJugador: Partida x User -> void
+        - Pre: `jugador.posicion` debe estar entre `0` y `39`.
+               `jugador` debe existir dentro de `p.usuarios`.
+               `p.tablero` debe ser válido.
+        - Pos: el jugador avanza según los dados.
+               Si pasa por la casilla de salida recibe dinero.
+               Si saca `3` pares o cae en `"Ir a la cárcel"`, se envía a la cárcel.
+               Se ejecuta la acción de la casilla correspondiente.
+               Se modifica tanto `p` como `jugador`.
+
+    - ReglaTercerTurnoCarcel: Carcel x string -> void
+        - Pre: `nombreJugador` debe existir dentro de `carcel.prisioneros`.
+        - Pos: se incrementa `turnosEnCarcel`.
+               Si llega a `3`, se libera al jugador y se ubica en la casilla `10`.
+
+    - ReglaTercerParFuera: Carcel x User -> void
+        - Pre: `user.contPares` debe tener el conteo correcto.
+        - Pos: si `user.contPares == 3`, el jugador va a la cárcel.
+               Si no, no ocurre nada.
+
+    - NumeroDePropiedades: Partida x string -> int
+        - Pre: `nombreJugador` debe existir en `p.usuarios`.
+        - Pos: retorna el tamaño de `p.usuarios[nombreJugador].propiedades`.
+
+    - NumeroDeServicios: Partida x string -> int
+        - Pre: `nombreJugador` debe existir en `p.usuarios`.
+        - Pos: retorna el tamaño de `p.usuarios[nombreJugador].servicios`.
+
+    - NumeroDeFerrocarriles: Partida x string -> int
+        - Pre: `nombreJugador` debe existir en `p.usuarios`.
+        - Pos: retorna el tamaño de `p.usuarios[nombreJugador].ferrocarriles`.
+
+    - PropietarioDeServicio: Partida x string -> string
+        - Pre: `nomServicio` debe existir en el tablero.
+        - Pos: retorna el nombre del dueño o `"except"` si nadie lo posee.
+
+    - PropietarioDeFerrocarril: Partida x string -> string
+        - Pre: `nomFerrocarril` válido.
+        - Pos: retorna el dueño o `"except"`.
+
+    - PropietarioDePropiedad: Partida x string -> string
+        - Pre: `nomPropiedad` válido.
+        - Pos: retorna el dueño o `"except"`.
+
+    - PropiedadEnMonopolio: Partida x string -> bool
+        - Pre: `nomPropiedad` debe existir en `p.tablero`.
+        - Pos: `true` si el jugador del turno tiene todas las propiedades
+               del mismo `color`. `false` si no.
+
+    - PuedeComprar: User x int -> bool
+        - Pre: `precio` debe ser mayor o igual a `0`.
+        - Pos: `true` si `user.cash >= precio`, de lo contrario `false`.
+
+    - NormalizarRespuesta: string -> string
+        - Pre: la entrada debe ser válida.
+        - Pos: retorna la cadena convertida a minúsculas.
+
+    - EjecutarCasilla: Partida x User x int -> void
+        - Pre: `user.posicion` entre `0` y `39`.
+               `p.tablero` correcto.
+        - Pos: ejecuta la acción correspondiente de la casilla:
+                compra, renta, subasta, o acción especial.
+               Modifica `p` y al `user`.
+
+    - EjecutarCasillaEspecial: Partida x User x string -> void
+        - Pre: `nombreCasilla` debe ser una casilla especial válida.
+        - Pos: aplica el efecto: pagar impuestos, moverse, cárcel, etc.
+               Modifica la partida y/o al usuario.
+
+    - EjecutarArcaComunal: Partida x User -> void
+        - Pre: debe existir al menos una carta en `p.arcaComunal`.
+        - Pos: aplica el efecto de la carta: dinero, movimiento, cárcel, etc.
+               Modifica al jugador y/o a la partida.
+
+    - SubastarPropiedad: Partida x string x string -> void
+        - Pre: `nomCasilla` válida dentro del tablero.
+               Deben existir al menos 2 jugadores.
+        - Pos: se realiza una subasta.
+               El ganador paga y recibe la propiedad.
+               Se modifica `p`.
+
+    - AsignarPropiedad: Partida x string x string -> void
+        - Pre: `nomCasilla` válida.
+               `comprador` existe en `p.usuarios`.
+        - Pos: la propiedad se agrega a `p.usuarios[comprador]`.
+               Se descuenta el costo correspondiente.
+
 
 - **Monopoly**:
 
