@@ -324,25 +324,20 @@ bool PropiedadEnMonopolio(Partida& partida, const std::string nomPropiedad) {
 
 
 // adicionalmente hay que incorporarle el tema de las subastas
-
 void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
 
     Casilla cas = ObtenerCasilla(partida.tablero, user.posicion);
 
-    // ===================================================
-    // SERVICIOS
-    // ===================================================
+    // Servicios
     if (cas.tipo == "servicio") {
 
         Servicio& servi = partida.tablero.servicios[cas.indiceTipo];
         std::string propietario = PropietarioDeServicio(partida, servi.nombre);
 
-        // SIN DUEÑO → comprar
+        // sin dueño para comprar
         if (propietario == "except") {
 
-            std::cout << user.nombre << " tiene " << user.cash
-                      << "$. Desea comprar " << servi.nombre
-                      << " por " << servi.valor << "? (si/no)\n";
+            std::cout << user.nombre << " tiene " << user.cash << "$. Desea comprar " << servi.nombre << " por " << servi.valor << "? (si/no)\n";
 
             std::string r;
             std::cin >> r;
@@ -362,11 +357,9 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
         // CON DUEÑO Y NO ES EL MISMO
         if (propietario != user.nombre) {
 
-            int renta = ValorRentaServicio(tiradaDeDados,
-                                           NumeroDeServicios(partida, propietario));
+            int renta = ValorRentaServicio(tiradaDeDados, NumeroDeServicios(partida, propietario));
 
-            std::cout << user.nombre << " cayó en " << servi.nombre
-                      << " de " << propietario << ". Debe pagar " << renta << "$.\n";
+            std::cout << user.nombre << " cayó en " << servi.nombre << " de " << propietario << ". Debe pagar " << renta << "$.\n";
 
             user = PerderDinero(user, renta);
             partida.usuarios[propietario] =
@@ -376,22 +369,16 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
         }
     }
 
-    // ===================================================
     // PROPIEDADES
-    // ===================================================
     else if (cas.tipo == "propiedad") {
 
         Propiedad& prop = partida.tablero.propiedades[cas.indiceTipo];
-
-        // CORREGIDO: función correcta
         std::string propietario = PropietarioDePropiedad(partida, prop.nombre);
 
         // SIN DUEÑO
         if (propietario == "except") {
 
-            std::cout << user.nombre << " tiene " << user.cash
-                      << "$. Desea comprar " << prop.nombre
-                      << " por " << prop.precio << "? (si/no)\n";
+            std::cout << user.nombre << " tiene " << user.cash << "$. Desea comprar " << prop.nombre << " por " << prop.precio << "? (si/no)\n";
 
             std::string r;
             std::cin >> r;
@@ -407,15 +394,14 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
             return;
         }
 
-        // CON DUEÑO — hay que pagar renta
+        // con dueño entonces hay que pagar renta
         if (propietario != user.nombre) {
 
             bool monopolio = PropiedadEnMonopolio(partida, prop.nombre);
 
             int renta = ValorRentaPropiedad(prop, monopolio);
 
-            std::cout << user.nombre << " cayó en " << prop.nombre
-                      << " de " << propietario << ". Debe pagar " << renta << "$.\n";
+            std::cout << user.nombre << " cayó en " << prop.nombre << " de " << propietario << ". Debe pagar " << renta << "$.\n";
 
             user = PerderDinero(user, renta);
             partida.usuarios[propietario] =
@@ -425,9 +411,7 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
         }
     }
 
-    // ===================================================
     // FERROCARRILES
-    // ===================================================
     else if (cas.tipo == "ferrocarril") {
 
         Ferrocarril& ferro = partida.tablero.ferrocarriles[cas.indiceTipo];
@@ -436,9 +420,7 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
         // SIN DUEÑO
         if (propietario == "except") {
 
-            std::cout << user.nombre << " tiene " << user.cash
-                      << "$. Desea comprar " << ferro.nombre
-                      << " por " << ferro.valor << "? (si/no)\n";
+            std::cout << user.nombre << " tiene " << user.cash << "$. Desea comprar " << ferro.nombre << " por " << ferro.valor << "? (si/no)\n";
 
             std::string r;
             std::cin >> r;
@@ -471,9 +453,7 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
         }
     }
 
-    // ===================================================
     // ESPECIALES (Carcel, Suerte, Parking, Ir a la cárcel)
-    // ===================================================
     else if (cas.tipo == "especial") {
         // aquí metemos lo que quieras: ir a cárcel, suerte, impuestos, etc.
     }
