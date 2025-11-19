@@ -133,8 +133,23 @@ Partida GanarPropiedad(Partida p, User u, Propiedad propiedad) {
     return p;
 }
 
+void AvanzarJugador(Partida& p, User& jugador) {
 
-User AvanzarJugador(User& jugador) {
+        // Verificar si está en la cárcel
+    if (EstaArrestado(p.carcel, jugador.nombre)) {
+
+        // Aplicar regla de 3 turnos
+        ReglaTercerTurnoCarcel(p.carcel, jugador.nombre);
+
+        // Si salió, continua el turno normal
+        if (!EstaArrestado(p.carcel, jugador.nombre)) {
+            std::cout << jugador.nombre << " ha quedado libre. Continúa su turno.\n";
+        } else {
+            std::cout << jugador.nombre << " sigue en la cárcel.\n";
+            return;  // NO juega este turno
+        }
+    }
+
 
     std::cout << "\nTurno de " << jugador.nombre << ". Presiona ENTER para tirar los dados...";
     std::cin.get();
@@ -143,13 +158,27 @@ User AvanzarJugador(User& jugador) {
     int d2 = TirarDado();
     int suma = d1 + d2;
 
-    std::cout << "  Dados: " << d1 << " + " << d2 << " = " << suma << "\n";
+    std::cout << " Dados: " << d1 << " + " << d2 << " = " << suma << "\n";
 
-    // Avanzar posición
+    //Contabilizar par
+    if (d1 == d2)
+        jugador.contPares++;
+    else
+        jugador.contPares = 0;
+
+    //Llamar a la regla externa
+    ReglaTercerParFuera(p.carcel, jugador);
+
+    // Si quedó arrestado, no sigue el turno
+    if (EstaArrestado(p.carcel, jugador.nombre)) {
+        std::cout << jugador.nombre << " fue enviado a la cárcel.\n";
+        return;
+    }
+
+    //  Mover al jugador
     int posicionAnterior = jugador.posicion;
-    jugador.posicion = (jugador.posicion + suma) % 40;   // tablero de 40 casillas
+    jugador.posicion = (posicionAnterior + suma) % 40;
 
-    // Pasó por la salida
     if (posicionAnterior + suma >= 40) {
         std::cout << ">>> " << jugador.nombre << " pasó por la salida y recibe $200.\n";
         jugador.cash += 200;
@@ -157,27 +186,33 @@ User AvanzarJugador(User& jugador) {
 
     std::cout << jugador.nombre << " ahora está en la casilla " << jugador.posicion << ".\n";
 
-    return jugador;
+    //Si sacó par, vuelve a tirar
+    if (d1 == d2)
+        AvanzarJugador(p, jugador);
 }
 
 void ReglaTercerTurnoCarcel(Carcel& carcel, const std::string& nombre) {
-    
+
     // Obtener referencia al par <User*, turnos>
     auto& data = carcel.prisioneros[nombre];
     User* user = data.first;
-    int turnos = data.second;
+    int& turnos = data.second;
+
+    // Incrementar turnos
+    turnos++;
+
+    std::cout << user->nombre << " lleva " << turnos << " turnos en la cárcel.\n";
 
     // Si ya cumplió 3 turnos debe ser liberado
     if (turnos >= 3) {
         std::cout << user->nombre << " ha cumplido 3 turnos en la cárcel. Queda libre.\n";
 
-        // Sale de la cárcel
         LiberarDeLaCarcel(carcel, nombre);
 
-        // el user sale a casilla #10
+        // Sale a la casilla 10
         user->posicion = 10;
 
-        // Resetear pares 
+        // Resetear pares
         user->contPares = 0;
     }
 }

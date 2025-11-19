@@ -124,7 +124,7 @@ void Monopoly::jugarTurno() {
     std::cout << "\n===== TURNO DE " << nombreJugador << " =====\n";
 
     // Avanzar al jugador (tirar dados y mover)
-    AvanzarJugador(jugador);
+    AvanzarJugador(partidaActual, jugador);
 
     // Pasar al siguiente turno
     partidaActual.nTurno = (partidaActual.nTurno + 1) % partidaActual.ordenUsuarios.size();
