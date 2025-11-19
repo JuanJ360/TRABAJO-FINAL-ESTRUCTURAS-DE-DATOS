@@ -40,7 +40,7 @@ int NumeroDePropiedades(const Partida&, const std::string&); // número de propi
 Partida SubastarPropiedad(Partida, std::string, std::string); // nombre de la propiedad y a quien se subasta para darle dicha propiedad
 
 void AvanzarJugador(Partida& p, User& jugador); // recibe el nombre del jugador
-bool TresParesConsecutivos(User&); // para comprobar después de cada tirada de los dados del jugador si este ha sacado 3 pares consecutivos
+
 
 void ReglaTercerTurnoCarcel(Carcel&, const std::string&); // la regla de los 3 turnos en la carcel
 void ReglaTercerParFuera(Carcel&, User&);// la misma regla de los 3 Pares pero cuando estamos afuera, para entrar a la carcel
