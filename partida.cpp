@@ -79,6 +79,8 @@ Partida IniciarPartida(std::vector<User> listaUsuarios) {
     p.nTurno = 0;
     p.tablero = CrearTablero();
     p.carcel = CrearCarcel();
+    p.arcaComunal = IniciarArcaComunal();
+
 
     // Agregar los usuarios al map
     for (auto &u : listaUsuarios) {
@@ -590,14 +592,13 @@ void EjecutarCasillaEspecial(Partida& partida, User& user, const std::string& no
     }
 
     if (nombre == "Caja de Comunidad") {
-        std::cout << user.nombre << " cayó en CAJA DE LA COMUNIDAD (por implementar).\n";
+        EjecutarArcaComunal(partida, user);
         return;
     }
 
     if (nombre == "Casilla de la Suerte") {
-        std::cout << user.nombre << " cayó en SUERTE (por implementar).\n";
         return;
-    }
+}
 
     if (nombre == "Impuesto sobre la Renta") {
         std::cout << user.nombre << " paga Impuesto sobre la renta ($200).\n";
@@ -629,4 +630,72 @@ void EjecutarCasillaEspecial(Partida& partida, User& user, const std::string& no
     }
 
     std::cout << "Casilla especial no reconocida: " << nombre << "\n";
+}
+
+void EjecutarArcaComunal(Partida& p, User& user) {
+
+    CartaArcaComunal carta = SacarCartaArcaComunal(p.arcaComunal);
+
+    std::cout << user.nombre << " sacó una carta de CAJA DE COMUNIDAD:\n";
+    std::cout << " -> " << carta.mensaje << "\n";
+
+
+    if (carta.tipo == "Ganancia") {
+        // Buscar número al final del mensaje
+        int valor = std::stoi(carta.mensaje.substr(carta.mensaje.find("$") + 1));
+        user.cash += valor;
+        std::cout << user.nombre << " recibe $" << valor << ".\n";
+        return;
+    }
+
+    if (carta.tipo == "Gasto") {
+        int valor = std::stoi(carta.mensaje.substr(carta.mensaje.find("$") + 1));
+        user.cash -= valor;
+        std::cout << user.nombre << " paga $" << valor << ".\n";
+        return;
+    }
+
+    if (carta.tipo == "Movimiento") {
+
+        // Adelántese a salida
+        if (carta.nombre == "Adelántese a la Salida") {
+            user.posicion = 0;
+            user.cash += 200;
+            std::cout << user.nombre << " avanza a SALIDA y cobra $200.\n";
+            return;
+        }
+
+        // Ir a la cárcel
+        if (carta.nombre == "Ir a la Cárcel") {
+            std::cout << user.nombre << " va DIRECTAMENTE a la CÁRCEL.\n";
+            user.posicion = 10;
+            Arrestar(p.carcel, &user);
+            return;
+        }
+    }
+
+    if (carta.tipo == "Especial") {
+
+        if (carta.nombre == "Salga Gratis de la Cárcel") {
+            user.cartaSalirDeLaCarcel = true;
+            std::cout << user.nombre << " guarda una carta de 'Salir Gratis de la Cárcel'.\n";
+            return;
+        }
+    }
+
+    // Ganancias para todos los jugadores 
+    if (carta.tipo == "Gasto (Gral)") {
+
+        // Se extrae el número desde el mensaje
+        int valor = std::stoi(carta.mensaje.substr(carta.mensaje.find("$") + 1));
+
+        user.cash -= valor;
+
+        std::cout << user.nombre << " paga $" << valor << " por reparaciones en la calle.\n";
+
+        return;
+    }
+
+
+    std::cout << "(Carta no implementada, tipo desconocido: " << carta.tipo << ")\n";
 }

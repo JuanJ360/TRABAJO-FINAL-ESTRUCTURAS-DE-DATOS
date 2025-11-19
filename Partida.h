@@ -6,6 +6,10 @@
 #include "Banco.h"
 #include "./casillas/Carcel.h"
 #include "./casillas/Propiedad.h"
+#include "cartas/CartaArcaComunal.h"
+#include "ArcaComunal.h"
+#include "casillas/Carcel.h"
+
 
 // estructura que representa una instancia de una partida de Monopoly
 struct Partida {
@@ -17,6 +21,7 @@ struct Partida {
     Carcel carcel;
     Tablero tablero;
     Banco banco;
+    ArcaComunal arcaComunal;
 };
 
 // OPERACIONES
@@ -37,7 +42,7 @@ int NumeroDePropiedades(const Partida&, const std::string&); // número de propi
 
 Partida SubastarPropiedad(Partida, std::string, std::string); // nombre de la propiedad y a quien se subasta para darle dicha propiedad
 
-void AvanzarJugador(Partida& p, User& jugador); // recibe el nombre del jugador
+void AvanzarJugador(Partida& , User& ); // recibe el nombre del jugador
 
 
 void ReglaTercerTurnoCarcel(Carcel&, const std::string&); // la regla de los 3 turnos en la carcel
@@ -51,6 +56,7 @@ std::string PropietarioDePropiedad(Partida&, const std::string);
 bool PropiedadEnMonopolio(Partida&, const std::string);
 void EjecutarCasilla(Partida&, User&, int);
 void EjecutarCasillaEspecial(Partida&, User&, const std::string&);
+void EjecutarArcaComunal(Partida&, User& );
 void SubastarPropiedad(Partida&, User&, std::string, bool); // usuario que no participa de la subasta y el nombre de la propiedad
 
 #endif

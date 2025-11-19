@@ -57,7 +57,7 @@
     {
         "tipo": "Gasto (Gral)",
         "nombre": "Reparaciones en la calle",
-        "mensaje": "Pague una evaluación especial por cada casa $40. Pague por cada hotel $115."
+        "mensaje": "Se le Cobra al jugador $25 por reparaciones en la calle. Pague al banco $25."
     },
     {
         "tipo": "Movimiento",
