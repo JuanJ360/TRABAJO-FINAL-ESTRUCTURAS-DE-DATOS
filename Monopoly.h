@@ -7,12 +7,12 @@
 #include "User.h"
 
 struct Monopoly {
-    // --- Estado del juego ---
+    // atributos
     bool juegoIniciado = false;
     Partida partidaActual;
     std::stack<Partida> partidas;  // Historial de partidas para deshacer
 
-    // --- Funcionalidades del menú ---
+    // funciones
     void mostrarMenuPrincipal(); 
     void iniciarNuevaPartida();  
     void mostrarEstadoPartida(); 
@@ -21,11 +21,9 @@ struct Monopoly {
     void GuardarEstadoPartida();
     void VerHistorial();
 
-    // --- Menú de propiedades ---
     void MenuPropiedades(); // muestra el menú para el jugador del turno actual
     void MostrarPropiedadesJugador(const std::string& jugador);
 
-    // Operaciones de propiedad
     bool ComprarCasa(const std::string& jugador, const std::string& nombreProp);
     bool ComprarHotel(const std::string& jugador, const std::string& nombreProp);
     bool VenderCasa(const std::string& jugador, const std::string& nombreProp);

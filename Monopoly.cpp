@@ -296,7 +296,6 @@ bool Monopoly::PuedeConstruirHotel(Partida& p, const std::string& jugador, Propi
     return true;
 }
 
-// --- MOSTRAR PROPIEDADES ---
 
 void Monopoly::MostrarPropiedadesJugador(const std::string& jugador) {
     if (!juegoIniciado) { std::cout << "No hay partida iniciada.\n"; return; }
@@ -321,7 +320,6 @@ void Monopoly::MostrarPropiedadesJugador(const std::string& jugador) {
     }
 }
 
-// --- OPERACIONES ---
 
 bool Monopoly::ComprarCasa(const std::string& jugador, const std::string& nombreProp) {
     if (!juegoIniciado) { std::cout<<"No hay partida iniciada.\n"; return false; }
@@ -421,14 +419,20 @@ bool Monopoly::VenderHotel(const std::string& jugador, const std::string& nombre
 }
 
 bool Monopoly::HipotecarPropiedad(const std::string& jugador, const std::string& nombreProp) {
-    if (!juegoIniciado) { std::cout<<"No hay partida iniciada.\n"; return false; }
+    if (!juegoIniciado) { 
+        std::cout<<"No hay partida iniciada.\n"; return false;
+    }
     GuardarEstadoPartida();
 
     User& u = partidaActual.usuarios[jugador];
     for (auto& p : u.propiedades) {
         if (p.nombre == nombreProp) {
-            if (p.hipotecada) { std::cout << "Ya está hipotecada.\n"; return false; }
-            if (p.numCasas > 0 || p.numHoteles > 0) { std::cout << "Quita casas / hotel antes de hipotecar.\n"; return false; }
+            if (p.hipotecada) { 
+                std::cout << "Ya está hipotecada.\n"; return false;
+            }
+            if (p.numCasas > 0 || p.numHoteles > 0) { 
+                std::cout << "Quita casas / hotel antes de hipotecar.\n"; return false;
+            }
             p.hipotecada = true;
             u.cash += p.valorHipotecar;
             std::cout << "Propiedad hipotecada por $" << p.valorHipotecar << ".\n";

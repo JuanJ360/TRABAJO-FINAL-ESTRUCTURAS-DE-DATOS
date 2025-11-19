@@ -33,8 +33,6 @@ Cada casilla se define mediante tres atributos esenciales: un nombre que la iden
 Clasificación por Tipo:
 El atributo de tipo permite agrupar las casillas según su función en el juego. Esto facilita el procesamiento diferenciado de eventos: las propiedades se manejan de manera distinta a las casillas de cartas, y estas a su vez difieren de las casillas especiales como la cárcel o el parqueadero. El índice de tipo complementa esta clasificación, permitiendo identificar de manera única cada casilla dentro de su categoría específica.
 
-Continúo con la documentación:
-
 Sistema de Ferrocarriles
 Los ferrocarriles representan un tipo especial de propiedad en Monopoly que sigue reglas particulares de valoración y renta, diferentes a las propiedades inmobiliarias convencionales.
 Estructura del Ferrocarril:

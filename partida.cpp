@@ -186,7 +186,7 @@ void AvanzarJugador(Partida& p, User& jugador) {
         std::cout << ">>> " << jugador.nombre << " pasó por la salida y recibe $200.\n";
         jugador.cash += 200;
     }
-
+   
     std::cout << jugador.nombre << " ahora está en la casilla " << jugador.posicion << ".\n";
 
     EjecutarCasilla(p,jugador,suma);
