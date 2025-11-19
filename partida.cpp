@@ -80,6 +80,7 @@ Partida IniciarPartida(std::vector<User> listaUsuarios) {
     p.tablero = CrearTablero();
     p.carcel = CrearCarcel();
     p.arcaComunal = IniciarArcaComunal();
+    p.suerte = IniciarSuerte();
 
 
     // Agregar los usuarios al map
@@ -597,6 +598,7 @@ void EjecutarCasillaEspecial(Partida& partida, User& user, const std::string& no
     }
 
     if (nombre == "Casilla de la Suerte") {
+        EjecutarCartaSuerte(partida,user);
         return;
 }
 
@@ -698,4 +700,132 @@ void EjecutarArcaComunal(Partida& p, User& user) {
 
 
     std::cout << "(Carta no implementada, tipo desconocido: " << carta.tipo << ")\n";
+}
+
+void EjecutarCartaSuerte(Partida& p, User& user) 
+{
+    CartaSuerte carta = SacarCartaSuerte(p.suerte);
+
+    std::cout << "\n[SUERTE] " << carta.mensaje << "\n";
+
+    // ======= COBRAR =======
+    if (carta.tipo == "cobrar") {
+
+        if (carta.nombre == "avanza a la salida") {
+            user.posicion = 0;
+            user.cash += 200;
+        }
+        else if (carta.nombre == "dividendo bancario") {
+            user.cash += 50;
+        }
+        else if (carta.nombre == "préstamo y edificio") {
+            user.cash += 150;
+        }
+    }
+
+    // ======= MOVIMIENTO =======
+    else if (carta.tipo == "movimiento") {
+
+        int posVieja = user.posicion;
+
+        if (carta.nombre == "avanza a illinois") {
+            user.posicion = 24; // Illinois Avenue
+        }
+        else if (carta.nombre == "avanza a st charles") {
+            user.posicion = 11; // St. Charles
+        }
+        else if (carta.nombre == "avanza a paseo marítimo") {
+            user.posicion = 39; // Boardwalk
+        }
+        else if (carta.nombre == "viaje a reading") {
+            user.posicion = 5; // Reading Railroad
+        }
+        else if (carta.nombre == "retrocede 3") {
+            user.posicion = (user.posicion - 3 + 40) % 40;
+        }
+
+        if (user.posicion < posVieja)
+            user.cash += 200; // pasó por salida
+    }
+
+    // ======= MOVIMIENTO ESPECIAL (versión simplificada) =======
+    else if (carta.tipo == "movimiento especial") {
+
+        if (carta.nombre == "ferrocarril cercano 1" ||
+            carta.nombre == "ferrocarril cercano 2")
+        {
+            // simplemente avanza al siguiente ferrocarril
+            int posicion = user.posicion;
+
+            if (posicion < 5) user.posicion = 5;
+            else if (posicion < 15) user.posicion = 15;
+            else if (posicion < 25) user.posicion = 25;
+            else if (posicion < 35) user.posicion = 35;
+            else {
+                // pasó por salida
+                user.posicion = 5;
+                user.cash += 200;
+            }
+        }
+
+        else if (carta.nombre == "utilidad cercana") {
+            int pos = user.posicion;
+
+            if (pos < 12) user.posicion = 12;
+            else if (pos < 28) user.posicion = 28;
+            else {
+                user.posicion = 12;
+                user.cash += 200;
+            }
+        }
+    }
+
+    // ======= PAGAR A JUGADORES =======
+    else if (carta.tipo == "pagar a jugadores") {
+
+        if (carta.nombre == "presidente del consejo") {
+            for (auto& par : p.usuarios) {
+                User& u = par.second;
+
+                // saltar al jugador que sacó la carta
+                if (u.nombre == user.nombre) 
+                    continue;
+
+                // cobra 50 del jugador actual
+                user.cash -= 50;
+                u.cash += 50;
+            }
+
+            std::cout << user.nombre << " paga $50 a cada jugador.\n";
+        }
+    }
+
+    // ======= PAGAR AL BANCO =======
+    else if (carta.tipo == "pagar al banco") {
+
+        if (carta.nombre == "impuestos a los pobres")
+            user.cash -= 15;
+    }
+
+    // ======= REPARACIONES (pero no tienes casas/hoteles) =======
+    else if (carta.tipo == "reparaciones") {
+
+        // versión compatible: ignoramos casas/hoteles
+        std::cout << "(Se ignoran reparaciones porque no tienes casas/hoteles)\n";
+    }
+
+    // ======= IR A LA CARCEL =======
+    else if (carta.tipo == "cárcel") {
+
+        user.posicion = 10;
+        std::cout << user.nombre << " fue enviado a la cárcel.\n";
+    }
+
+    // ======= SALIR DE LA CARCEL =======
+    else if (carta.tipo == "especial") {
+
+        if (carta.nombre == "sal de la cárcel gratis") {
+            user.cartaSalirDeLaCarcel = true;
+        }
+    }
 }

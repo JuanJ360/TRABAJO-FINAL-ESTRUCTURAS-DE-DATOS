@@ -1,4 +1,5 @@
 ArcaComunal.cpp
+suerte.cpp
 Banco.cpp
 main.cpp
 Monopoly.cpp

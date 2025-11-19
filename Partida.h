@@ -9,6 +9,7 @@
 #include "cartas/CartaArcaComunal.h"
 #include "ArcaComunal.h"
 #include "casillas/Carcel.h"
+#include "suerte.h"
 
 
 // estructura que representa una instancia de una partida de Monopoly
@@ -22,6 +23,7 @@ struct Partida {
     Tablero tablero;
     Banco banco;
     ArcaComunal arcaComunal;
+    Suerte suerte;
 };
 
 // OPERACIONES
@@ -57,6 +59,8 @@ bool PropiedadEnMonopolio(Partida&, const std::string);
 void EjecutarCasilla(Partida&, User&, int);
 void EjecutarCasillaEspecial(Partida&, User&, const std::string&);
 void EjecutarArcaComunal(Partida&, User& );
+void EjecutarCartaSuerte(Partida& , User& ); 
+
 void SubastarPropiedad(Partida&, User&, std::string, bool); // usuario que no participa de la subasta y el nombre de la propiedad
 
 #endif
