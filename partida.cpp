@@ -748,7 +748,7 @@ void EjecutarCartaSuerte(Partida& p, User& user)
             user.cash += 200; // pasó por salida
     }
 
-    // ======= MOVIMIENTO ESPECIAL (versión simplificada) =======
+    // ======= MOVIMIENTO ESPECIAL =======
     else if (carta.tipo == "movimiento especial") {
 
         if (carta.nombre == "ferrocarril cercano 1" ||
@@ -807,10 +807,10 @@ void EjecutarCartaSuerte(Partida& p, User& user)
             user.cash -= 15;
     }
 
-    // ======= REPARACIONES (pero no tienes casas/hoteles) =======
+    // ======= REPARACIONES  =======
     else if (carta.tipo == "reparaciones") {
 
-        // versión compatible: ignoramos casas/hoteles
+        // versión compatible: 
         std::cout << "(Se ignoran reparaciones porque no tienes casas/hoteles)\n";
     }
 

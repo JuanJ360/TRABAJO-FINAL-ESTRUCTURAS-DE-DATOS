@@ -1,0 +1,227 @@
+Documentación del Proyecto
+ Descripción General
+
+Este archivo forma parte del sistema de datos del juego *Monopoly* implementado para el proyecto académico de Estructuras de Datos. Cartas de Arca Comunal
+El sistema de cartas de Arca Comunal se implementó mediante una estructura de datos de cola, siguiendo el comportamiento real del juego de Monopoly donde las cartas se leen y luego se colocan al final del mazo.
+Estructura de la Carta:
+Cada carta de Arca Comunal contiene tres atributos fundamentales: el tipo de carta, su nombre identificador y el mensaje que se muestra al jugador cuando la extrae. Esta estructura simple pero efectiva permite almacenar toda la información necesaria para el funcionamiento de las cartas dentro del juego.
+Generación de la Cola:
+Las cartas se cargan desde un archivo JSON externo, lo que facilita la modificación y mantenimiento del juego sin necesidad de recompilar el código. El sistema lee todas las cartas disponibles y las almacena temporalmente en un vector. Posteriormente, este vector se baraja utilizando un generador de números aleatorios moderno, garantizando una distribución impredecible de las cartas en cada partida. Finalmente, las cartas barajadas se transfieren a una estructura de cola, asegurando el comportamiento FIFO (First In, First Out) requerido por las reglas del juego.
+
+Cartas de Suerte (Casualidad)
+El sistema de cartas de Suerte (conocidas también como cartas de Casualidad) replica el mismo patrón de diseño utilizado para las cartas de Arca Comunal, manteniendo consistencia en la arquitectura del proyecto.
+Estructura de la Carta:
+Al igual que su contraparte de Arca Comunal, cada carta de Suerte almacena tres componentes esenciales: el nombre identificador, el tipo de carta y el mensaje descriptivo. Esta uniformidad en el diseño de ambos tipos de cartas facilita el mantenimiento del código y reduce la complejidad del sistema.
+Implementación de la Cola:
+El mecanismo de generación de la cola sigue el mismo proceso robusto: las cartas se cargan desde un archivo JSON independiente, lo que permite gestionar ambos mazos de cartas de forma separada y organizada. El vector temporal se baraja mediante algoritmos criptográficamente seguros de generación aleatoria, asegurando que cada partida tenga una secuencia única e impredecible de cartas. La cola resultante garantiza que las cartas extraídas se coloquen automáticamente al final del mazo, simulando fielmente el comportamiento del juego físico.
+
+Sistema de Cárcel
+La cárcel representa una de las casillas especiales más importantes del juego de Monopoly, requiriendo un manejo cuidadoso del estado de los jugadores que se encuentran arrestados.
+Estructura de Datos:
+Se implementó utilizando un mapa (diccionario) que asocia el nombre de cada jugador con un par de datos: un puntero al objeto del usuario y un contador de turnos transcurridos en la cárcel. Esta elección de estructura de datos permite acceso directo y eficiente a la información de cualquier prisionero mediante su nombre como clave, con complejidad logarítmica en las operaciones de búsqueda, inserción y eliminación.
+Gestión de Prisioneros:
+El sistema maneja el ciclo completo de encarcelamiento: desde el arresto inicial donde se registra al jugador con cero turnos cumplidos, hasta su liberación cuando se elimina del registro de prisioneros. El uso de punteros a usuarios permite mantener una referencia directa al jugador sin duplicar información, siguiendo principios de eficiencia de memoria.
+Conteo de Turnos:
+Cada prisionero tiene su propio contador individual de turnos en la cárcel, lo que permite implementar correctamente la regla de Monopoly donde un jugador debe permanecer un número específico de turnos antes de poder salir. El contador se incrementa de manera independiente para cada jugador, permitiendo que múltiples jugadores estén simultáneamente encarcelados con diferentes tiempos de permanencia.
+Consulta de Estado:
+El sistema proporciona una función de verificación que permite consultar rápidamente si un jugador específico se encuentra arrestado, sin necesidad de modificar el estado de la cárcel. Esta funcionalidad es esencial para la lógica del juego, que debe verificar el estado de encarcelamiento antes de permitir ciertas acciones.
+
+Sistema de Casillas
+Las casillas constituyen los elementos fundamentales del tablero de Monopoly, representando cada una de las posiciones donde los jugadores pueden ubicarse durante el juego.
+Estructura de la Casilla:
+Cada casilla se define mediante tres atributos esenciales: un nombre que la identifica de manera legible, un tipo que categoriza su naturaleza (propiedad, casilla especial, carta, etc.), y un índice de tipo que permite diferenciar casillas dentro de una misma categoría. Esta estructura triple proporciona tanto información descriptiva para el usuario como datos técnicos para la lógica del juego.
+Clasificación por Tipo:
+El atributo de tipo permite agrupar las casillas según su función en el juego. Esto facilita el procesamiento diferenciado de eventos: las propiedades se manejan de manera distinta a las casillas de cartas, y estas a su vez difieren de las casillas especiales como la cárcel o el parqueadero. El índice de tipo complementa esta clasificación, permitiendo identificar de manera única cada casilla dentro de su categoría específica.
+
+Continúo con la documentación:
+
+Sistema de Ferrocarriles
+Los ferrocarriles representan un tipo especial de propiedad en Monopoly que sigue reglas particulares de valoración y renta, diferentes a las propiedades inmobiliarias convencionales.
+Estructura del Ferrocarril:
+Cada ferrocarril se caracteriza por su tipo fijo (identificado como "Ferrocarril"), un nombre distintivo, su valor de compra, un estado de hipoteca, y un arreglo de cuatro valores de alquiler. Este arreglo es fundamental ya que el alquiler de un ferrocarril no es estático, sino que depende directamente de cuántos ferrocarriles posee el mismo propietario, reflejando fielmente las reglas originales del juego.
+Sistema de Renta Progresiva:
+La característica más notable de los ferrocarriles es su modelo de renta escalable. Cuando un jugador posee múltiples ferrocarriles, el valor del alquiler aumenta exponencialmente. La implementación utiliza una fórmula matemática basada en potencias de dos, donde el alquiler se calcula como veinticinco multiplicado por dos elevado a la cantidad de ferrocarriles menos uno. Esto significa que poseer más ferrocarriles incrementa significativamente los ingresos, incentivando a los jugadores a completar el conjunto de las cuatro estaciones.
+
+Sistema de Propiedades
+Las propiedades inmobiliarias constituyen el núcleo económico del juego de Monopoly, representando terrenos que pueden desarrollarse con construcciones para incrementar su rentabilidad.
+Estructura Completa de la Propiedad:
+Cada propiedad mantiene un registro exhaustivo de información: su tipo general y subtipo específico, nombre identificador, color que la agrupa con otras propiedades del mismo conjunto, precio de compra, estado de hipoteca, y un arreglo de seis valores de alquiler que corresponden a diferentes niveles de desarrollo. Adicionalmente, almacena los costos asociados a la construcción de casas y hoteles, así como los valores para hipotecar y deshipotecar. Finalmente, mantiene contadores del número actual de casas y hoteles construidos sobre el terreno.
+Sistema de Desarrollo Progresivo:
+El sistema implementa las reglas de construcción de Monopoly de manera rigurosa. Una propiedad puede desarrollarse mediante la construcción gradual de hasta cuatro casas. Este proceso es controlado y validado, impidiendo que se excedan los límites establecidos. Una vez que una propiedad alcanza las cuatro casas, el jugador puede optar por construir un hotel, lo que representa el máximo nivel de desarrollo. En este momento, las cuatro casas se eliminan y se reemplazan por un hotel único, simulando el comportamiento real del juego donde las casas regresan al banco.
+
+Sistema de Servicios Públicos
+Los servicios públicos representan otro tipo especial de propiedad en Monopoly, con un mecanismo único de cálculo de renta basado en la tirada de dados del jugador.
+Estructura del Servicio:
+Cada servicio público se define mediante su tipo fijo ("Servicio"), un nombre identificador (típicamente "Compañía de Electricidad" o "Compañía de Agua"), su valor de compra y su valor de hipoteca. Esta estructura simplificada refleja la naturaleza menos compleja de estos activos en comparación con las propiedades inmobiliarias, ya que los servicios no admiten desarrollo o construcciones.
+Mecanismo de Renta Variable:
+La característica distintiva de los servicios públicos es su sistema de cálculo de renta, que introduce un elemento de aleatoriedad al depender de la tirada de dados que llevó al jugador a esa casilla. Esta mecánica única crea situaciones donde el mismo servicio puede generar diferentes ingresos en cada visita, añadiendo un factor de incertidumbre estratégica al juego.
+Sistema de Multiplicadores:
+El valor de la renta se determina mediante multiplicadores que escalan con la cantidad de servicios públicos que posee el propietario. Si el propietario tiene un único servicio, el multiplicador es cuatro, resultando en un alquiler moderado. Sin embargo, si posee ambos servicios públicos disponibles en el tablero, el multiplicador aumenta dramáticamente a diez, más que duplicando los ingresos potenciales. Este diseño incentiva fuertemente la adquisición del monopolio de servicios.
+
+Sistema de guardado de datos JSON
+Es importante recalcar que toda la información la guardamos en un JSON para poder manejarla de la mejor manera, para esto descargamos un archivo publico llamado "json.hpp" el cual nos ayuda con el manejo de toda la información
+
+Sistema de Arca Comunal
+El sistema de Arca Comunal actúa como gestor principal del mazo de cartas de Arca Comunal, encapsulando toda la lógica de manejo de estas cartas en una estructura de alto nivel.
+Estructura del Sistema:
+El componente Arca Comunal mantiene una cola de cartas que representa el mazo completo. Esta estructura actúa como contenedor y gestor, separando la responsabilidad de administrar el mazo de la definición individual de cada carta. Este diseño modular permite que la lógica de barajado, extracción y reposición de cartas esté centralizada en un único componente.
+Inicialización del Mazo:
+El proceso de inicialización es robusto y completo. Primero, se cargan todas las cartas disponibles desde el archivo JSON en un vector temporal. Este enfoque de dos fases (vector seguido de cola) es deliberado: el vector permite realizar el barajado eficientemente mediante algoritmos de mezcla aleatoria, mientras que la cola proporciona el comportamiento FIFO necesario durante el juego. Una vez barajado el vector, las cartas se transfieren secuencialmente a la cola, estableciendo el orden aleatorio que se mantendrá durante la partida.
+Mecánica de Extracción y Reposición:
+La función de extracción implementa fielmente la regla de Monopoly donde las cartas leídas retornan al final del mazo. Cuando un jugador saca una carta, el sistema obtiene la carta al frente de la cola, la remueve de esa posición, y luego la coloca automáticamente al final. Esta operación mantiene el ciclo continuo de cartas, asegurando que todas las cartas del mazo eventualmente vuelvan a estar disponibles sin necesidad de rebarajar.
+
+Sistema del Banco
+El banco representa la entidad financiera y administrativa central del juego de Monopoly, actuando como intermediario en todas las transacciones y como repositorio de propiedades disponibles.
+Estructura del Banco:
+El banco se modela mediante una estructura que mantiene un vector de propiedades disponibles para la compra. Una decisión de diseño importante fue no incluir un contador de dinero del banco, reconociendo que en las reglas oficiales de Monopoly el banco posee recursos financieros ilimitados. Esta abstracción simplifica la implementación sin sacrificar la fidelidad al juego real, donde aunque físicamente los billetes sean finitos, el banco nunca se queda sin fondos conceptualmente.
+Gestión de Propiedades:
+El banco inicia el juego siendo propietario de todas las propiedades del tablero. A medida que los jugadores compran terrenos, ferrocarriles y servicios, estas propiedades se transfieren del banco a los jugadores. El vector de propiedades del banco representa el inventario disponible, permitiendo consultas rápidas sobre qué propiedades aún no han sido adquiridas y están disponibles para compra.
+Rol como Intermediario:
+Aunque la estructura en sí es simple, el banco juega un papel fundamental en la arquitectura del juego. Actúa como punto central para transacciones de compra y venta, gestión de hipotecas, y devolución de propiedades cuando los jugadores declaran bancarrota. Su existencia como entidad separada permite modelar correctamente el flujo de activos entre el sistema y los jugadores.
+
+Sistema Principal de MonopolyEl sistema Monopoly representa el controlador principal del juego, encapsulando toda la lógica de interfaz, gestión de turnos, y coordinación entre los diferentes componentes del proyecto.Arquitectura del Sistema:
+La estructura mantiene tres elementos fundamentales: un indicador booleano del estado del juego, la partida actualmente en curso, y una pila de estados históricos de partidas. Esta combinación permite tanto gestionar el flujo normal del juego como implementar la funcionalidad de deshacer turnos, uno de los requisitos clave del proyecto.Interfaz de Usuario:
+El sistema proporciona un menú principal completo que actúa como punto de entrada para todas las operaciones del juego. Los jugadores pueden iniciar nuevas partidas, consultar el estado actual, ejecutar turnos, deshacer acciones, revisar el historial de movimientos, y gestionar sus propiedades. Esta interfaz por línea de comandos cumple con el requisito de proveer una interacción clara y comprensible entre los jugadores y el sistema.Gestión de Partidas:
+El inicio de una nueva partida solicita información de cuatro jugadores, crea sus respectivos objetos de usuario con saldo inicial, y establece el orden de turnos de manera aleatoria mediante un sistema de decisión. Al crear una nueva partida, el historial de turnos previos se limpia automáticamente, asegurando que cada juego comience con un estado fresco y sin residuos de partidas anteriores.Sistema de Turnos:
+La ejecución de turnos sigue un patrón crítico: antes de realizar cualquier acción, se guarda el estado completo de la partida actual en la pila de historial. Esto permite que cada turno pueda ser revertido posteriormente. Después de guardar el estado, se ejecuta el turno del jugador correspondiente, que incluye tirar los dados, mover al jugador, y procesar los eventos de la casilla donde cae. Al finalizar el turno, el sistema avanza automáticamente al siguiente jugador en el orden establecido, implementando un ciclo circular que garantiza que todos los jugadores participen secuencialmente.Funcionalidad de Deshacer:
+El sistema de deshacer implementa la pila de estados del juego requerida por el proyecto. Cuando un jugador solicita deshacer un turno, el sistema solicita confirmación explícita para evitar reversiones accidentales. Si se confirma, la partida actual se reemplaza completamente por el estado guardado más reciente de la pila, efectivamente "rebobinando" el juego a un punto anterior. Esta funcionalidad es especialmente útil para corregir errores o explorar diferentes estrategias.Visualización del Estado:
+La función de mostrar estado proporciona una vista completa de la partida en curso, incluyendo el jugador del turno actual, la cantidad de turnos guardados en el historial, y un desglose detallado de cada jugador con su dinero disponible, posición en el tablero, y todas sus propiedades, servicios y ferrocarriles. Esta información permite a los jugadores tomar decisiones informadas sobre sus próximas jugadas.Gestión Avanzada de Propiedades:
+El sistema incluye un menú secundario dedicado exclusivamente a la gestión de propiedades del jugador actual. Este menú permite construir casas y hoteles, vender construcciones, hipotecar y deshipotecar propiedades. Cada operación incluye validaciones exhaustivas que verifican las reglas del juego: se debe tener el monopolio del color para construir, las construcciones deben mantenerse equilibradas entre propiedades del mismo color, no se puede hipotecar una propiedad con construcciones, y se requiere dinero suficiente para todas las operaciones.
+
+Sistema de Partida
+La estructura Partida representa el núcleo del estado del juego, encapsulando todos los elementos necesarios para una sesión completa de Monopoly y coordinando las interacciones entre jugadores, tablero y reglas.
+Composición de la Partida:
+Una partida mantiene un contador de turno actual, un mapa de jugadores indexado por sus nombres para acceso directo, un vector con el orden de turnos establecido, y referencias a todas las estructuras especiales del juego: la cárcel, el tablero completo, el banco, y los mazos de cartas de Arca Comunal y Suerte. Esta arquitectura centralizada permite que todas las operaciones del juego accedan consistentemente al mismo estado compartido.
+Inicialización de la Partida:
+El proceso de inicio construye el estado completo del juego: crea el tablero con todas sus casillas y propiedades, inicializa la cárcel vacía, baraja ambos mazos de cartas, y registra todos los jugadores en el mapa con sus estados iniciales. Los jugadores se agregan tanto al mapa para búsquedas rápidas como al vector de orden para determinar la secuencia de turnos.
+Determinación del Orden de Juego:
+El sistema implementa la regla clásica de Monopoly donde cada jugador tira dos dados al inicio, y el orden de juego se establece de mayor a menor suma. El proceso solicita a cada jugador presionar Enter antes de tirar, creando una experiencia interactiva. Las tiradas se almacenan junto con los jugadores correspondientes, se ordenan por valor descendente, y finalmente se actualiza el orden oficial de turnos. Este mecanismo asegura que el jugador con la tirada más alta comience la partida.
+Sistema de Dados:
+La implementación de dados utiliza números aleatorios para simular tiradas reales, generando valores entre uno y seis. Aunque simple, esta función es fundamental para determinar el movimiento de los jugadores y calcular alquileres de servicios públicos.
+Movimiento del Jugador:
+El sistema de avance de jugadores implementa la lógica completa de un turno. Primero verifica si el jugador está en la cárcel y aplica las reglas correspondientes. Si está libre, solicita al jugador que presione Enter para tirar los dados, calcula la suma, y detecta si sacó par para permitirle tirar nuevamente. El jugador avanza el número de casillas indicado, aplicando aritmética modular para circular por el tablero de cuarenta casillas. Si completa una vuelta, recibe automáticamente los doscientos dólares por pasar la salida. Finalmente, se ejecuta la lógica de la casilla donde cayó.
+Detección de Pares Consecutivos:
+El sistema mantiene un contador de pares consecutivos para cada jugador. Cuando un jugador saca par (ambos dados con el mismo valor), el contador se incrementa; de lo contrario, se resetea a cero. Si un jugador alcanza tres pares consecutivos, es enviado automáticamente a la cárcel independientemente de su posición actual, implementando una regla importante que previene ventajas excesivas.
+Gestión de la Cárcel:
+El sistema implementa múltiples reglas relacionadas con el encarcelamiento. Un jugador puede llegar a la cárcel por caer en la casilla "Ir a la Cárcel", sacar tres pares consecutivos, o mediante ciertas cartas. Mientras está encarcelado, el jugador no puede moverse normalmente. El sistema cuenta automáticamente los turnos transcurridos en prisión, y al tercer turno libera automáticamente al jugador en la casilla de la cárcel (posición diez) sin cobrar. Esta implementación respeta las reglas oficiales del juego.
+Ejecución de Casillas:
+El sistema identifica el tipo de casilla mediante el atributo de tipo y ejecuta la lógica correspondiente. Para propiedades, servicios y ferrocarriles, verifica si tienen dueño: si no lo tienen, ofrece la opción de compra al jugador; si éste rechaza o no puede pagar, inicia automáticamente una subasta. Si la propiedad tiene dueño diferente al jugador actual, se calcula y cobra el alquiler correspondiente, transfiriendo dinero del jugador actual al propietario.
+Sistema de Subastas:
+Cuando una propiedad no es comprada por el jugador que cayó en ella, se activa una subasta automática donde participan todos los demás jugadores. El sistema solicita ofertas sucesivas, validando que cada nueva puesta sea mayor que la anterior. Los jugadores pueden retirarse escribiendo "pasar". La subasta continúa hasta que solo quede un postor o todos decidan retirarse. El ganador recibe la propiedad y paga el monto ofertado. Este mecanismo añade estrategia al juego, permitiendo que las propiedades se adquieran a precios variables.
+Cálculo de Alquileres:
+El sistema calcula dinámicamente los alquileres según el tipo de propiedad y su estado. Para propiedades inmobiliarias, verifica si el dueño tiene el monopolio del color para aplicar las reglas de alquiler doble o considerar construcciones. Para ferrocarriles, el alquiler depende de cuántos ferrocarriles posee el propietario. Para servicios, el alquiler se calcula multiplicando la tirada de dados por un factor que varía según la cantidad de servicios del dueño.
+Detección de Monopolios:
+El sistema puede determinar si una propiedad específica está en monopolio: busca el color de la propiedad en el tablero, cuenta cuántas propiedades totales existen de ese color, y verifica si el propietario actual posee todas ellas. Esta información es crítica tanto para cálculo de alquileres como para determinar si se permite construir casas y hoteles.
+Funciones de Consulta:
+El sistema proporciona múltiples funciones para consultar el estado de propiedades: identificar si una propiedad tiene dueño, determinar quién es el propietario, y contar cuántas propiedades, servicios o ferrocarriles posee un jugador específico. Estas consultas se utilizan extensivamente durante el cálculo de alquileres y validación de operaciones.
+Ejecución de Cartas de Arca Comunal:
+Cuando un jugador cae en una casilla de Arca Comunal, el sistema extrae la primera carta del mazo, la muestra al jugador, y ejecuta su efecto según su tipo. Las cartas de ganancia añaden dinero al jugador, las de gasto lo reducen, las de movimiento reposicionan al jugador en el tablero, y las especiales otorgan beneficios como la carta de "Salir Gratis de la Cárcel". El sistema procesa automáticamente todos estos efectos, actualizando el estado del jugador y de la partida según corresponda.
+Ejecución de Cartas de Suerte:
+Las cartas de Suerte siguen un patrón similar pero con mayor variedad de efectos. El sistema procesa cartas de cobro que otorgan dinero, cartas de movimiento que reposicionan al jugador en casillas específicas, cartas de movimiento especial que llevan al jugador al ferrocarril o servicio más cercano, cartas que requieren pagos a otros jugadores o al banco, y cartas que envían a la cárcel. Cada tipo de carta tiene su propia lógica de procesamiento, y el sistema detecta automáticamente si el jugador pasa por la salida durante movimientos para otorgar los doscientos dólares correspondientes.
+Casillas Especiales:
+El sistema procesa varios tipos de casillas especiales: la salida es puramente informativa, los impuestos deducen cantidades fijas del dinero del jugador, el estacionamiento gratuito es un espacio neutral sin efecto, la casilla de visita a la cárcel no afecta a jugadores libres, y la casilla "Ir a la Cárcel" envía inmediatamente al jugador a prisión. Esta implementación cubre todas las casillas especiales del tablero estándar de Monopoly.
+Transferencias Financieras:
+El sistema gestiona automáticamente todas las transferencias de dinero: cuando un jugador paga alquiler, su saldo se reduce y el del propietario aumenta en la misma cantidad. Cuando compra una propiedad, pierde el dinero y gana la propiedad. Cuando recibe cartas de ganancia o pasa por la salida, su saldo aumenta. Esta contabilidad automática elimina la posibilidad de errores manuales y mantiene la integridad financiera del juego.
+Validación de Fondos:
+Antes de permitir compras o pagos, el sistema verifica que el jugador tenga suficiente dinero disponible. Esta validación previene estados inconsistentes donde un jugador tendría saldo negativo, forzando decisiones estratégicas sobre cuándo vender propiedades o hipotecarlas para obtener liquidez.
+Normalización de Entradas:
+El sistema convierte todas las respuestas del usuario a minúsculas antes de procesarlas, eliminando problemas de sensibilidad a mayúsculas. Esto mejora la experiencia del usuario, permitiendo respuestas como "Si", "SI" o "si" sean todas aceptadas de manera equivalente.
+Asignación de Propiedades:
+Cuando una propiedad se asigna a un jugador (por compra o subasta), el sistema busca la casilla correspondiente en el tablero, determina su tipo, y agrega el elemento apropiado (propiedad, ferrocarril o servicio) al vector correspondiente del jugador. Simultáneamente, deduce el precio pagado del saldo del jugador, completando la transacción de manera atómica.
+
+Sistema de Cartas de Suerte
+
+El sistema de cartas de Suerte gestiona el mazo de cartas de Casualidad dentro del juego de Monopoly. Cada carta contiene un tipo, un nombre identificador y un mensaje que se muestra al jugador al extraerla. Las cartas se mantienen en una cola FIFO, lo que permite que la carta que se toma del mazo vuelva al final, simulando fielmente un mazo físico de cartas.
+
+Estructura de Datos
+
+El mazo se representa mediante la estructura Suerte, que tiene un único atributo: una cola de cartas (colaCartas). Cada carta en la cola es un objeto de tipo CartaSuerte. Esta elección de cola asegura que las cartas se extraigan en orden y se reingresen al final automáticamente, manteniendo el flujo continuo del juego.
+
+Inicialización del Mazo
+
+El mazo se inicializa con la función IniciarSuerte(). Primero, se carga un archivo JSON externo que contiene todas las cartas de Suerte disponibles. Cada entrada del JSON se transforma en un objeto CartaSuerte y se guarda en un vector temporal. Una vez cargadas todas las cartas, el vector se baraja utilizando un generador de números aleatorios moderno, asegurando que el orden de las cartas sea impredecible en cada partida. Luego, las cartas barajadas se transfieren a la cola de Suerte, estableciendo el mazo listo para jugar.
+
+Extracción y Reposición de Cartas
+
+Cuando un jugador cae en una casilla de Suerte, se llama a la función SacarCartaSuerte(). Esta función toma la carta que está al frente de la cola, la devuelve como resultado y la coloca nuevamente al final de la cola. De esta forma, las cartas se reutilizan continuamente sin necesidad de volver a barajar durante la partida.
+
+Sistema de Tablero
+
+El sistema de Tablero gestiona todas las casillas y propiedades del juego de Monopoly. Representa el tablero completo, incluyendo casillas normales, propiedades, ferrocarriles, servicios públicos y casillas especiales como la cárcel o las cartas de Suerte y Arca Comunal. Este módulo centraliza toda la información sobre la disposición del tablero y permite acceder de manera eficiente a cualquier casilla según la posición del jugador.
+
+Estructura de Datos
+
+El tablero se implementa mediante la estructura Tablero, que contiene varios vectores separados según el tipo de elemento:
+
+casillas: contiene todas las casillas del tablero en orden de aparición, independientemente de su tipo.
+
+propiedades: almacena únicamente las propiedades inmobiliarias del tablero.
+
+ferrocarriles: contiene los ferrocarriles, que tienen reglas de renta especiales.
+
+servicios: incluye los servicios públicos (luz y agua) con su propia lógica de renta.
+
+especiales: guarda los nombres de casillas especiales, como cárcel, salida o casillas de cartas, para identificarlas rápidamente.
+
+Esta separación permite tanto recorrer el tablero de manera lineal como acceder a cada tipo de casilla de forma eficiente.
+
+Inicialización del Tablero
+
+La función CrearTablero() construye completamente el tablero al inicio de la partida. Para ello, se leen varios archivos JSON: propiedades, ferrocarriles, servicios, casillas especiales y el orden de todas las casillas. Cada entrada se convierte en el objeto correspondiente (Propiedad, Ferrocarril, Servicio o Casilla) y se almacena en el vector correspondiente dentro de la estructura Tablero.
+
+Antes de guardar cada tipo de elemento, se copian sus atributos específicos, como alquileres, precios de compra, estado de hipoteca o valores de construcción en el caso de las propiedades. Luego, todas las casillas se enlazan con su posición dentro del tablero, garantizando que cada movimiento de jugador pueda localizar la casilla correcta.
+
+Acceso a Casillas
+
+Para obtener información de una casilla específica, se utiliza la función ObtenerCasilla(), que recibe el tablero y un índice. La función aplica aritmética modular para permitir que los jugadores circulen por el tablero de manera cíclica, simulando el paso por la casilla de salida y continuando alrededor del tablero sin errores de índice.
+
+Aunque en el código hay funciones comentadas para obtener directamente ferrocarriles, servicios o propiedades por índice, la lógica principal usa casillas como vector central y luego consulta el tipo para decidir la acción a ejecutar en cada turno.
+
+
+Sistema de Jugadores (User)
+
+El sistema de jugadores gestiona toda la información relativa a cada participante del juego de Monopoly. Cada jugador se representa mediante la estructura User, que almacena tanto los datos básicos como los inventarios de propiedades, servicios y ferrocarriles adquiridos durante la partida.
+
+Estructura de Datos
+
+Cada jugador tiene los siguientes atributos fundamentales:
+
+nombre: identifica al jugador de manera legible.
+
+cash: representa la cantidad de dinero disponible. Cada jugador inicia con 1500 dólares.
+
+posicion: indica la casilla actual del tablero donde se encuentra el jugador.
+
+contPares: lleva la cuenta de cuántos pares consecutivos ha sacado el jugador al tirar los dados, importante para determinar si va a la cárcel.
+
+activo: indica si el jugador sigue activo en la partida o ha sido eliminado.
+
+cartaSalirDeLaCarcel: un indicador que refleja si el jugador posee la carta que le permite salir gratis de la cárcel.
+
+Además, cada jugador mantiene vectores que representan sus inventarios:
+
+propiedades: almacena todas las propiedades inmobiliarias que posee.
+
+ferrocarriles: contiene los ferrocarriles adquiridos.
+
+servicios: incluye los servicios públicos del jugador.
+
+Esta separación permite gestionar de manera clara y eficiente qué posee cada jugador y facilita el cálculo de alquileres y otros efectos durante la partida.
+
+Creación y Gestión de Jugadores
+
+La función CrearUsuario() inicializa un jugador con valores predeterminados: dinero inicial, posición de salida en el tablero, contadores en cero y sin carta de salida de la cárcel. Los vectores de propiedades, ferrocarriles y servicios empiezan vacíos.
+
+Otras funciones permiten modificar el estado del jugador de manera controlada:
+
+CambiarNombreUsuario(): actualiza el nombre del jugador.
+
+AumentarPosicion(): mueve al jugador un número determinado de casillas en el tablero.
+
+GanarDinero() y PerderDinero(): ajustan el saldo del jugador según las ganancias o pagos.
+
+UsuarioEliminado(): marca al jugador como inactivo cuando abandona la partida o queda en bancarrota.
+
+ResetContPares() y AumentarContPares(): gestionan el contador de pares consecutivos para la regla de la cárcel.
+
+GanarCartaSalirDeLaCarcel() y GastarCartaSalirDeLaCarcel(): manejan el estado de la carta de salida de la cárcel.
