@@ -1,5 +1,7 @@
+// Monopoly.cpp
 #include "Monopoly.h"
 #include <iostream>
+
 using namespace std;
 
 void Monopoly::mostrarMenuPrincipal() {
@@ -12,10 +14,8 @@ void Monopoly::mostrarMenuPrincipal() {
         cout << "3. Jugar turno\n";
         cout << "4. Salir\n";
         cout << "Selecciona una opcion: ";
-        cin >> opcion;
 
         switch (opcion) {
-
             case 1:
                 iniciarNuevaPartida();
                 break;
@@ -43,7 +43,12 @@ void Monopoly::iniciarNuevaPartida() {
 
     int n;
     cout << "¿Cuántos jugadores? (mínimo 2, máximo 4): ";
-    cin >> n;
+    if (!(cin >> n)) {
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Número inválido.\n";
+        return;
+    }
 
     if (n < 2 || n > 4) {
         cout << "Número inválido.\n";
@@ -56,11 +61,14 @@ void Monopoly::iniciarNuevaPartida() {
     for (int i = 1; i <= n; i++) {
         string nombre;
         cout << "Nombre del jugador " << i << ": ";
-        cin >> nombre;
-
-        User u;
-        u.name = nombre;
-        jugadores.push_back(u);
+        cin >> ws;
+        getline(cin, nombre);
+        if (nombre.empty()) {
+            cout << "Nombre vacío, usando Jugador" << i << "\n";
+            nombre = "Jugador" + to_string(i);
+        }
+        // usa la función que ya tienes para inicializar un User
+        jugadores.push_back(CrearUsuario(nombre));
     }
 
     partidaActual = IniciarPartida(jugadores);
@@ -77,38 +85,31 @@ void Monopoly::mostrarEstadoPartida() {
 
     cout << "\n--- ESTADO DE LA PARTIDA ---\n";
 
-    for (auto &par : partidaActual.usuariosProp) {
-        const string &nombre = par.first;
-        const auto &user = par.second.first;
-        const auto &props = par.second.second;
+    // Recorremos el map central de usuarios
+    for (const auto &entry : partidaActual.usuarios) {
+        const string &nombre = entry.first;
+        const User &user = entry.second;
 
         cout << "\nJugador: " << nombre << "\n";
-        cout << "Propiedades: ";
-        if (props.empty()) cout << "Ninguna";
-        for (const auto &p : props) cout << p.nombre << ", ";
+        cout << "  Dinero: $" << user.cash << "\n";
+        cout << "  Posicion: " << user.posicion << "\n";
+
+        cout << "  Propiedades: ";
+        if (user.propiedades.empty()) cout << "Ninguna";
+        for (const auto &p : user.propiedades) cout << p.nombre << ", ";
         cout << "\n";
-    }
 
-    for (auto &par : partidaActual.usuariosSer) {
-        const string &nombre = par.first;
-        const auto &sers = par.second.second;
-
-        cout << "Servicios: ";
-        if (sers.empty()) cout << "Ninguno";
-        for (const auto &s : sers) cout << s.nombre << ", ";
+        cout << "  Servicios: ";
+        if (user.servicios.empty()) cout << "Ninguno";
+        for (const auto &s : user.servicios) cout << s.nombre << ", ";
         cout << "\n";
-    }
 
-    for (auto &par : partidaActual.usuariosFerro) {
-        const string &fers = par.second.second;
-
-        cout << "Ferrocarriles: ";
-        if (fers.empty()) cout << "Ninguno";
-        for (const auto &f : fers) cout << f.nombre << ", ";
+        cout << "  Ferrocarriles: ";
+        if (user.ferrocarriles.empty()) cout << "Ninguno";
+        for (const auto &f : user.ferrocarriles) cout << f.nombre << ", ";
         cout << "\n";
     }
 }
-
 
 void Monopoly::jugarTurno() {
     if (!juegoIniciado) {
@@ -116,5 +117,6 @@ void Monopoly::jugarTurno() {
         return;
     }
 
-    cout << "\n--- Jugar turno---\n"; // Pendiente de implmenentar teniendo en cuenta que faltan cosas de partida
+    cout << "\n--- Jugar turno (pendiente de implementación completa) ---\n";
+    cout << "Esta acción será implementada por la lógica principal de Partida/Turnos.\n";
 }

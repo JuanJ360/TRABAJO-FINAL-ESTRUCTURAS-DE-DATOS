@@ -238,7 +238,8 @@ std::string PropietarioDePropiedad(Partida& partida, const std::string nomPropie
 // falta esta función
 // un monopolio es cuando un jugador tiene todas las casillas de un mismo color
 bool PropiedadEnMonopolio(Partida& partida, const std::string nomPropiedad) {
-
+    return false; //falta por hacer
+    
 }
 
 // adicionalmente hay que incorporarle el tema de las subastas
@@ -330,7 +331,7 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
             user = PerderDinero(user, precio);
             std::cout << user.nombre << " le ha pagado " << precio << " a " << propFerro << ". " << user.nombre << " le quedan " << user.cash << "$" << std::endl;
 
-            // falta manejar lo de que el usuario pueda quedarse sin dinero o en negativo y por ende deva de subastar o hipotecar
+            // falta manejar lo de que el usuario pueda quedarse sin dinero o en negativo y por ende deba de subastar o hipotecar
         }
         
     }

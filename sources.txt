@@ -1,0 +1,16 @@
+ArcaComunal.cpp
+Banco.cpp
+main.cpp
+Monopoly.cpp
+partida.cpp
+Tablero.cpp
+User.cpp
+
+cartas/CartaArcaComunal.cpp
+cartas/CartaSuerte.cpp
+
+casillas/Carcel.cpp
+casillas/Casilla.cpp
+casillas/Ferrocarril.cpp
+casillas/Propiedad.cpp
+casillas/Servicio.cpp

@@ -20,10 +20,10 @@ std::queue<CartaArcaComunal> GenerarColaCartasArcaComunal() {
             cacVector.push_back(CrearCartaArcaComunal(j[i]["tipo"], j[i]["nombre"], j[i]["mensaje"]));
         }
         std::random_device rd; 
-        std::mt19937 generador(rd());
-        std::shuffle(cacVector.begin(), cacVector.end(), generador());
+        std::mt19937 gen(rd());
+        std::shuffle(cacVector.begin(), cacVector.end(), gen);
 
-        std::queue<CartaSuerte> ans;
+        std::queue<CartaArcaComunal> ans;
         for (i = 0; i < cacVector.size(); i++) {
             ans.push(cacVector[i]);
         }

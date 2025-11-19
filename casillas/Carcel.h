@@ -13,6 +13,6 @@ Carcel CrearCarcel();
 void Arrestar(Carcel&, User*);
 void LiberarDeLaCarcel(Carcel&, std::string);
 void AumentarTurnos(Carcel&, std::string);
-bool EstaArrestado(const Carcel&, std::string);
+bool EstaArrestado(const Carcel&, const std::string&);
 
 #endif

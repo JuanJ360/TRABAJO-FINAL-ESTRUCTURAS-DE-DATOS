@@ -16,6 +16,8 @@ int ValorRentaServicio(int tirada, int nServicios) {
     if (nServicios == 2) {
         return 10 * tirada;
     }
+
+    return 0;
 }
 
 int MultDadoServicio(int ns) {

@@ -41,6 +41,7 @@ Propiedad ConsturirHotel(Propiedad prop) {
 }
 
 int ValorRentaPropiedad(Propiedad& prop, bool monopolio) {
+    
     if (!monopolio) {
         return prop.alquiler[0];
     }
@@ -58,4 +59,6 @@ int ValorRentaPropiedad(Propiedad& prop, bool monopolio) {
             return prop.alquiler[5];
         }
     }
+
+    return 0;
 }

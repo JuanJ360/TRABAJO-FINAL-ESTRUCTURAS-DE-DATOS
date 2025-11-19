@@ -16,8 +16,8 @@ ArcaComunal IniciarArcaComunal() {
         
         // revolver el vector de las cartas con shuffle
         std::random_device rd; 
-        std::mt19937 generador(rd());
-        std::shuffle(vCartas.begin(), vCartas.end(), generador());
+        std::mt19937 gen(rd());
+        std::shuffle(vCartas.begin(), vCartas.end(), gen);
 
         ArcaComunal ac;
 

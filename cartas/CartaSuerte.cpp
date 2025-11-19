@@ -19,8 +19,8 @@ std::queue<CartaSuerte> GenerarColaCartasSuerte() {
             csVector.push_back(CrearCartaSuerte(j[i]["tipo"], j[i]["nombre"], j[i]["mensaje"]));
         }
         std::random_device rd; 
-        std::mt19937 generador(rd());
-        std::shuffle(csVector.begin(), csVector.end(), generador());
+        std::mt19937 gen(rd());
+        std::shuffle(csVector.begin(), csVector.end(), gen);
 
         std::queue<CartaSuerte> ans;
         for (i = 0; i < csVector.size(); i++) {
