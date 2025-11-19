@@ -188,6 +188,31 @@ Aqui se va a guardar todo el trabajo en parejas de Juan José Bolivar y Juan And
 
 - **Partida**:
 
+    - TirarDado: Null -> int
+        - Pre: Nada.
+        - Pos: la función devuelve un numero entero randomizado de entre 1 y 6.
+    - DecidirOrdenUsuarios: Partida -> void
+        - Pre: p.usuarios debe ser un map<string,User> con al menos 1 jugador
+            -para este caso, cada usuario debe tener un nombre, una posición y un contador de pares.
+        - Pos: Se define el orden de todos los users por la suma de los dados de cada uno.
+            - Como usamos el posicionamiento de cada uno para determinar quien saca mas, se limpia al final para que estos no inicien la partida en la posición del valor que sacaron de dados
+            - Como es void, modificamos p directamente.
+    - IniciarPartida: vector<User> -> Partida
+        - Pre: - listaUsuarios tiene que tener por lo menos 1 elemento.
+               - crearTablero() y CrearCarcel() Tienen que existir.
+        - Pos: - crea una partida p con:
+                    - p.nTurno = 0
+                    - p.tablero = crearTablero()
+                    - p.carcel = crearCarcel()
+                    - usa el nombre de p.usuarios como clave.
+               - no modifica el vector original.
+    - PropiedadPerteneceAAlguien: Partida x string -> bool
+        - Pre: - p.usuario y nombrePropiedad deben existir y ser válidos.
+        - Pos: - True si algún usuario posee esta propiedad y false si nadie la tiene.
+    - DuenoDeLaPropiedad: Partida x string -> string
+        - Pre: - p.usuario y nombrePropiedad deben existir y ser válidos.
+        - Pos: - Devuelve el nombre del dueño y si no existe nadie retorna "nadie".
+
 - **Monopoly**:
 
 - **Tablero**: 
