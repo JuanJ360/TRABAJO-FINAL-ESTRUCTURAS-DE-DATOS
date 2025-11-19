@@ -312,6 +312,147 @@ Aqui se va a guardar todo el trabajo en parejas de Juan José Bolivar y Juan And
 
 - **Monopoly**:
 
+    - mostrarMenuPrincipal: -> void
+        - Pre: ninguna. El objeto `Monopoly` debe estar correctamente construido.
+        - Pos: muestra el menú principal y permite al usuario seleccionar opciones.
+               Llama a otras funciones como `iniciarNuevaPartida()`, `jugarTurno()`, etc.
+               No modifica el estado salvo a través de las operaciones seleccionadas.
+
+    - iniciarNuevaPartida: -> void
+        - Pre: deben existir las funciones `CrearUsuario()`, `IniciarPartida()` y `DecidirOrdenUsuarios()`.
+        - Pos: inicializa `partidaActual` con 4 jugadores ingresados por consola.
+               Limpia el historial `partidas`.
+               Deja `juegoIniciado = true`.
+
+    - mostrarEstadoPartida: -> void
+        - Pre: `juegoIniciado == true`.
+        - Pos: imprime el estado actual de la partida:
+               turno, dinero de cada jugador, propiedades, servicios y ferrocarriles.
+               No modifica datos.
+
+    - jugarTurno: -> void
+        - Pre: `juegoIniciado == true`.
+               `partidaActual.ordenUsuarios` no debe estar vacío.
+        - Pos: guarda el estado anterior mediante `GuardarEstadoPartida()`.
+               Ejecuta el turno del jugador actual usando `AvanzarJugador()`.
+               Actualiza `p.nTurno` al siguiente jugador.
+               Modifica `partidaActual`.
+
+    - DevolverPartida: -> void
+        - Pre: la pila `partidas` debe tener al menos un elemento.
+        - Pos: restaura `partidaActual` al estado previamente guardado.
+               Reduce la pila `partidas` en un elemento.
+               Permite deshacer el turno anterior.
+
+    - GuardarEstadoPartida: -> void
+        - Pre: `juegoIniciado == true`.
+        - Pos: guarda una copia completa de `partidaActual` en la pila `partidas`.
+
+    - VerHistorial: -> void
+        - Pre: ninguna.
+        - Pos: muestra cuántos estados hay en `partidas`.
+               No modifica el estado.
+
+    - MenuPropiedades: -> void
+        - Pre: `juegoIniciado == true`.
+               `partidaActual.nTurno` debe ser válido.
+        - Pos: presenta un menú para manejar propiedades del jugador actual.
+               Según la acción elegida, puede modificar:
+                    - `prop.numCasas`
+                    - `prop.numHoteles`
+                    - `prop.hipotecada`
+                    - `user.cash`
+               Permite construir, vender, hipotecar y deshipotecar.
+
+    - MostrarPropiedadesJugador: string -> void
+        - Pre: `jugador` debe existir en `partidaActual.usuarios`.
+        - Pos: lista todas las propiedades detalladas del jugador.
+               No modifica la partida.
+
+    - ComprarCasa: string x string -> bool
+        - Pre: `juegoIniciado == true`.
+               `jugador` debe existir.
+               `nombreProp` debe ser propiedad del jugador.
+               `PuedeConstruirCasa()` debe devolver true.
+               `user.cash >= prop.valorCasa`.
+        - Pos: añade una casa (`prop.numCasas++`).
+               Se descuenta `prop.valorCasa` de `user.cash`.
+               Guarda estado previo para deshacer.
+               Retorna true si se construyó.
+
+    - ComprarHotel: string x string -> bool
+        - Pre: `juegoIniciado == true`.
+               `PuedeConstruirHotel()` debe devolver true.
+        - Pos: `prop.numHoteles = 1`, `prop.numCasas = 0`.
+               Se descuenta `prop.valorHotel` de `user.cash`.
+               Guarda estado previo.
+               Retorna true si se construyó.
+
+    - VenderCasa: string x string -> bool
+        - Pre: `juegoIniciado == true`.
+               `prop.numCasas > 0`.
+               No puede romper el equilibrio entre propiedades del mismo color.
+        - Pos: `prop.numCasas--`.
+               Se suma a `user.cash` la mitad de `prop.valorCasa`.
+               Guarda estado previo.
+               Retorna true si se vendió.
+
+    - VenderHotel: string x string -> bool
+        - Pre: `prop.numHoteles == 1`.
+        - Pos: `prop.numHoteles = 0`.
+               `prop.numCasas = 4` (regla oficial).
+               `user.cash += prop.valorHotel / 2`.
+               Guarda estado previo.
+               Retorna true si se vendió.
+
+    - HipotecarPropiedad: string x string -> bool
+        - Pre: `prop.hipotecada == false`.
+               `prop.numCasas == 0` y `prop.numHoteles == 0`.
+        - Pos: `prop.hipotecada = true`.
+               `user.cash += prop.valorHipotecar`.
+               Guarda estado previo.
+               Retorna true si se hipotecó.
+
+    - DeshipotecarPropiedad: string x string -> bool
+        - Pre: `prop.hipotecada == true`.
+               `user.cash >= prop.valorDesHipotecar`.
+        - Pos: `prop.hipotecada = false`.
+               `user.cash -= prop.valorDesHipotecar`.
+               Guarda estado previo.
+               Retorna true si se deshipotecó.
+
+    - ObtenerPropsColor: Partida x string x string -> vector<Propiedad*>
+        - Pre: `jugador` existe en `p.usuarios`.
+        - Pos: retorna un vector de punteros a las propiedades de ese color que posee el jugador.
+               No modifica la partida.
+
+    - TieneMonopolio: Partida x string x string -> bool
+        - Pre: `color` debe existir en el tablero.
+               `jugador` debe existir en `p.usuarios`.
+        - Pos: retorna true si el jugador posee todas las propiedades de ese color.
+               No modifica nada.
+
+    - PuedeConstruirCasa: Partida x string x Propiedad -> bool
+        - Pre: propiedad debe pertenecere a `jugador`.
+        - Pos: retorna true si:
+                - no está hipotecada
+                - no tiene hotel
+                - `TieneMonopolio == true`
+                - respeta el equilibrio de casas
+                - `prop.numCasas < 4`
+               No modifica estado.
+
+    - PuedeConstruirHotel: Partida x string x Propiedad -> bool
+        - Pre: propiedad debe pertenecer a `jugador`.
+        - Pos: retorna true si:
+                - no está hipotecada
+                - `TieneMonopolio == true`
+                - `prop.numCasas == 4`
+                - `prop.numHoteles == 0`
+                - todas las propiedades del color tienen 4 casas
+               No modifica estado.
+
+
 - **Tablero**: 
     - CrearTablero: -> Tablero
         - pre: 
