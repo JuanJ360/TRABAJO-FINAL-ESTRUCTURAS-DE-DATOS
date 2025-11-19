@@ -50,6 +50,7 @@ std::string PropietarioDeFerrocarril(Partida&, const std::string);
 std::string PropietarioDePropiedad(Partida&, const std::string);
 bool PropiedadEnMonopolio(Partida&, const std::string);
 void EjecutarCasilla(Partida&, User&, int);
+void EjecutarCasillaEspecial(Partida&, User&, const std::string&);
 void SubastarPropiedad(Partida&, User&, std::string, bool); // usuario que no participa de la subasta y el nombre de la propiedad
 
 #endif

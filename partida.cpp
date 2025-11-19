@@ -472,7 +472,7 @@ void EjecutarCasilla(Partida& partida, User& user, int tiradaDeDados) {
 
     // ESPECIALES (Carcel, Suerte, Parking, Ir a la cárcel)
     else if (cas.tipo == "especial") {
-        // EjecutarCasillaEspecial(partida, user, cas.nombre);
+        EjecutarCasillaEspecial(partida, user, cas.nombre);
     }
 }
 
@@ -580,4 +580,53 @@ void AsignarPropiedad(Partida& partida, const std::string& comprador, const std:
             break;
         }
     }
+}
+
+void EjecutarCasillaEspecial(Partida& partida, User& user, const std::string& nombre) {
+
+    if (nombre == "Salida") {
+        std::cout << user.nombre << " está en SALIDA.\n";
+        return;
+    }
+
+    if (nombre == "Caja de Comunidad") {
+        std::cout << user.nombre << " cayó en CAJA DE LA COMUNIDAD (por implementar).\n";
+        return;
+    }
+
+    if (nombre == "Casilla de la Suerte") {
+        std::cout << user.nombre << " cayó en SUERTE (por implementar).\n";
+        return;
+    }
+
+    if (nombre == "Impuesto sobre la Renta") {
+        std::cout << user.nombre << " paga Impuesto sobre la renta ($200).\n";
+        user.cash -= 200;
+        return;
+    }
+
+    if (nombre == "Impuesto de Lujo") {
+        std::cout << user.nombre << " paga Impuesto de Lujo ($75).\n";
+        user.cash -= 75;
+        return;
+    }
+
+    if (nombre == "Cárcel") {
+        std::cout << user.nombre << " está VISITANDO la cárcel.\n";
+        return;
+    }
+
+    if (nombre == "Ir a la Cárcel") {
+        std::cout << user.nombre << " va DIRECTAMENTE a la CÁRCEL.\n";
+        user.posicion = 10; 
+        Arrestar(partida.carcel, &user);
+        return;
+    }
+
+    if (nombre == "Estacionamiento Gratuito") {
+        std::cout << user.nombre << " está en ESTACIONAMIENTO GRATUITO.\n";
+        return;
+    }
+
+    std::cout << "Casilla especial no reconocida: " << nombre << "\n";
 }
