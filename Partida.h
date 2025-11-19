@@ -9,7 +9,7 @@
 
 // estructura que representa una instancia de una partida de Monopoly
 struct Partida {
-    int nTurno;
+    int nTurno = 0;
 
     // un solo registro de jugadores
     std::map<std::string, User> usuarios;
@@ -21,7 +21,7 @@ struct Partida {
 
 // OPERACIONES
 
-Partida DecidirOrdenUsuarios(User, User, User, User);
+void DecidirOrdenUsuarios(Partida &p);
 Partida IniciarPartida(std::vector<User>); // función para instanciar el estado inicial de una partida
 Partida AvanzarPartida(Partida); // función para crear una nueva instancia de la partida avanzando el turno
 int TirarDado(); // función para tirar UN SOLO DADO

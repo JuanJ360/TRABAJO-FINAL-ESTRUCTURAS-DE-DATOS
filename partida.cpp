@@ -10,44 +10,65 @@ int TirarDado() {
     return rand() % 6 + 1;
 }
 
-Partida DecidirOrdenUsuarios(User u1, User u2, User u3, User u4) {
 
-    // Se guardan temporalmente para poder ordenarlos
+void DecidirOrdenUsuarios(Partida &p) {
 
-    std::vector<User> usuarios = {u1, u2, u3, u4};
+    // Extraer los usuarios del map (copia)
+    std::vector<User> usuarios;
+    for (auto &kv : p.usuarios)
+        usuarios.push_back(kv.second);
 
+    std::cout << "\n--- Determinando orden de turnos ---\n";
+
+    // Aqui se guardan las tiradas en una copia
+    std::vector<std::pair<int, User>> tiradas;
+    while (std::cin.get() != '\n');
+
+    // Tirada inicial de cada jugador
     for (auto &u : usuarios) {
         std::cout << "\nTurno para que " << u.nombre << " tire sus dados iniciales.\n";
         std::cout << "Presiona ENTER para tirar...";
-        std::cin.get();
+        std::string temp;
+        std::getline(std::cin, temp);
 
         int d1 = TirarDado();
         int d2 = TirarDado();
-        u.posicion = d1 + d2;   
+        int suma = d1 + d2;
 
-        std::cout << "  Dados: " << d1 << " + " << d2 
-                  << " = " << u.posicion << "\n";
+        std::cout << "  Dados: " << d1 << " + " << d2
+                  << " = " << suma << "\n";
+
+        // Nos quedamos con el usuario real sin cambiar su posición real
+        u.posicion = 0;
+
+        tiradas.push_back({suma, u});
     }
 
-    // Ordenar de mayor a menor según la suma 
-    std::sort(usuarios.begin(), usuarios.end(),[](const User &a, const User &b) {
-        return a.posicion > b.posicion;
-    });
+    // Ordenar por tirada (mayor a menor)
+    std::sort(tiradas.begin(), tiradas.end(),
+              [](const auto &a, const auto &b) {
+                  return a.first > b.first;
+              });
 
-    Partida p;
-    p.nTurno = 1;
+    // Limpiar orden antiguo
+    p.ordenUsuarios.clear();
 
-    // Pasar usuarios al map
-    for (auto &u : usuarios) {
-        p.usuarios[u.nombre] = u;
-        p.ordenUsuarios.push_back(u.nombre);
+    // Actualizar el mapa de usuarios y el orden correcto
+    for (auto &entry : tiradas) {
+        const User &jug = entry.second;
+        p.usuarios[jug.nombre] = jug;
+        p.ordenUsuarios.push_back(jug.nombre);
     }
 
+    // Reiniciamos el turno para que empiece desde el nuevo primero
+    p.nTurno = 0;
+
+    // Mostrar el orden final
     std::cout << "\nOrden final de jugadores:\n";
-    for (auto &u : usuarios) {
-        std::cout << " - " << u.nombre << " (" << u.posicion << ")\n";
+    for (auto &entry : tiradas) {
+        std::cout << " - " << entry.second.nombre
+                  << " (tiró " << entry.first << ")\n";
     }
-    return p;
 }
 
 
@@ -55,13 +76,15 @@ Partida IniciarPartida(std::vector<User> listaUsuarios) {
 
     Partida p;
 
-    p.nTurno = 1;
+    p.nTurno = 0;
     p.tablero = CrearTablero();
     p.carcel = CrearCarcel();
 
     // Agregar los usuarios al map
-    for (auto &u : listaUsuarios)
+    for (auto &u : listaUsuarios) {
         p.usuarios[u.nombre] = u;
+        p.ordenUsuarios.push_back(u.nombre);
+    }
 
     std::cout << "Partida iniciada.\n";
 
@@ -239,7 +262,7 @@ std::string PropietarioDePropiedad(Partida& partida, const std::string nomPropie
 // un monopolio es cuando un jugador tiene todas las casillas de un mismo color
 bool PropiedadEnMonopolio(Partida& partida, const std::string nomPropiedad) {
     return false; //falta por hacer
-    
+
 }
 
 // adicionalmente hay que incorporarle el tema de las subastas

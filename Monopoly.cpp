@@ -2,18 +2,19 @@
 #include "Monopoly.h"
 #include <iostream>
 
-using namespace std;
 
 void Monopoly::mostrarMenuPrincipal() {
     int opcion;
 
     while (true) {
-        cout << "\n===== MENU PRINCIPAL MONOPOLY =====\n";
-        cout << "1. Iniciar nueva partida\n";
-        cout << "2. Mostrar estado de la partida\n";
-        cout << "3. Jugar turno\n";
-        cout << "4. Salir\n";
-        cout << "Selecciona una opcion: ";
+        std::cout << "\n===== MENU PRINCIPAL MONOPOLY =====\n";
+        std::cout << "1. Iniciar nueva partida\n";
+        std::cout << "2. Mostrar estado de la partida\n";
+        std::cout << "3. Jugar turno\n";
+        std::cout << "4. Salir";
+        std::cout << "\n Selecciona una opcion: ";
+        
+        std::cin >> opcion;
 
         switch (opcion) {
             case 1:
@@ -29,94 +30,104 @@ void Monopoly::mostrarMenuPrincipal() {
                 break;
 
             case 4:
-                cout << "Saliendo del juego...\n";
+                std::cout << "Saliendo del juego...\n";
                 return;
 
             default:
-                cout << "Opción inválida.\n";
+                std::cout << "Opción inválida.\n";
         }
     }
 }
 
 void Monopoly::iniciarNuevaPartida() {
-    cout << "\n--- Iniciar Nueva Partida ---\n";
+    std::cout << "\n--- Iniciar Nueva Partida ---\n";
 
-    int n;
-    cout << "¿Cuántos jugadores? (mínimo 2, máximo 4): ";
-    if (!(cin >> n)) {
-        cin.clear();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        cout << "Número inválido.\n";
-        return;
-    }
+    std::vector<User> jugadores;
 
-    if (n < 2 || n > 4) {
-        cout << "Número inválido.\n";
-        return;
-    }
-
-    vector<User> jugadores;
-    jugadores.reserve(n);
-
-    for (int i = 1; i <= n; i++) {
-        string nombre;
-        cout << "Nombre del jugador " << i << ": ";
-        cin >> ws;
-        getline(cin, nombre);
-        if (nombre.empty()) {
-            cout << "Nombre vacío, usando Jugador" << i << "\n";
-            nombre = "Jugador" + to_string(i);
-        }
-        // usa la función que ya tienes para inicializar un User
+    for (int i = 1; i <= 4; i++) {
+        std::string nombre;
+        std::cout << "Nombre del jugador " << i << ": ";
+        std::cin >> nombre;
         jugadores.push_back(CrearUsuario(nombre));
     }
 
+    //crear la partida
     partidaActual = IniciarPartida(jugadores);
+
+    // Luego decidir el orden
+    DecidirOrdenUsuarios(partidaActual);
+
     juegoIniciado = true;
 
-    cout << "La partida ha sido creada exitosamente.\n";
+    std::cout << "\nPartida creada.\n";
 }
 
 void Monopoly::mostrarEstadoPartida() {
     if (!juegoIniciado) {
-        cout << "No hay una partida iniciada.\n";
+        std::cout << "No hay una partida iniciada.\n";
         return;
     }
 
-    cout << "\n--- ESTADO DE LA PARTIDA ---\n";
+    std::cout << "\n--- ESTADO DE LA PARTIDA ---\n";
 
-    // Recorremos el map central de usuarios
     for (const auto &entry : partidaActual.usuarios) {
-        const string &nombre = entry.first;
+        const std::string &nombre = entry.first;
         const User &user = entry.second;
 
-        cout << "\nJugador: " << nombre << "\n";
-        cout << "  Dinero: $" << user.cash << "\n";
-        cout << "  Posicion: " << user.posicion << "\n";
+        std::cout << "\nJugador: " << nombre << "\n";
+        std::cout << "  Dinero: $" << user.cash << "\n";
+        std::cout << "  Posicion: " << user.posicion << "\n";
 
-        cout << "  Propiedades: ";
-        if (user.propiedades.empty()) cout << "Ninguna";
-        for (const auto &p : user.propiedades) cout << p.nombre << ", ";
-        cout << "\n";
+        std::cout << "  Propiedades: ";
+        if (user.propiedades.empty()) std::cout << "Ninguna";
+        for (const auto &p : user.propiedades) std::cout << p.nombre << ", ";
+        std::cout << "\n";
 
-        cout << "  Servicios: ";
-        if (user.servicios.empty()) cout << "Ninguno";
-        for (const auto &s : user.servicios) cout << s.nombre << ", ";
-        cout << "\n";
+        std::cout << "  Servicios: ";
+        if (user.servicios.empty()) std::cout << "Ninguno";
+        for (const auto &s : user.servicios) std::cout << s.nombre << ", ";
+        std::cout << "\n";
 
-        cout << "  Ferrocarriles: ";
-        if (user.ferrocarriles.empty()) cout << "Ninguno";
-        for (const auto &f : user.ferrocarriles) cout << f.nombre << ", ";
-        cout << "\n";
+        std::cout << "  Ferrocarriles: ";
+        if (user.ferrocarriles.empty()) std::cout << "Ninguno";
+        for (const auto &f : user.ferrocarriles) std::cout << f.nombre << ", ";
+        std::cout << "\n";
     }
 }
-
 void Monopoly::jugarTurno() {
     if (!juegoIniciado) {
-        cout << "No hay una partida iniciada.\n";
+        std::cout << "No hay una partida iniciada.\n";
         return;
     }
 
-    cout << "\n--- Jugar turno (pendiente de implementación completa) ---\n";
-    cout << "Esta acción será implementada por la lógica principal de Partida/Turnos.\n";
+    // Si no hay jugadores registrados, error
+    if (partidaActual.ordenUsuarios.empty()) {
+        std::cout << "ERROR: No hay jugadores en la partida.\n";
+        return;
+    }
+
+    // Obtener índice de turno actual
+    int idx = partidaActual.nTurno;
+
+    // Seguridad: si el índice se sale, se resetea
+    if (idx >= (int)partidaActual.ordenUsuarios.size()) {
+        partidaActual.nTurno = 0;
+        idx = 0;
+    }
+
+    // Nombre del jugador que va
+    std::string nombreJugador = partidaActual.ordenUsuarios[idx];
+
+    // Referencia al jugador
+    User& jugador = partidaActual.usuarios[nombreJugador];
+
+    std::cout << "\n===== TURNO DE " << nombreJugador << " =====\n";
+
+    // Avanzar al jugador (tirar dados y mover)
+    AvanzarJugador(jugador);
+
+    // Pasar al siguiente turno
+    partidaActual.nTurno = (partidaActual.nTurno + 1) % partidaActual.ordenUsuarios.size();
+
+    std::cout << "Turno terminado. El siguiente jugador será "<< partidaActual.ordenUsuarios[partidaActual.nTurno]<< ".\n";
 }
