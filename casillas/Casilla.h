@@ -4,11 +4,12 @@
 #include <string>
 
 struct Casilla {
+    std::string nombre;
     std::string tipo;
     int indiceTipo;
 };
 
-Casilla CrearCasilla(std::string, int);
+Casilla CrearCasilla(std::string, std::string, int);
 
 Casilla ActivarEvento(std::string, int);
 

@@ -73,7 +73,7 @@ Tablero CrearTablero() {
     // enlazar todas las cartas con sus posiciones
     std::vector<Casilla> casillas;
     for (i = 0; i < cas.size(); i++) {
-        casillas.push_back(CrearCasilla(cas[i]["tipo"], cas[i]["posicion"]));
+        casillas.push_back(CrearCasilla(cas[i]["nombre"], cas[i]["tipo"], cas[i]["posicion"]));
     }
 
     Tablero tablero;
