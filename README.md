@@ -190,30 +190,268 @@ Aqui se va a guardar todo el trabajo en parejas de Juan José Bolivar y Juan And
 
     - TirarDado: Null -> int
         - Pre: Nada.
-        - Pos: la función devuelve un numero entero randomizado de entre 1 y 6.
+        - Pos: la función devuelve un número entero randomizado entre `1` y `6`.
+
     - DecidirOrdenUsuarios: Partida -> void
-        - Pre: p.usuarios debe ser un map<string,User> con al menos 1 jugador
-            -para este caso, cada usuario debe tener un nombre, una posición y un contador de pares.
-        - Pos: Se define el orden de todos los users por la suma de los dados de cada uno.
-            - Como usamos el posicionamiento de cada uno para determinar quien saca mas, se limpia al final para que estos no inicien la partida en la posición del valor que sacaron de dados
-            - Como es void, modificamos p directamente.
+        - Pre: `p.usuarios` debe ser un `map<string, User>` con al menos un jugador.
+               Cada usuario debe tener un `nombre`, una `posición` y un `contador de pares` válido.
+        - Pos: Se define el orden de todos los usuarios según la suma de sus dados.
+               Como usamos la `posición` temporalmente para ordenar, se limpia al finalizar.
+               Como es `void`, se modifica `p` directamente.
+
     - IniciarPartida: vector<User> -> Partida
-        - Pre: - listaUsuarios tiene que tener por lo menos 1 elemento.
-               - crearTablero() y CrearCarcel() Tienen que existir.
-        - Pos: - crea una partida p con:
-                    - p.nTurno = 0
-                    - p.tablero = crearTablero()
-                    - p.carcel = crearCarcel()
-                    - usa el nombre de p.usuarios como clave.
-               - no modifica el vector original.
+        - Pre: `listaUsuarios` debe contener al menos un elemento.
+               Deben existir `crearTablero()` y `CrearCarcel()`.
+        - Pos: se crea una partida `p` con:
+                - `p.nTurno = 0`
+                - `p.tablero = crearTablero()`
+                - `p.carcel = CrearCarcel()`
+                - `p.usuarios` usando el `nombre` como clave.
+               No modifica `listaUsuarios` original.
+
     - PropiedadPerteneceAAlguien: Partida x string -> bool
-        - Pre: - p.usuario y nombrePropiedad deben existir y ser válidos.
-        - Pos: - True si algún usuario posee esta propiedad y false si nadie la tiene.
+        - Pre: `p.usuarios` y `nombrePropiedad` deben existir y ser válidos.
+        - Pos: `true` si algún usuario posee la propiedad, `false` si nadie la tiene.
+
     - DuenoDeLaPropiedad: Partida x string -> string
-        - Pre: - p.usuario y nombrePropiedad deben existir y ser válidos.
-        - Pos: - Devuelve el nombre del dueño y si no existe nadie retorna "nadie".
+        - Pre: `p.usuarios` y `nombrePropiedad` deben existir y ser válidos.
+        - Pos: retorna el nombre del dueño o `"nadie"` si no hay dueño.
+
+    - GanarPropiedad: Partida x User x Propiedad -> Partida
+        - Pre: `u.nombre` debe existir como clave en `p.usuarios`.
+        - Pos: la propiedad se agrega a `p.usuarios[u.nombre].propiedades`.
+               Se retorna la partida modificada.
+
+    - AvanzarJugador: Partida x User -> void
+        - Pre: `jugador.posicion` debe estar entre `0` y `39`.
+               `jugador` debe existir dentro de `p.usuarios`.
+               `p.tablero` debe ser válido.
+        - Pos: el jugador avanza según los dados.
+               Si pasa por la casilla de salida recibe dinero.
+               Si saca `3` pares o cae en `"Ir a la cárcel"`, se envía a la cárcel.
+               Se ejecuta la acción de la casilla correspondiente.
+               Se modifica tanto `p` como `jugador`.
+
+    - ReglaTercerTurnoCarcel: Carcel x string -> void
+        - Pre: `nombreJugador` debe existir dentro de `carcel.prisioneros`.
+        - Pos: se incrementa `turnosEnCarcel`.
+               Si llega a `3`, se libera al jugador y se ubica en la casilla `10`.
+
+    - ReglaTercerParFuera: Carcel x User -> void
+        - Pre: `user.contPares` debe tener el conteo correcto.
+        - Pos: si `user.contPares == 3`, el jugador va a la cárcel.
+               Si no, no ocurre nada.
+
+    - NumeroDePropiedades: Partida x string -> int
+        - Pre: `nombreJugador` debe existir en `p.usuarios`.
+        - Pos: retorna el tamaño de `p.usuarios[nombreJugador].propiedades`.
+
+    - NumeroDeServicios: Partida x string -> int
+        - Pre: `nombreJugador` debe existir en `p.usuarios`.
+        - Pos: retorna el tamaño de `p.usuarios[nombreJugador].servicios`.
+
+    - NumeroDeFerrocarriles: Partida x string -> int
+        - Pre: `nombreJugador` debe existir en `p.usuarios`.
+        - Pos: retorna el tamaño de `p.usuarios[nombreJugador].ferrocarriles`.
+
+    - PropietarioDeServicio: Partida x string -> string
+        - Pre: `nomServicio` debe existir en el tablero.
+        - Pos: retorna el nombre del dueño o `"except"` si nadie lo posee.
+
+    - PropietarioDeFerrocarril: Partida x string -> string
+        - Pre: `nomFerrocarril` válido.
+        - Pos: retorna el dueño o `"except"`.
+
+    - PropietarioDePropiedad: Partida x string -> string
+        - Pre: `nomPropiedad` válido.
+        - Pos: retorna el dueño o `"except"`.
+
+    - PropiedadEnMonopolio: Partida x string -> bool
+        - Pre: `nomPropiedad` debe existir en `p.tablero`.
+        - Pos: `true` si el jugador del turno tiene todas las propiedades
+               del mismo `color`. `false` si no.
+
+    - PuedeComprar: User x int -> bool
+        - Pre: `precio` debe ser mayor o igual a `0`.
+        - Pos: `true` si `user.cash >= precio`, de lo contrario `false`.
+
+    - NormalizarRespuesta: string -> string
+        - Pre: la entrada debe ser válida.
+        - Pos: retorna la cadena convertida a minúsculas.
+
+    - EjecutarCasilla: Partida x User x int -> void
+        - Pre: `user.posicion` entre `0` y `39`.
+               `p.tablero` correcto.
+        - Pos: ejecuta la acción correspondiente de la casilla:
+                compra, renta, subasta, o acción especial.
+               Modifica `p` y al `user`.
+
+    - EjecutarCasillaEspecial: Partida x User x string -> void
+        - Pre: `nombreCasilla` debe ser una casilla especial válida.
+        - Pos: aplica el efecto: pagar impuestos, moverse, cárcel, etc.
+               Modifica la partida y/o al usuario.
+
+    - EjecutarArcaComunal: Partida x User -> void
+        - Pre: debe existir al menos una carta en `p.arcaComunal`.
+        - Pos: aplica el efecto de la carta: dinero, movimiento, cárcel, etc.
+               Modifica al jugador y/o a la partida.
+
+    - SubastarPropiedad: Partida x string x string -> void
+        - Pre: `nomCasilla` válida dentro del tablero.
+               Deben existir al menos 2 jugadores.
+        - Pos: se realiza una subasta.
+               El ganador paga y recibe la propiedad.
+               Se modifica `p`.
+
+    - AsignarPropiedad: Partida x string x string -> void
+        - Pre: `nomCasilla` válida.
+               `comprador` existe en `p.usuarios`.
+        - Pos: la propiedad se agrega a `p.usuarios[comprador]`.
+               Se descuenta el costo correspondiente.
+
 
 - **Monopoly**:
+
+    - mostrarMenuPrincipal: -> void
+        - Pre: ninguna. El objeto `Monopoly` debe estar correctamente construido.
+        - Pos: muestra el menú principal y permite al usuario seleccionar opciones.
+               Llama a otras funciones como `iniciarNuevaPartida()`, `jugarTurno()`, etc.
+               No modifica el estado salvo a través de las operaciones seleccionadas.
+
+    - iniciarNuevaPartida: -> void
+        - Pre: deben existir las funciones `CrearUsuario()`, `IniciarPartida()` y `DecidirOrdenUsuarios()`.
+        - Pos: inicializa `partidaActual` con 4 jugadores ingresados por consola.
+               Limpia el historial `partidas`.
+               Deja `juegoIniciado = true`.
+
+    - mostrarEstadoPartida: -> void
+        - Pre: `juegoIniciado == true`.
+        - Pos: imprime el estado actual de la partida:
+               turno, dinero de cada jugador, propiedades, servicios y ferrocarriles.
+               No modifica datos.
+
+    - jugarTurno: -> void
+        - Pre: `juegoIniciado == true`.
+               `partidaActual.ordenUsuarios` no debe estar vacío.
+        - Pos: guarda el estado anterior mediante `GuardarEstadoPartida()`.
+               Ejecuta el turno del jugador actual usando `AvanzarJugador()`.
+               Actualiza `p.nTurno` al siguiente jugador.
+               Modifica `partidaActual`.
+
+    - DevolverPartida: -> void
+        - Pre: la pila `partidas` debe tener al menos un elemento.
+        - Pos: restaura `partidaActual` al estado previamente guardado.
+               Reduce la pila `partidas` en un elemento.
+               Permite deshacer el turno anterior.
+
+    - GuardarEstadoPartida: -> void
+        - Pre: `juegoIniciado == true`.
+        - Pos: guarda una copia completa de `partidaActual` en la pila `partidas`.
+
+    - VerHistorial: -> void
+        - Pre: ninguna.
+        - Pos: muestra cuántos estados hay en `partidas`.
+               No modifica el estado.
+
+    - MenuPropiedades: -> void
+        - Pre: `juegoIniciado == true`.
+               `partidaActual.nTurno` debe ser válido.
+        - Pos: presenta un menú para manejar propiedades del jugador actual.
+               Según la acción elegida, puede modificar:
+                    - `prop.numCasas`
+                    - `prop.numHoteles`
+                    - `prop.hipotecada`
+                    - `user.cash`
+               Permite construir, vender, hipotecar y deshipotecar.
+
+    - MostrarPropiedadesJugador: string -> void
+        - Pre: `jugador` debe existir en `partidaActual.usuarios`.
+        - Pos: lista todas las propiedades detalladas del jugador.
+               No modifica la partida.
+
+    - ComprarCasa: string x string -> bool
+        - Pre: `juegoIniciado == true`.
+               `jugador` debe existir.
+               `nombreProp` debe ser propiedad del jugador.
+               `PuedeConstruirCasa()` debe devolver true.
+               `user.cash >= prop.valorCasa`.
+        - Pos: añade una casa (`prop.numCasas++`).
+               Se descuenta `prop.valorCasa` de `user.cash`.
+               Guarda estado previo para deshacer.
+               Retorna true si se construyó.
+
+    - ComprarHotel: string x string -> bool
+        - Pre: `juegoIniciado == true`.
+               `PuedeConstruirHotel()` debe devolver true.
+        - Pos: `prop.numHoteles = 1`, `prop.numCasas = 0`.
+               Se descuenta `prop.valorHotel` de `user.cash`.
+               Guarda estado previo.
+               Retorna true si se construyó.
+
+    - VenderCasa: string x string -> bool
+        - Pre: `juegoIniciado == true`.
+               `prop.numCasas > 0`.
+               No puede romper el equilibrio entre propiedades del mismo color.
+        - Pos: `prop.numCasas--`.
+               Se suma a `user.cash` la mitad de `prop.valorCasa`.
+               Guarda estado previo.
+               Retorna true si se vendió.
+
+    - VenderHotel: string x string -> bool
+        - Pre: `prop.numHoteles == 1`.
+        - Pos: `prop.numHoteles = 0`.
+               `prop.numCasas = 4` (regla oficial).
+               `user.cash += prop.valorHotel / 2`.
+               Guarda estado previo.
+               Retorna true si se vendió.
+
+    - HipotecarPropiedad: string x string -> bool
+        - Pre: `prop.hipotecada == false`.
+               `prop.numCasas == 0` y `prop.numHoteles == 0`.
+        - Pos: `prop.hipotecada = true`.
+               `user.cash += prop.valorHipotecar`.
+               Guarda estado previo.
+               Retorna true si se hipotecó.
+
+    - DeshipotecarPropiedad: string x string -> bool
+        - Pre: `prop.hipotecada == true`.
+               `user.cash >= prop.valorDesHipotecar`.
+        - Pos: `prop.hipotecada = false`.
+               `user.cash -= prop.valorDesHipotecar`.
+               Guarda estado previo.
+               Retorna true si se deshipotecó.
+
+    - ObtenerPropsColor: Partida x string x string -> vector<Propiedad*>
+        - Pre: `jugador` existe en `p.usuarios`.
+        - Pos: retorna un vector de punteros a las propiedades de ese color que posee el jugador.
+               No modifica la partida.
+
+    - TieneMonopolio: Partida x string x string -> bool
+        - Pre: `color` debe existir en el tablero.
+               `jugador` debe existir en `p.usuarios`.
+        - Pos: retorna true si el jugador posee todas las propiedades de ese color.
+               No modifica nada.
+
+    - PuedeConstruirCasa: Partida x string x Propiedad -> bool
+        - Pre: propiedad debe pertenecere a `jugador`.
+        - Pos: retorna true si:
+                - no está hipotecada
+                - no tiene hotel
+                - `TieneMonopolio == true`
+                - respeta el equilibrio de casas
+                - `prop.numCasas < 4`
+               No modifica estado.
+
+    - PuedeConstruirHotel: Partida x string x Propiedad -> bool
+        - Pre: propiedad debe pertenecer a `jugador`.
+        - Pos: retorna true si:
+                - no está hipotecada
+                - `TieneMonopolio == true`
+                - `prop.numCasas == 4`
+                - `prop.numHoteles == 0`
+                - todas las propiedades del color tienen 4 casas
+               No modifica estado.
+
 
 - **Tablero**: 
     - CrearTablero: -> Tablero
